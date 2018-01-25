@@ -7,7 +7,6 @@ public class QuickSort {
         int[] result;
         result = quicksort(a,0,a.length-1);
         printArray(result);
-
     }
 
     //quick sort
