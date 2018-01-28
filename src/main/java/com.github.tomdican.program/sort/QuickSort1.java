@@ -1,4 +1,4 @@
-package com.github.tomdican.program;
+package com.github.tomdican.program.sort;
 
 public class QuickSort1 extends QuickSort {
     public static void main(String [] args){

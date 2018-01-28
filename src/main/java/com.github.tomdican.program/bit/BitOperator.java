@@ -1,4 +1,4 @@
-package com.github.tomdican.program;
+package com.github.tomdican.program.bit;
 
 public class BitOperator {
     public static void main(String [] args){

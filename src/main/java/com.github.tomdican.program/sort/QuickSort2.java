@@ -1,7 +1,4 @@
-package com.github.tomdican.program;
-
-import java.util.ArrayList;
-import java.util.List;
+package com.github.tomdican.program.sort;
 
 public class QuickSort2 extends QuickSort1{
     public static void main(String [] args){

@@ -1,4 +1,6 @@
-package com.github.tomdican.program;
+package com.github.tomdican.program.sort;
+
+import com.github.tomdican.program.Util;
 
 public class QuickSort {
     public static void main(String [] args){
