@@ -37,6 +37,30 @@
 
 	<profiles>
 		<profile>
+			<repositories>
+				<repository>
+					<id>tomdican</id>
+					<url>https://github.com/tomdican/mvnrepo/tree/repository</url>
+				</repository>
+			</repositories>
+			<dependencies>
+				<dependency>
+					<groupId>com.github.pedrovgs.app</groupId>
+					<artifactId>algorithms</artifactId>
+					<version>1.0</version>
+				</dependency>
+				<dependency>
+					<groupId>edu.princeton.cs</groupId>
+					<artifactId>algs4</artifactId>
+					<version>1.0.0.0</version>
+				</dependency>
+				<dependency>
+					<groupId>junit</groupId>
+					<artifactId>junit</artifactId>
+					<version>4.11</version>
+					<scope>test</scope>
+				</dependency>
+			</dependencies>
 			<id>main-build</id>
 				<activation>
 					<activeByDefault>true</activeByDefault>
@@ -73,23 +97,5 @@
 
 		</profile>
 	</profiles>
-	<repositories>
-		<repository>
-			<id>tomdican</id>
-			<url>https://github.com/tomdican/mvnrepo/tree/repository</url>
-		</repository>
-	</repositories>
-	<dependencies>
-		<dependency>
-			<groupId>edu.princeton.cs</groupId>
-			<artifactId>algs4</artifactId>
-			<version>1.0.0.0</version>
-		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.11</version>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
+
 </project>
