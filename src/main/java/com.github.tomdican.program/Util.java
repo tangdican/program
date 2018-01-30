@@ -14,4 +14,10 @@ public class Util {
         a[i] = a[j];
         a[j] = temp;
     }
+
+    public static void exchange(int i , int j) {
+        int temp = i;
+        i = j;
+        j = temp;
+    }
 }
