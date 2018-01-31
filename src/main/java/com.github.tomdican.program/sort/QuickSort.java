@@ -8,7 +8,7 @@ public class QuickSort {
         int [] a = {8,11,88,1,2,77,9,3,12};
         int[] result;
         result = quicksort(a,0,a.length-1);
-        printArray(result);
+        Util.printArray(result);
     }
 
     //quick sort
@@ -53,22 +53,4 @@ public class QuickSort {
         return quicksort(a,i+1,end);
     }
 
-    public static void printArray(int[] a){
-      printArray(a,0,a.length-1);
-    }
-
-    public static void printArray(int[] a,int begin,int end){
-        for (int i = begin; i <= end; i++) {
-            Util.print(a[i]+",");
-        }
-        Util.println("");
-    }
-
-    public static void printLine(int n){
-        while (n > 0){
-            Util.print("--->");
-            n--;
-        }
-        Util.println("");
-    }
 }
