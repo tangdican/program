@@ -9,6 +9,25 @@ public class Util {
         System.out.print(str);
     }
 
+    public static void printArray(int[] a){
+        printArray(a,0,a.length-1);
+    }
+
+    public static void printArray(int[] a,int begin,int end){
+        for (int i = begin; i <= end; i++) {
+            Util.print(a[i]+",");
+        }
+        Util.println("");
+    }
+
+    public static void printLine(int n){
+        while (n > 0){
+            Util.print("--->");
+            n--;
+        }
+        Util.println("");
+    }
+
     public static void exchange(int[] a, int i ,int j) {
         int temp = a[i];
         a[i] = a[j];
@@ -20,4 +39,5 @@ public class Util {
         i = j;
         j = temp;
     }
+
 }
