@@ -10,11 +10,13 @@ public class ShellSort {
     // when d=1,like the insert sort
     public static void shellSort(int[] a) {
 
+        // group by d
         for (int d = a.length/2; d > 0; d/=2) {
+           // traversing the array
             for (int i = d; i < a.length; i++) {
-                // 内部直接插入
                 int temp = a[i];
                 int j = i - d;
+                // sort the corresponding element between the groups
                 while (j >= 0 && temp < a[j]) {
                     a[j+d] = a[j];
                     j -= d;
