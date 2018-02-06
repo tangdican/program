@@ -11,6 +11,10 @@ public class QuickSort {
         Util.printArray(result);
     }
 
+    public  static  void quicksort(int[] a) {
+        quicksort(a,0,a.length-1);
+    }
+
     //quick sort
     public static int[] quicksort(int[] a, int begin, int end) {
         if(begin >= end) {

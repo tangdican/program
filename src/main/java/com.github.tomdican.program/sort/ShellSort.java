@@ -23,7 +23,7 @@ public class ShellSort {
                 }
                 a[j+d] = temp;
             }
-            Util.printArray(a);
+           // Util.printArray(a);
         }
     }
 }
