@@ -14,10 +14,10 @@ public class BitOperator {
         println("bit x311",Integer.toString(x311));
         println("max integer",String.valueOf(Math.pow(2,31)));
        println("max test",String.valueOf(2147483647));
+       println("a^b^b is a:",String.valueOf((char)('a'^'b'^'b')));
     }
 
     public static void println(String name , String str){
         System.out.println("-->"+name +" : "+ str);
-
     }
 }
