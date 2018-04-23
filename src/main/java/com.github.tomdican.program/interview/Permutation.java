@@ -2,7 +2,6 @@ package com.github.tomdican.program.interview;
 
 import com.github.tomdican.program.Util;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
