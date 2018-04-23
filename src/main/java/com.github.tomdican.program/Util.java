@@ -5,7 +5,7 @@ public class Util {
         System.out.println(str);
     }
 
-    public static void print(String str){
+    public static void print(Object str){
         System.out.print(str);
     }
 
