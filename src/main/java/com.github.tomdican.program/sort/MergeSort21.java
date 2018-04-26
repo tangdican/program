@@ -2,12 +2,7 @@ package com.github.tomdican.program.sort;
 
 import com.github.tomdican.program.Util;
 
-/**
- * guide and code, https://www.geeksforgeeks.org/merge-sort/
- * {10,2,6,22,13,23,111,21,227,912,1234}
- */
-public class MergeSort2 {
-
+public class MergeSort21 {
     public static void sort(int[] input) {
         int len = input.length;
         int partLen = 1;
@@ -23,16 +18,25 @@ public class MergeSort2 {
     public static void merge(int[] input, int partLen) {
         int tempLen = 2*partLen;
         for (int i = 0; i < input.length + tempLen; i += tempLen) {
-            sort(input, i, tempLen);
+            int[] temp = new int[partLen];
+            for (int j = 0; j < tempLen; j++) {
+                temp[j] = input[i+j];
+            }
+
+            sort(temp, i, tempLen);
+
+            for (int j = 0; j < tempLen; j++) {
+                input[i+j] = temp[j];
+            }
         }
     }
 
     public static void sort(int[] input, int startLoc, int partLen) {
         int[] temp = new int[partLen];
-        int mid = startLoc + partLen/2;
-        int left = startLoc;
+        int mid = partLen/2;
+        int left = 0;
         int right = mid;
-        int rightLen = startLoc + partLen;
+        int rightLen = partLen;
         int leftLen = mid;
         int j = 0;
         for (; j < partLen; j++) {
@@ -67,3 +71,5 @@ public class MergeSort2 {
         MergeSort2.sort(input);
     }
 }
+
+
