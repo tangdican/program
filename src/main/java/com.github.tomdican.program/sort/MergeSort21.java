@@ -2,12 +2,7 @@ package com.github.tomdican.program.sort;
 
 import com.github.tomdican.program.Util;
 
-/**
- * guide and code, https://www.geeksforgeeks.org/merge-sort/
- * {10,2,6,22,13,23,111,21,227,912,1234}
- */
-public class MergeSort2 {
-
+public class MergeSort21 {
     public static void sort(int[] input) {
         int len = input.length;
         int partLen = 1;
@@ -23,42 +18,45 @@ public class MergeSort2 {
     public static void merge(int[] input, int partLen) {
         int tempLen = 2*partLen;
         for (int i = 0; i < input.length + tempLen; i += tempLen) {
-            sort(input, i, tempLen);
+            int[] temp = new int[partLen];
+            int j = 0;
+            for (; i+j < input.length && j < tempLen; j++) {
+                temp[j] = input[i+j];
+            }
+
+            sort(temp, j);
+
+            for (int k = 0; i+k < input.length && k < tempLen; k++) {
+                input[i+k] = temp[k];
+            }
         }
     }
 
-    public static void sort(int[] input, int startLoc, int partLen) {
+    public static void sort(int[] input, int partLen) {
         int[] temp = new int[partLen];
-        int mid = startLoc + partLen/2;
-        int left = startLoc;
+        int mid = partLen/2;
+        int left = 0;
         int right = mid;
-        int rightLen = startLoc + partLen;
-        int leftLen = mid;
         int j = 0;
         for (; j < partLen; j++) {
 
-            if ((right >= input.length) || left >= leftLen || right >= rightLen) {
+            if (left >= mid || right >= partLen) {
                 break;
             }
             if (input[left] <= input[right]) {
-                temp[j] = input[left];
-                left++;
+                temp[j] = input[left++];
             } else {
-                temp[j] = input[right];
-                right++;
+                temp[j] = input[right++];
             }
         }
-        while (left < input.length && left < leftLen) {
+        while (left < mid) {
             temp[j++] = input[left++];
         }
-        while (right < input.length && right < rightLen) {
+        while (right < partLen) {
             temp[j++] = input[right++];
         }
         for (int k = 0; k < partLen; k++) {
-            if (startLoc + k >= input.length) {
-                break;
-            }
-            input[startLoc + k] = temp[k];
+            input[k] = temp[k];
         }
     }
 
@@ -67,3 +65,5 @@ public class MergeSort2 {
         MergeSort2.sort(input);
     }
 }
+
+

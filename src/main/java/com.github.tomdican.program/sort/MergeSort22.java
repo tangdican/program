@@ -6,7 +6,7 @@ import com.github.tomdican.program.Util;
  * guide and code, https://www.geeksforgeeks.org/merge-sort/
  * {10,2,6,22,13,23,111,21,227,912,1234}
  */
-public class MergeSort2 {
+public class MergeSort22 {
 
     public static void sort(int[] input) {
         int len = input.length;
@@ -64,6 +64,6 @@ public class MergeSort2 {
 
     public static void main(String[] args) {
         int[] input = {10,123,111,22,13,23,21,21,227,912,2};
-        MergeSort2.sort(input);
+        MergeSort22.sort(input);
     }
 }
