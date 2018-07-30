@@ -4,6 +4,9 @@ import com.github.tomdican.program.Util;
 
 /**
  * optimize the mergesort
+ *
+ * reference:
+ * https://algs4.cs.princeton.edu/lectures/22Mergesort.pdf
  */
 public class MergeSort31 {
     public static void main(String[] args) {
