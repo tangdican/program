@@ -130,15 +130,25 @@ public class Tree2 {
     }
 
     public static void printLevelNodes(Node node, int level) {
-        if (node == null || level <= 0 ) {
+        if (level <= 0 ) {
             return;
         }
-        if (level == 1) {
-            System.out.print("," + node.val);
-        }
-        printLevelNodes(node.left, level - 1);
 
-        printLevelNodes(node.right, level - 1);
+        String val = " ";
+        Node left = null;
+        Node right = null;
+        if (node != null){
+            val = String.valueOf(node.val);
+            left = node.left;
+            right = node.right;
+        }
+
+        if (level == 1) {
+            System.out.print("," + val);
+        }
+
+        printLevelNodes(left, level - 1);
+        printLevelNodes(right, level - 1);
     }
 
     public static void preOrder(Node node) {
