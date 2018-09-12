@@ -18,7 +18,7 @@ public class Tree2 {
     private static Queue<Node> queue = new LinkedBlockingQueue<>();
 
     public static void main(String[] args) {
-        int[] arr = {4,5,1,2,3,8,7};
+        int[] arr = {6,4,8,2,5,7,9,1,3};
         createLeftToRight(arr);
        // create(arr);
 //        find(arr[4], root);
@@ -42,6 +42,8 @@ public class Tree2 {
 
         // printLevelOrder(root);
         printLevelOrderLineWithQueue(root);
+        System.out.println("");
+        inOrderTraverseWithStack(root);
 
     }
 
@@ -155,20 +157,84 @@ public class Tree2 {
         if (node == null) {
             return;
         }
-        preOrder(node.left);
         System.out.print("," + node.val);
+        preOrder(node.left);
         preOrder(node.right);
-
     }
 
+    /**
+     * inOrder recursively
+     *
+     * @param node
+     */
     public static void inOrder(Node node) {
         if (node == null) {
             return;
         }
 
-        System.out.print("," + node.val);
         inOrder(node.left);
+        System.out.print("," + node.val);
         inOrder(node.right);
+    }
+
+    /**
+     *  inOrder with stack
+     *
+     *   * input:
+     *
+     *   ,6
+         ,4,8
+         ,2,5,7,9
+         ,1,3
+
+     *******************************
+     *
+     *   output:
+     *
+     *  ,1,2,3,4,5,6,7,8,9
+     *
+     *
+     * @param node
+     */
+    private static void inOrderTraverseWithStack(Node node) {
+        if (node == null) {
+            return;
+        }
+        stack.push(node);
+        Node curr = null;
+        boolean isLeft = true;
+        while (!stack.isEmpty()) {
+            curr = stack.peek();
+            if (isLeft && curr.left != null) {
+                stack.push(curr.left);
+            } else {
+                isLeft = false;
+                System.out.print(","+curr.val);
+                stack.pop();
+                if (curr.right != null) {
+                    stack.push(curr.right);
+                    isLeft = true;
+                }
+            }
+        }
+
+    }
+
+    /**
+     *
+     *
+     * http://liacs.leidenuniv.nl/~deutzah/DS/september28.pdf
+     * @param node
+     */
+    private static void inOrderTraverseWithoutStack(Node node) {
+        Node curr = node;
+        while (curr != null) {
+            if (curr.left != null) {
+                curr = curr.left;
+            } else {
+
+            }
+        }
     }
 
     public static void postOrder(Node node) {
@@ -247,6 +313,19 @@ public class Tree2 {
         }
     }
 
+    /**
+     *   * construct the tree:
+     *
+     *   ,5
+         ,3,8
+         ,2,4,7,9
+         ,1,6, , , , , ,
+
+     ***********************
+     * i++ is the important point
+
+     * @param node
+     */
     public static void insertLeftToRight(Node node, int val) {
         if (node == null) {
             node = new Node();
@@ -269,24 +348,6 @@ public class Tree2 {
                     tempNode.right = new Node();
                     tempNode.right.val = val;
                     return;
-                } else {
-                    queue.poll();
-//                    if (!queue.isEmpty()) {
-//                        Node tempNode2 = queue.peek();
-//                        if (tempNode2.left == null) {
-//                            tempNode2.left = new Node();
-//                            tempNode2.left.val = val;
-//                            return;
-//                        } else if (tempNode2.right == null) {
-//                            tempNode2.right = new Node();
-//                            tempNode2.right.val = val;
-//                            return;
-//                        } else {
-//                            queue.poll();
-//                            queue.poll();
-//                        }
-//                        i--;
-//                    }
                 }
             } else if (i < level - 1) {
 
@@ -296,8 +357,14 @@ public class Tree2 {
                 if (tempNode.right != null) {
                     queue.add(tempNode.right);
                 }
-                i++;
-
+                if (tempNode.left != null && tempNode.right != null) {
+                    queue.poll();
+                    if ((queue.size()) == (int)Math.pow(2, i+1) )  {
+                        i++;
+                    }
+                } else {
+                    i++;
+                }
             }
         }
     }

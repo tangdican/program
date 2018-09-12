@@ -1,9 +1,11 @@
 package com.github.tomdican.program.tree;
 
 import com.github.tomdican.program.Util;
+import java.sql.Statement;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Stack;
 
 /**
  * ** binary search tree
@@ -25,17 +27,76 @@ public class BinarySearchTree {
 
     private static Node root = null;
     private static Queue<Node> queue = new LinkedList<>();
+    private static Stack<Node> stack = new Stack<>();
+    private static Stack<Node> stack1 = new Stack<>();
 
     public static void main(String[] args) {
+        int[] arr1 = {9,5,7,4,3,8};
+        int[] arr2 = {1,2,6};
+        Node tree1 = createBST(arr1);
+        System.out.println("tree1:");
+        Tree2.printLevelOrder(tree1);
+
+        System.out.println("");
+
+        Node tree2 = createBST(arr2);
+        System.out.println("tree2:");
+        Tree2.printLevelOrder(tree2);
+
+
+        mergeBST(tree1, tree2);
+
         int[] arr = {9,1,5,7,2,4,3,6,8};
-        //insertWithMid(arr);
-        insertWithInorder2(arr);
-        inOrder(arr, 0, root);
-        Tree2.printLevelOrder(root);
+       // insertWithMid(arr);
+      //  insertWithInorder2(arr);
+     //   Tree2.printLevelOrder(root);
 //        createSumTree(root);
      //   convertToMinHeap(root);
-        reverseBSTPath(root);
-        Tree2.printLevelOrder(root);
+     //   reverseBSTPath(root);
+     //   Tree2.printLevelOrder(root);
+    }
+
+    private static void mergeBST(Node tree1, Node tree2) {
+        // get size1
+        int size1 = countSum(tree1);
+        // get size2
+        int size2 = countSum(tree2);
+
+        // construct the tree of size1 + size2
+        root = constructBalancedStructure3(size1+size2, root);
+
+        // inorder traverse and merge
+        inOrderMerge(root, tree1, tree2);
+
+    }
+
+    private static void inOrderMerge(Node root, Node tree1, Node tree2) {
+        stack.push(root);
+        if (tree1.val <= tree2.val) {
+            stack1.push(tree2);
+            stack1.push(tree1);
+        } else {
+            stack1.push(tree1);
+            stack1.push(tree2);
+        }
+
+        Node curr,curr1,curr2;
+        Node left = root;
+        while (left != null) {
+            stack.push(left);
+            if (left.left != null) {
+                left = left.left;
+            } else {
+                stack.pop();
+                while (!stack.isEmpty()) {
+                    curr = stack.pop();
+                    System.out.println(curr.val);
+                    if (curr.right != null) {
+                        stack.push(curr.right);
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -244,6 +305,7 @@ public class BinarySearchTree {
     private static void insertWithInorder2(int[] arr) {
         Arrays.sort(arr);
         constructBalancedStructure2(arr.length);
+        inOrder(arr, 0, root);
     }
 
     private static void constructBalancedStructure2(int size) {
@@ -254,8 +316,7 @@ public class BinarySearchTree {
             num -= levelNum;
             maxLevel++;
         }
-        root = constructBalancedStructure3(size, root);
-       // root = constructBalancedStructure2(size, maxLevel, root);
+        root = constructBalancedStructure2(size, maxLevel, root);
     }
 
     /**
@@ -284,6 +345,31 @@ public class BinarySearchTree {
 
 
     /**
+     * construct a balanced binary search tree
+     *
+     * @param arr
+     */
+    private static Node createBST(int[] arr) {
+        Arrays.sort(arr);
+        Node tree = null;
+        tree = constructBalancedStructure3(arr.length, tree);
+        inOrder(arr, 0, tree);
+        return tree;
+    }
+
+
+    /**
+     * construct a balanced binary search tree
+     *
+     * @param arr
+     */
+    private static void insertWithInorder3(int[] arr) {
+        Arrays.sort(arr);
+        root = constructBalancedStructure3(arr.length, root);
+        inOrder(arr, 0, root);
+    }
+
+    /**
      * consruct a balanced BST structure
      * by inorder
      *        6
@@ -298,7 +384,9 @@ public class BinarySearchTree {
         if (num <= 0) {
             return null;
         }
-        node = new Node();
+        if (node == null) {
+            node = new Node();
+        }
         node.left = constructBalancedStructure3(num / 2, node.left);
         node.right = constructBalancedStructure3(num - num/2 -1, node.right);
         return node;
