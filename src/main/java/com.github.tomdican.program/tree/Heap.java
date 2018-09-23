@@ -1,7 +1,7 @@
 package com.github.tomdican.program.tree;
 
 import com.github.tomdican.program.Util;
-import com.github.tomdican.program.interview.Permutation;
+import java.util.Arrays;
 
 /**
  *
@@ -20,14 +20,13 @@ public class Heap {
     static int len = 0;
 
     public static void main(String[] args) {
-        int arr[] = {2,3,5,1,4,8,10};
-        root = new int[arr.length];
+//        int arr[] = {2,3,5,1,4,8,10};
+//        root = new int[arr.length];
+//        createMinHeap(arr);
+//        System.out.println("create min heap:");
+//        Util.printArray(root);
 
-        createMinHeap(arr);
-        System.out.println("create min heap:");
-        Util.printArray(root);
-
-        int min = getMin();
+ //       int min = getMin();
 
 //        decreaseKey(1, len-1);
 //        System.out.println("extract min heap:");
@@ -38,11 +37,71 @@ public class Heap {
 //        Util.printArray(root, 0, len-1);
 
 
-        delete(4);
-        Util.printArray(root, 0, len-1);
-        
+//        delete(4);
+//        Util.printArray(root, 0, len-1);
+
+        /**********************************************************/
+
+        int arr[] = {12,3,5,1,14,8,10,13,2,4,6,9,7};
+        root = Arrays.copyOf(arr,arr.length);
+        len = arr.length;
+        heapSort3(root);
+        Util.printArray(root);
+
     }
 
+    /**
+     * input: 12,3,5,1,14,8,10,13,2,4,6,9,7
+     *
+     * output: 14,13,12,10,9,8,7,6,5,4,3,2,1,
+     *
+     *
+     * @param arr
+     */
+    private static void heapSort3(int[] arr) {
+        int lenl = len;
+        buildAllMinHeap();
+
+        for (int i = lenl-1; i >= 0; i--) {
+            int minVal = extractMin();
+            root[i] = minVal;
+            minHeap(0);
+        }
+    }
+
+    private static void buildAllMinHeap() {
+        for (int i = len - 1; i >= 0 ; i--) {
+            toTopMin(i);
+        }
+    }
+
+    private static void toTopMin(int par) {
+        int left = 2*par + 1;
+        int right = 2*par + 2;
+
+        while (left < len || right < len) {
+            int minLoc = par;
+
+            if (left < len && root[left] < root[minLoc]) {
+                minLoc = left;
+            }
+
+            if (right < len && root[right] < root[minLoc]) {
+                minLoc = right;
+            }
+
+            if (minLoc != par) {
+                Util.exchange(root,minLoc, par);
+                par = minLoc;
+                left = 2*par + 1;
+                right = 2*par + 2;
+            } else {
+                break;
+            }
+        }
+    }
+
+    /*****************************************************************/
     /**
      *
      * input:   2,3,5,1,4,8,10
@@ -133,7 +192,12 @@ public class Heap {
      *
      */
     private static void minHeap() {
-        int parentLoc = 0;
+       minHeap(0);
+    }
+
+    private static void minHeap(int i) {
+
+        int parentLoc = i;
         int leftLoc = 2*parentLoc + 1;
         int rightLoc = 2*parentLoc + 2;
         while (leftLoc < len || rightLoc < len) {
@@ -156,7 +220,6 @@ public class Heap {
             rightLoc = 2*parentLoc + 2;
         }
     }
-
 
     /**
      * output: 1
