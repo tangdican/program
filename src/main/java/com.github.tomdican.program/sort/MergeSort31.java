@@ -2,20 +2,24 @@ package com.github.tomdican.program.sort;
 
 import com.github.tomdican.program.Util;
 
-public class MergeSort3 {
+public class MergeSort31 {
     public static void main(String[] args) {
         int[] input = {10,123,111,22,13,23,21,21,227,912,2};
-        MergeSort3.sort(input, 0, input.length-1);
+        MergeSort31.sort(input, 0, input.length-1);
     }
 
     public static void sort(int[] input,int left, int right) {
         if ( left == right ) {
             return;
         }
-        int mid = (left + right)/2;
-        MergeSort3.sort(input, left, mid);
-        MergeSort3.sort(input, mid + 1, right);
-        MergeSort3.merge(input, left, mid, right);
+//        int mid = (left + right)/2;
+//        MergeSort31.sort(input, left, mid);
+//        MergeSort31.sort(input, mid + 1, right);
+
+        while (left != right) {
+            int mid = (left + right)/2;
+            MergeSort31.merge(input, left, mid, right);
+        }
 
         Util.printArray(input);
     }
