@@ -45,7 +45,7 @@ public class ParamInstance implements Runnable{
          }
     }
 
-    public void  set(List<String> strs) {
+    public void set(List<String> strs) {
         synchronized(this.ss) {
             this.ss = strs;
         }
