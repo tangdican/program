@@ -2,6 +2,7 @@ package com.github.tomdican.program.concurrency;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  *
@@ -154,6 +155,29 @@ public class ThreadBasic {
     }
 
 
+    /****
+     *
+     * For this simple class, synchronization is an acceptable solution.
+     * But for a more complicated class, we might want to avoid the liveness
+     * impact of unnecessary synchronization. Replacing the int field with
+     * an AtomicInteger allows us to prevent thread interference without
+     * resorting to synchronization, as in AtomicCounter:
+     *
+     */
+
+    private AtomicInteger aci = new AtomicInteger(0);
+
+    public void incrementAtomic() {
+        aci.incrementAndGet();
+    }
+
+    public void decrementAtomic() {
+        aci.decrementAndGet();
+    }
+
+    public int valueAtomic() {
+        return aci.get();
+    }
 
 //   using the synchronized keyword with a constructor is a syntax error
 //
