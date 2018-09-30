@@ -2,16 +2,50 @@ package com.github.tomdican.program.graph;
 
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Stack;
 
 public class Graph {
 
     public static void main(String[] args) {
         Vertex adj = createGraph();
         breathFirstSearch(adj,0);
-
-
+        depthFirstSearch(adj,0);
     }
 
+    /***
+     * output: ,0,4,3,2,1
+     *
+     * @param adj
+     * @param start
+     */
+    private static void depthFirstSearch(Vertex adj, int start) {
+        Stack<Integer> stack = new Stack<>();
+        boolean visited[] = new boolean[adj.V];
+        stack.push(start);
+        visited[start] = true;
+        while (!stack.isEmpty()) {
+            int s = stack.pop();
+            System.out.print(","+s);
+            LinkedList<Integer> links = adj.adjListArray[s];
+            Iterator<Integer> iterator = links.iterator();
+
+            while (iterator.hasNext()) {
+                int r = iterator.next();
+                if (!visited[r]) {
+                    stack.add(r);
+                    visited[r] = true;
+                }
+            }
+
+        }
+    }
+
+    /**
+     * output: ,0,1,4,2,3
+     *
+     * @param adj
+     * @param start
+     */
     private static void breathFirstSearch(Vertex adj,int start) {
         LinkedList<Integer> queue = new LinkedList<>();
         boolean visited[] = new boolean[adj.V];
@@ -34,6 +68,15 @@ public class Graph {
         System.out.println("");
     }
 
+    /**
+     *  vertex 0 :1,4,
+        vertex 1 :0,2,3,4,
+        vertex 2 :1,3,
+        vertex 3 :1,2,4,
+        vertex 4 :0,1,3,
+     *
+     * @return
+     */
     private static Vertex createGraph() {
         int V = 5;
         Vertex adj = new Vertex(V);
