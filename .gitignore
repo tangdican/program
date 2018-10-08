@@ -2,3 +2,6 @@ program.iml
 LICENSE
 .idea
 target
+.DS_Store
+src/.DS_Store
+src/doc
