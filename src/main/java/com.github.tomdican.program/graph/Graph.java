@@ -8,8 +8,69 @@ public class Graph {
 
     public static void main(String[] args) {
         Vertex adj = createGraph();
-        breathFirstSearch(adj,0);
-        depthFirstSearch(adj,0);
+      //  breathFirstSearch(adj,0);
+      //  depthFirstSearch(adj,0);
+
+//        int motherVertice = findMotherVertices(adj);
+//        System.out.println();
+//        System.out.println("mother vertice: "+motherVertice);
+
+
+    }
+
+    /**
+     * input:
+     *
+     *   vertex 0 :4,
+         vertex 1 :2,3,4,
+         vertex 2 :3,
+         vertex 3 :4,
+         vertex 4 :
+         ,0,4,1,3,2
+     ******************************
+     output:
+     mother vertice: 1
+     *
+     * @param adj
+     * @return
+     */
+    private static int findMotherVertices(Vertex adj) {
+        boolean visited[] = new boolean[adj.V];
+        int motherV = 0;
+        for (int i = 0; i < adj.V; i++) {
+            if (!visited[i]) {
+                DFSWithVisited(adj, i, visited);
+                motherV = i;
+            }
+        }
+        return motherV;
+    }
+
+    /****
+     * dfs with visited
+     * @param adj
+     * @param start
+     * @param visited
+     */
+    private static void DFSWithVisited(Vertex adj, int start, boolean[] visited) {
+        Stack<Integer> stack = new Stack<>();
+        stack.push(start);
+        visited[start] = true;
+        while (!stack.isEmpty()) {
+            int s = stack.pop();
+            System.out.print(","+s);
+            LinkedList<Integer> links = adj.adjListArray[s];
+            Iterator<Integer> iterator = links.iterator();
+
+            while (iterator.hasNext()) {
+                int r = iterator.next();
+                if (!visited[r]) {
+                    stack.add(r);
+                    visited[r] = true;
+                }
+            }
+
+        }
     }
 
     /***
@@ -80,6 +141,7 @@ public class Graph {
     private static Vertex createGraph() {
         int V = 5;
         Vertex adj = new Vertex(V);
+        // annotation the line when testing the findMotherVertices method
         addEdge(adj, 0, 1);
         addEdge(adj, 0, 4);
         addEdge(adj, 1, 2);
@@ -104,7 +166,7 @@ public class Graph {
 
     private static void addEdge(Vertex adj, int src, int desc) {
         adj.put(src, desc);
-        adj.put(desc, src);
+      //  adj.put(desc, src);
     }
 
 }
