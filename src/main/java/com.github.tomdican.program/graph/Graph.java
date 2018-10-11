@@ -16,6 +16,64 @@ public class Graph {
 //        System.out.println("mother vertice: "+motherVertice);
 
 
+        int pathNum = countPath(adj, 2, 3);
+        System.out.println();
+        System.out.println("path number: "+pathNum);
+    }
+
+    /**
+     *
+     * input:
+     *   vertex 0 :1,2,3,
+         vertex 1 :3,
+         vertex 2 :0,1,
+         vertex 3 :
+         vertex 4 :
+
+     ****************************
+     *
+         output:
+
+         ,2,1,3
+         ,0,3
+         ,1,3
+         path number: 3
+
+     *
+     *  source: https://www.geeksforgeeks.org/count-possible-paths-two-vertices/
+     *
+     * @param adj
+     * @param src
+     * @param desc
+     * @return
+     */
+    private static int countPath(Vertex adj, int src, int desc) {
+        Stack<Integer> stack = new Stack<>();
+        boolean[] visited = new boolean[adj.V];
+        stack.push(src);
+        visited[src] = true;
+        int pathNum = 0;
+        String prexPath = "";
+        while (!stack.isEmpty()) {
+            Integer v = stack.pop();
+            System.out.print(","+ v);
+            Iterator<Integer> iterator = adj.adjListArray[v].iterator();
+            while (iterator.hasNext()) {
+                Integer next = iterator.next();
+                if (!visited[next]) {
+                    if (next == desc) {
+                        pathNum++;
+                        visited[v] = false;
+                        System.out.println(","+ next);
+                    } else {
+                        stack.push(next);
+                        visited[next] = true;
+                    }
+
+                }
+            }
+        }
+        return pathNum;
     }
 
     /**
@@ -142,13 +200,21 @@ public class Graph {
         int V = 5;
         Vertex adj = new Vertex(V);
         // annotation the line when testing the findMotherVertices method
+//        addEdge(adj, 0, 1);
+//        addEdge(adj, 0, 4);
+//        addEdge(adj, 1, 2);
+//        addEdge(adj, 1, 3);
+//        addEdge(adj, 1, 4);
+//        addEdge(adj, 2, 3);
+//        addEdge(adj, 3, 4);
+
+        // count path
         addEdge(adj, 0, 1);
-        addEdge(adj, 0, 4);
-        addEdge(adj, 1, 2);
+        addEdge(adj, 0, 2);
+        addEdge(adj, 0, 3);
+        addEdge(adj, 2, 0);
+        addEdge(adj, 2, 1);
         addEdge(adj, 1, 3);
-        addEdge(adj, 1, 4);
-        addEdge(adj, 2, 3);
-        addEdge(adj, 3, 4);
 
         printGraph(adj,V);
         return adj;
