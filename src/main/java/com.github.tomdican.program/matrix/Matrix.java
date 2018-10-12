@@ -9,47 +9,104 @@ public class Matrix {
             {13,   11,   7,    8},
             {14,   15,   16,   12}};
 
+        printMatrix(matrix);
         rotateMatrix(matrix);
+        System.out.println("旋转后：");
+        printMatrix(matrix);
     }
 
+    private static void printMatrix(int[][] matrix) {
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++) {
+                System.out.print(","+matrix[i][j]);
+            }
+            System.out.println();
+        }
+    }
+
+    /***
+     *
+     * inpput:
+     *
+     *   ,5,1,2,3
+         ,9,10,6,4
+         ,13,11,7,8
+         ,14,15,16,12
+
+         旋转后：
+         ,9,5,1,2
+         ,13,11,10,3
+         ,14,7,6,4
+         ,15,16,12,8
+
+
+        source: https://www.geeksforgeeks.org/rotate-matrix-elements/
+     *
+     * @param matrix
+     */
     private static void rotateMatrix(int[][] matrix) {
         int startRowIndex = 0;
         int endRowIndex = matrix.length-1;
         int startColIndex = 0;
         int endColIndex = matrix[0].length-1;
 
-        int tempVal = 0;
-        // move top row
-        for (int i = startColIndex; i < endColIndex; i++) {
-            tempVal = matrix[startRowIndex][i+1];
-            matrix[startRowIndex][i+1] = matrix[startRowIndex][i];
-        }
-        int lastVal = tempVal;
+        while( startColIndex <= endColIndex && startRowIndex <= endRowIndex) {
+            int tempVal = 0;
+            int lastVal = 0;
 
-        // move end column
-        for (int i = startRowIndex; i < endRowIndex; i++) {
-            tempVal = matrix[i+1][endColIndex];
-            matrix[i+1][endColIndex] = matrix[i][endColIndex];
-        }
-        matrix[startRowIndex][endColIndex] = lastVal;
-        lastVal = tempVal;
+            // move top row
+            if (startColIndex < endColIndex ) {
+                for (int i = startColIndex; i < endColIndex; i++) {
+                    tempVal = matrix[startRowIndex][i];
+                    matrix[startRowIndex][i] = lastVal;
+                    lastVal = tempVal;
+                }
+                if (startRowIndex == endRowIndex) {
+                    tempVal = matrix[startRowIndex][endColIndex];
+                    matrix[startRowIndex][endColIndex] = lastVal;
+                    lastVal = tempVal;
+                }
+            }
 
-        // move bottom row
-        for (int i = endColIndex; i > startColIndex; i--) {
-            tempVal = matrix[endRowIndex][i-1];
-            matrix[endRowIndex][i-1] = matrix[endRowIndex][i];
-        }
-        matrix[startRowIndex][endColIndex] = lastVal;
-        lastVal = tempVal;
+            // move end column
+            if (startRowIndex < endRowIndex ) {
+                for (int i = startRowIndex; i < endRowIndex; i++) {
+                    tempVal = matrix[i][endColIndex];
+                    matrix[i][endColIndex] = lastVal;
+                    lastVal = tempVal;
+                }
 
-        // move start column
-        for (int i = endRowIndex; i > startRowIndex; i--) {
-            tempVal = matrix[i+1][endColIndex];
-            matrix[i+1][endColIndex] = matrix[i][endColIndex];
+                if (startColIndex == endColIndex ) {
+                    tempVal = matrix[endRowIndex][endColIndex];
+                    matrix[endRowIndex][endColIndex] = lastVal;
+                    lastVal = tempVal;
+                }
+            }
+
+            // move bottom row
+            if (startColIndex < endColIndex && startRowIndex < endRowIndex) {
+                for (int i = endColIndex; i > startColIndex; i--) {
+                    tempVal = matrix[endRowIndex][i];
+                    matrix[endRowIndex][i] = lastVal;
+                    lastVal = tempVal;
+                }
+            }
+
+            // move start column
+            if (startRowIndex < endRowIndex && startColIndex < endColIndex) {
+                for (int i = endRowIndex; i > startRowIndex; i--) {
+                    tempVal = matrix[i][startColIndex];
+                    matrix[i][startColIndex] = lastVal;
+                    lastVal = tempVal;
+                }
+            }
+
+            matrix[startRowIndex][startColIndex] = lastVal;
+
+            startColIndex++;
+            startRowIndex++;
+            endColIndex--;
+            endRowIndex--;
         }
-        matrix[startRowIndex][endColIndex] = lastVal;
-        lastVal = tempVal;
     }
-
-
 }
