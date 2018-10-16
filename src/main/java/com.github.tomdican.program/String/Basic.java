@@ -11,13 +11,47 @@ package com.github.tomdican.program.String;
 public class Basic {
 
     public static void main(String[] args) {
-        String str = "abccaccdcaddc";
-        String result = rearrangeAdjacentRepeat(str);
-        System.out.println(result);
-        if (result.length() > 1 && result.charAt(result.length()-1) == result.charAt(result.length()-2)) {
-            System.out.println("not rearrange!!");
+//        String str = "abccaccdcaddc";
+//        String result = rearrangeAdjacentRepeat(str);
+//        System.out.println(result);
+//        if (result.length() > 1 && result.charAt(result.length()-1) == result.charAt(result.length()-2)) {
+//            System.out.println("not rearrange!!");
+//
+//        }
 
+
+        String str1 = "abcc";
+        String str2 = "abccac";
+        String extraStr = findExtraStr(str1, str2);
+        System.out.println(extraStr);
+    }
+
+    /**
+     * input:
+     *  String str1 = "abcc";
+        String str2 = "abccac";
+
+        output: ac
+     *
+     * @param str1
+     * @param str2
+     * @return
+     */
+    private static String findExtraStr(String str1, String str2) {
+        int extra[] = new int[26];
+        for (int i = 0; i < str2.length(); i++) {
+            extra[str2.charAt(i)-'a']++;
         }
+        for (int i = 0; i < str1.length(); i++) {
+            extra[str1.charAt(i)-'a']--;
+        }
+        String result = "";
+        for (int i = 0; i < 26; i++) {
+            for (int j = 0; j < extra[i]; j++) {
+                result += (char)('a' + i);
+            }
+        }
+        return result;
     }
 
     /**
