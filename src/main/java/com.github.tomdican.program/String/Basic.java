@@ -20,10 +20,37 @@ public class Basic {
 //        }
 
 
-        String str1 = "abcc";
-        String str2 = "abccac";
-        String extraStr = findExtraStr(str1, str2);
-        System.out.println(extraStr);
+//        String str1 = "abcc";
+//        String str2 = "abccac";
+//        String extraStr = findExtraStr(str1, str2);
+//        System.out.println(extraStr);
+
+        // arthimetic operation in string
+        String str = "222222323";
+        int remainder = findRemainderBy11(str);
+        System.out.println("remainder when large number is divided by 11 :"+remainder);
+    }
+
+    /**
+     * find remainder when large number is divided by 11
+     *
+     * input: 222222323
+     * output: 4
+     *
+     * source: https://www.geeksforgeeks.org/program-find-remainder-large-number-divided-11
+     *
+     * @param str
+     * @return
+     */
+    private static int findRemainderBy11(String str) {
+        int remainder = 0;
+        int len = str.length();
+        for (int i = 0; i < len; i++) {
+            int divided = remainder * 10 + str.charAt(i) - '0';
+            remainder = divided % 11;
+        }
+
+        return remainder;
     }
 
     /**
