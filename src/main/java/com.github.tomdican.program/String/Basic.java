@@ -26,9 +26,21 @@ public class Basic {
 //        System.out.println(extraStr);
 
         // arthimetic operation in string
-        String str = "222222323";
-        int remainder = findRemainderBy11(str);
-        System.out.println("remainder when large number is divided by 11 :"+remainder);
+//        String str = "222222323";
+//        int remainder = findRemainderBy11(str);
+//        System.out.println("remainder when large number is divided by 11 :"+remainder);
+
+        // Character Counting
+        // Print all distinct characters of a string in order
+        String str = "Hello Geeks";
+        String distinctStr = findDistinctChar(str);
+    }
+
+    private static String findDistinctChar(String str) {
+       String result = "";
+
+
+       return result;
     }
 
     /**
