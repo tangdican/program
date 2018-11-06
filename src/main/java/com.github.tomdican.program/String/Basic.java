@@ -34,11 +34,35 @@ public class Basic {
         // Print all distinct characters of a string in order
         String str = "Hello Geeks";
         String distinctStr = findDistinctChar(str);
+        System.out.println(distinctStr);
     }
 
+    /**
+     * find all distinct characters
+     * input: Hello Geeks
+     * output: H,o,G,k,s,
+     *
+     * source: https://www.geeksforgeeks.org/print-all-distinct-characters-of-a-string-in-order-3-methods/
+     * @param str
+     * @return
+     */
     private static String findDistinctChar(String str) {
        String result = "";
 
+       int[] count = new int[256];
+
+        for (int i = 0; i < str.length(); i++) {
+            if (' '== str.charAt(i)) {
+                continue;
+            }
+            count[str.charAt(i)]++;
+        }
+
+        for (int i = 0; i < str.length(); i++) {
+            if (count[str.charAt(i)] == 1) {
+                result += str.charAt(i)+",";
+            }
+        }
 
        return result;
     }
