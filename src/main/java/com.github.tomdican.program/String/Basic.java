@@ -32,9 +32,60 @@ public class Basic {
 
         // Character Counting
         // Print all distinct characters of a string in order
-        String str = "Hello Geeks";
-        String distinctStr = findDistinctChar(str);
-        System.out.println(distinctStr);
+//        String str = "Hello Geeks";
+//        String distinctStr = findDistinctChar(str);
+//        System.out.println(distinctStr);
+
+        // subsequence and substring
+        // Count substrings with each character occurring at most k times
+        String str = "aaabb";
+        int subCount = findSubString(str, 2);
+        System.out.println("sum:"+subCount);
+    }
+
+    /**
+     *  count substrings character with occurring k times
+     *
+     * input: aaabb
+     *
+     * output:
+     *   ,a,a,a,b,b
+         ,aa,aa,ab,bb
+         ,aab,abb
+         ,aabb
+
+         sum:12
+     *
+     * source:  https://www.geeksforgeeks.org/count-substrings-character-occurring-k-times/
+     *
+     * @param str
+     * @param maxTimes
+     * @return
+     */
+    private static int findSubString(String str, int maxTimes) {
+        int len = str.length();
+        int sumSub = 0;
+        for (int j = 1; j <= len; j++) {
+
+            for (int k = 0; k <= len - j; k++) {
+                int[] count = new int[256];
+                String outStr = "";
+                for (int i = k; i < j+k && i < len; i++) {
+                    char c = str.charAt(i);
+                    outStr += c;
+                    if (++count[c] > maxTimes) {
+                        i = j;
+                        outStr="";
+                    }
+                }
+                if (!outStr.equals("")) {
+                    System.out.print(","+outStr);
+                    sumSub++;
+                }
+            }
+            System.out.println();
+        }
+        return sumSub;
     }
 
     /**
