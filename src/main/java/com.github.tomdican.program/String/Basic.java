@@ -1,5 +1,7 @@
 package com.github.tomdican.program.String;
 
+import sun.security.tools.jarsigner.TimestampedSigner;
+
 /**
  * Pangram: A pangram or holoalphabetic sentence is a sentence using every letter of a given alphabet at least once.
  * The best-known English pangram is “The quick brown fox jumps over the lazy dog.”
@@ -39,12 +41,41 @@ public class Basic {
         // subsequence and substring
         // Count substrings with each character occurring at most k times
         String str = "aaabb";
-        int subCount = findSubString(str, 2);
+        int subCount = countSubString(str, 2);
+        //int subCount = findSubString(str, 2);
         System.out.println("sum:"+subCount);
     }
 
     /**
+     * input: aaabb
+     * output: 12
+     *
+     * O(n)
+     *
+     * source:  https://www.geeksforgeeks.org/count-substrings-character-occurring-k-times/
+     *
+     * @param str
+     * @param maxTimes
+     * @return
+     */
+    private static int countSubString(String str, int maxTimes) {
+        int leftIndex = 0,rightIndex = 0;
+        int len = str.length();
+        int count[] = new int[256];
+        int sumSub = 0;
+        for (; rightIndex < len; rightIndex++) {
+            int times = ++count[str.charAt(rightIndex)];
+            while (times > maxTimes) {
+                --count[str.charAt(leftIndex++)];
+            }
+            sumSub += (rightIndex - leftIndex + 1);
+        }
+        return sumSub;
+    }
+
+    /**
      *  count substrings character with occurring k times
+     *  print the all substring
      *
      * input: aaabb
      *
