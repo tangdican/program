@@ -46,7 +46,7 @@ public class Basic {
 
         // reverse and rotation
         String str = "bababaa";
-        String result = reverse(str);
+        String result = reverse(str,2, str.length()-1);
         System.out.println("reverse string: "+ result);
     }
 
@@ -61,13 +61,13 @@ public class Basic {
      * @param str
      * @return
      */
-    private static String reverse(String str) {
-        int len = str.length();
+    private static String reverse(String str, int startIndex, int endIndex) {
+        int len = endIndex - startIndex + 1;
         char[] strchar = str.toCharArray();
-        for (int i = 0; i < len/2; i++) {
+        for (int i = startIndex; i < len/2 + startIndex; i++) {
             char temp = strchar[i];
-            strchar[i] = strchar[len-i-1];
-            strchar[len-i-1] = temp;
+            strchar[i] = strchar[len-i-1 + 2*startIndex];
+            strchar[len-i-1 + 2*startIndex] = temp;
         }
         return String.valueOf(strchar);
     }
