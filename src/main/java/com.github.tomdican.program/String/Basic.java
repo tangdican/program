@@ -46,8 +46,50 @@ public class Basic {
 
         // reverse and rotation
         String str = "bababaa";
-        String result = reverse(str,2, str.length()-1);
+        String result = reverse(str,0, str.length()-1);
         System.out.println("reverse string: "+ result);
+        String resultLeft = leftRotation(str, 2);
+        System.out.println("left rotation:" + resultLeft);
+        String resultRight = rightRotation(str, 2);
+        System.out.println("right rotation:" + resultRight);
+    }
+
+    /***
+     * left rotation
+     *
+     * input: bababaa
+     * output: babaaba
+     *
+     * source: https://www.geeksforgeeks.org/left-rotation-right-rotation-string-2/
+     *
+     * @param str
+     * @param steps
+     * @return
+     */
+    private static String leftRotation(String str, int steps) {
+        String result = str;
+        result = reverse(result, steps, str.length()-1);
+        result = reverse(result, 0, steps-1);
+        result = reverse(result, 0, str.length()-1);
+        return result;
+    }
+
+    /**
+     * right rotation
+     *
+     * input: bababaa
+     * output: aababab
+     *
+     * source: https://www.geeksforgeeks.org/left-rotation-right-rotation-string-2/
+     *
+     * @param str
+     * @param steps
+     * @return
+     */
+    private static String rightRotation(String str, int steps) {
+        String result = str;
+        result = leftRotation(result, str.length() - steps);
+        return result;
     }
 
     /**
