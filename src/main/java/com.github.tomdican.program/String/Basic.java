@@ -1,6 +1,5 @@
 package com.github.tomdican.program.String;
 
-import sun.security.tools.jarsigner.TimestampedSigner;
 
 /**
  * Pangram: A pangram or holoalphabetic sentence is a sentence using every letter of a given alphabet at least once.
@@ -40,10 +39,37 @@ public class Basic {
 
         // subsequence and substring
         // Count substrings with each character occurring at most k times
-        String str = "aaabb";
-        int subCount = countSubString(str, 2);
-        //int subCount = findSubString(str, 2);
-        System.out.println("sum:"+subCount);
+//        String str = "aaabb";
+//        int subCount = countSubString(str, 2);
+//        //int subCount = findSubString(str, 2);
+//        System.out.println("sum:"+subCount);
+
+        // reverse and rotation
+        String str = "bababaa";
+        String result = reverse(str);
+        System.out.println("reverse string: "+ result);
+    }
+
+    /**
+     * reverse string
+     *
+     * input: bababaa
+     * output: aababab
+     *
+     * source: https://www.geeksforgeeks.org/program-reverse-string-iterative-recursive/
+     *
+     * @param str
+     * @return
+     */
+    private static String reverse(String str) {
+        int len = str.length();
+        char[] strchar = str.toCharArray();
+        for (int i = 0; i < len/2; i++) {
+            char temp = strchar[i];
+            strchar[i] = strchar[len-i-1];
+            strchar[len-i-1] = temp;
+        }
+        return String.valueOf(strchar);
     }
 
     /**
