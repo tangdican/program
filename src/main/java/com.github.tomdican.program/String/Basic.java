@@ -1,6 +1,8 @@
 package com.github.tomdican.program.String;
 
 
+import java.util.SortedMap;
+
 /**
  * Pangram: A pangram or holoalphabetic sentence is a sentence using every letter of a given alphabet at least once.
  * The best-known English pangram is “The quick brown fox jumps over the lazy dog.”
@@ -45,13 +47,28 @@ public class Basic {
 //        System.out.println("sum:"+subCount);
 
         // reverse and rotation
-        String str = "bababaa";
-        String result = reverse(str,0, str.length()-1);
-        System.out.println("reverse string: "+ result);
-        String resultLeft = leftRotation(str, 2);
-        System.out.println("left rotation:" + resultLeft);
-        String resultRight = rightRotation(str, 2);
-        System.out.println("right rotation:" + resultRight);
+//        String str = "bababaa";
+//        String result = reverse(str,0, str.length()-1);
+//        System.out.println("reverse string: "+ result);
+//        String resultLeft = leftRotation(str, 2);
+//        System.out.println("left rotation:" + resultLeft);
+//        String resultRight = rightRotation(str, 2);
+//        System.out.println("right rotation:" + resultRight);
+
+        // sorting and search
+        String[] str = {"ccd","bbc","cac","aac","cbc","bcb"};
+        sortByTrie(str);
+    }
+
+    private static void sortByTrie(String[] str) {
+
+
+    }
+
+    class Trie {
+        int size = 26*2;
+        int index;
+        Trie[] child = null;
     }
 
     /***
