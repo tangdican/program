@@ -61,14 +61,40 @@ public class Basic {
     }
 
     private static void sortByTrie(String[] str) {
+        Trie trie = new Trie();
+        int len = str.length;
+        for (int i = 0; i < len; i++) {
+            String strElement = str[i];
+            int strLen = strElement.length();
+            trie.sort(strElement, strLen);
+        }
 
 
     }
 
-    class Trie {
+    static class Trie {
         int size = 26*2;
         int index;
         Trie[] child = null;
+        public void sort(String element, int len) {
+            Trie next = this;
+            for (int i = 0; i < len; i++) {
+                if (next.child == null) {
+                    next.child = new Trie[size];
+                }
+                int index = getIndex(element.charAt(i));
+                next.child[index].index++;
+                next = next.child[index];
+            }
+        }
+
+        private int getIndex(char c) {
+            if (c >= 'A') {
+                return 26 + c - 'A';
+            } else {
+                return c - 'a';
+            }
+        }
     }
 
     /***
