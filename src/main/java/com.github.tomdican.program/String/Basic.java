@@ -56,8 +56,33 @@ public class Basic {
 //        System.out.println("right rotation:" + resultRight);
 
         // sorting and search
-        String[] str = {"a","bbc","aa","aac","cbc","bcb"};
-        sortByTrie(str);
+//        String[] str = {"a","bbc","aa","aac","cbc","bcb"};
+//        sortByTrie(str);
+
+        // toggle case char
+        String str = "aBCxF";
+        String result = toggleCase(str);
+        System.out.println(result);
+    }
+
+    /**
+     * Toggle case of a string using Bitwise Operators
+     *
+     * input: aBCxF
+     * output: AbcXf
+     *
+     * source: https://www.geeksforgeeks.org/toggle-case-string-using-bitwise-operators/
+     *
+     * @param str
+     * @return
+     */
+    private static String toggleCase(String str) {
+        char s[] = str.toCharArray();
+        int caseDigit = 'a' - 'A';
+        for (int i = 0; i < s.length; i++) {
+            s[i] = (char)(caseDigit ^ s[i]);
+        }
+        return String.valueOf(s);
     }
 
     /**
