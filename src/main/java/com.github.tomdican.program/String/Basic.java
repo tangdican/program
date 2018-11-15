@@ -56,43 +56,77 @@ public class Basic {
 //        System.out.println("right rotation:" + resultRight);
 
         // sorting and search
-        String[] str = {"ccd","bbc","cac","aac","cbc","bcb"};
+        String[] str = {"a","bbc","aa","aac","cbc","bcb"};
         sortByTrie(str);
     }
 
+    /**
+     *
+     * Sorting array of strings (or words) using Trie
+     *
+     * input: "a","bbc","aa","aac","cbc","bcb"
+     * output: a, aa, aac, bbc, bcb, cbc,
+     *
+     * source: https://www.geeksforgeeks.org/sorting-array-strings-words-using-trie/
+     *
+     * @param str
+     */
     private static void sortByTrie(String[] str) {
         Trie trie = new Trie();
         int len = str.length;
         for (int i = 0; i < len; i++) {
             String strElement = str[i];
             int strLen = strElement.length();
-            trie.sort(strElement, strLen);
+            trie.sort(strElement, strLen, i);
         }
 
-
+       trie.printOrderString(str);
     }
 
     static class Trie {
         int size = 26*2;
-        int index;
+        int index = -1;
+        int count = 0;
         Trie[] child = null;
-        public void sort(String element, int len) {
+
+        public void sort(String element, int len, int loc) {
             Trie next = this;
             for (int i = 0; i < len; i++) {
                 if (next.child == null) {
                     next.child = new Trie[size];
                 }
                 int index = getIndex(element.charAt(i));
-                next.child[index].index++;
+                //next.child[index].index++;
+                if (next.child[index] == null) {
+                    next.child[index] = new Trie();
+                }
                 next = next.child[index];
             }
+            next.index = loc;
+            next.count++;
+        }
+
+        public void printOrderString(String[] str) {
+                if (index != -1) {
+                    for (int i = 0; i < count; i++) {
+                        System.out.print(str[index]+", ");
+                    }
+                }
+                if (child != null) {
+                    for (int i = 0; i < size; i++) {
+                        if (child[i] != null) {
+                            child[i].printOrderString(str);
+                        }
+                    }
+                }
+
         }
 
         private int getIndex(char c) {
-            if (c >= 'A') {
-                return 26 + c - 'A';
+            if (c >= 'a') {
+                return 26 + c - 'a';
             } else {
-                return c - 'a';
+                return c - 'A';
             }
         }
     }
