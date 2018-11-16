@@ -59,10 +59,71 @@ public class Basic {
 //        String[] str = {"a","bbc","aa","aac","cbc","bcb"};
 //        sortByTrie(str);
 
-        // toggle case char
-        String str = "aBCxF";
-        String result = toggleCase(str);
+        // Case Sensitive String
+//        String str = "aBCxF";
+//        String result = toggleCase(str);
+//        System.out.println(result);
+
+        // Occurrence Based String
+        String str = "GeeksQuikzG";
+        char result = findFirstNonRepeatChar(str);
         System.out.println(result);
+
+    }
+
+    /**
+     * Given a string, find its first non-repeating character
+     *
+     * input: GeeksQuikzG
+     * output: s
+     *
+     * source: https://www.geeksforgeeks.org/given-a-string-find-its-first-non-repeating-character/
+     *
+     * @param str
+     * @return
+     */
+    private static char findFirstNonRepeatChar(String str) {
+        int result = 0;
+        int len = str.length();
+        Count[] counts = new Count[Count.maxSize];
+        // mark and count
+        for (int i = 0; i < len; i++) {
+            int index = Count.getIndex(str.charAt(i));
+            if (counts[index] == null) {
+                counts[index] = new Count(1, i);
+            } else {
+                counts[index].count++;
+            }
+        }
+
+        // find first non repeat char
+        int minLoc = counts.length;
+        for (int i = 0; i < counts.length; i++) {
+            if (counts[i] != null && counts[i].count == 1 && counts[i].index < minLoc) {
+                minLoc = counts[i].index;
+            }
+        }
+        result = str.charAt(minLoc);
+        return (char)result;
+    }
+
+    static class Count {
+        int count;
+        int index;
+        static final int maxSize = 2*26;
+
+        public Count(int count, int index) {
+            this.count = count;
+            this.index = index;
+        }
+
+        public static int getIndex(char c) {
+            if (c >= 'a') {
+                return 26 + c - 'a';
+            } else {
+                return c - 'A';
+            }
+        }
     }
 
     /**
