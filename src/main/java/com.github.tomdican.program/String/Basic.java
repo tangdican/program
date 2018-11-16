@@ -65,16 +65,46 @@ public class Basic {
 //        System.out.println(result);
 
         // Occurrence Based String
-        String str = "GeeksQuikzG";
+        String str = "geeksquikzg";
         char result = findFirstNonRepeatChar(str);
+        result = findFirstRepeatChar(str);
         System.out.println(result);
 
+    }
+
+    /***
+     * find first repeated character in a string
+     * use bits to store
+     *
+     * input: geeksquikzg
+     * output: e
+     *
+     * source : https://www.geeksforgeeks.org/efficiently-find-first-repeated-character-string-without-using-additional-data-structure-one-traversal/
+     *
+     * @param str
+     * @return
+     */
+    private static char findFirstRepeatChar(String str) {
+        int charBit = 0;
+        int len = str.length();
+        int result = 0;
+        for (int i = 0; i < len; i++) {
+            int mvBits = str.charAt(i) - 'a';
+            int oneBit = (1 << mvBits);
+            if ((charBit & oneBit) > 0) {
+                result = str.charAt(i);
+                i = len;
+            } else {
+                charBit |= oneBit;
+            }
+        }
+        return (char)result;
     }
 
     /**
      * Given a string, find its first non-repeating character
      *
-     * input: GeeksQuikzG
+     * input: geeksquikzg
      * output: s
      *
      * source: https://www.geeksforgeeks.org/given-a-string-find-its-first-non-repeating-character/
