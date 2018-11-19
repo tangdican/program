@@ -65,12 +65,103 @@ public class Basic {
 //        System.out.println(result);
 
         // Occurrence Based String
-        String str = "geeksquikzg";
-        char result = findFirstNonRepeatChar(str);
-        result = findFirstRepeatChar(str);
-        System.out.println(result);
+//        String str = "geeksquikzg";
+//        char result = findFirstNonRepeatChar(str);
+//        result = findFirstRepeatChar(str);
+//        System.out.println(result);
+
+        // Anagram
+        String[] str = {"listen","abc","silent","cba","ww","a"};
+        findAnagram(str);
 
     }
+
+    /***
+     * Given a sequence of words, print all anagrams together
+     *
+     * input: "listen","abc","silent","cba","ww","a"
+     * output: abc, cba, listen, silent,
+     *
+     *  source: https://www.geeksforgeeks.org/given-a-sequence-of-words-print-all-anagrams-together-set-2/
+     *
+     * @param str
+     */
+    private static void findAnagram(String[] str) {
+        int len = str.length;
+        String[] newStr = new String[str.length];
+        for (int i = 0; i < len; i++) {
+            int[] count = new int[256];
+            for (int j = 0; j < str[i].length(); j++) {
+                count[str[i].charAt(j)]++;
+            }
+            newStr[i] = "";
+            for (int j = 0; j < count.length; j++) {
+                for (int k = 0; k < count[j]; k++) {
+                    newStr[i] += (char)j;
+                }
+            }
+        }
+
+        Tries tries = new Tries();
+        for (int i = 0; i < newStr.length; i++) {
+            tries.sort(newStr[i], newStr[i].length(), i);
+        }
+        tries.printOrderString(str);
+    }
+
+    static class Tries {
+        int size = 26*2;
+        // the max repeat times of string
+        int index[] = new int[10];
+        Tries[] child = null;
+
+        public void sort(String element, int len, int loc) {
+            Tries next = this;
+            for (int i = 0; i < len; i++) {
+                if (next.child == null) {
+                    next.child = new Tries[size];
+                }
+                int index = getIndex(element.charAt(i));
+                //next.child[index].index++;
+                if (next.child[index] == null) {
+                    next.child[index] = new Tries();
+                }
+                next = next.child[index];
+            }
+
+            for (int i = 0; i < next.index.length; i++) {
+                if (next.index[i] == 0 ) {
+                    next.index[i] = loc + 1; // in order for setting 0 to empty
+                    i = next.index.length;
+                }
+            }
+        }
+
+        public void printOrderString(String[] str) {
+            if (index[1] != 0) { // only print anagram
+                for (int i = 0;i < index.length && index[i] > 0; i++) {
+                    System.out.print(str[index[i]-1]+", ");
+                }
+            }
+            if (child != null) {
+                for (int i = 0; i < size; i++) {
+                    if (child[i] != null) {
+                        child[i].printOrderString(str);
+                    }
+                }
+            }
+
+        }
+
+        private int getIndex(char c) {
+            if (c >= 'a') {
+                return 26 + c - 'a';
+            } else {
+                return c - 'A';
+            }
+        }
+    }
+
 
     /***
      * find first repeated character in a string
