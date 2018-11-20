@@ -71,9 +71,29 @@ public class Basic {
 //        System.out.println(result);
 
         // Anagram
-        String[] str = {"listen","abc","silent","cba","ww","a"};
-        findAnagram(str);
+//        String[] str = {"listen","abc","silent","cba","ww","a"};
+//        findAnagram(str);
 
+        // Palindromic
+        String str = "abcca";
+        int count = countPalindromic(str, 0, str.length() - 1);
+        System.out.println("sub Palindromic sum: "+ count);
+
+    }
+
+    // not right
+    private static int countPalindromic(String str,int i, int j) {
+        if ( i > j) {
+            return 0;
+        }
+
+        if (i == j) {
+            return 1;
+        } else if (str.charAt(i) == str.charAt(j)) {
+            return countPalindromic(str, i+1,j) + countPalindromic(str, i,j-1) - countPalindromic(str, i+1, j-1) + 1;
+        } else {
+            return countPalindromic(str, i+1,j) + countPalindromic(str, i,j-1) - countPalindromic(str, i+1, j-1);
+        }
     }
 
     /***
