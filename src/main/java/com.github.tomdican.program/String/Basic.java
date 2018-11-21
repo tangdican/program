@@ -75,25 +75,39 @@ public class Basic {
 //        findAnagram(str);
 
         // Palindromic
-        String str = "abcca";
-        int count = countPalindromic(str, 0, str.length() - 1);
+        // A string is said to be palindrome if reverse of the string is same as string
+        String str = "cbccbc";
+        int count = countPalindromic(str);
         System.out.println("sub Palindromic sum: "+ count);
 
     }
 
-    // not right
-    private static int countPalindromic(String str,int i, int j) {
-        if ( i > j) {
-            return 0;
-        }
+    /**
+     * Count the number of possible palindrome substrings in a string
+     *
+     * input: cbccbc
+     * output: 11
+     *
+     * source: https://leetcode.com/discuss/interview-question/125095/count-palindromes
+     *
+     * @param str
+     * @return
+     */
+    private static int countPalindromic(String str) {
+        int count = 0;
+        int len = str.length();
+        for (int mid = 0; mid < len; mid++) {
+            // substring of the odd length
+            for (int j = 0; mid >= j && mid < len - j && str.charAt(mid - j) == str.charAt(mid + j); j++) {
+                count++;
+            }
+            // substring of the even length
+            for (int j = 1; mid >= j - 1 && mid < len - j && str.charAt(mid - j + 1) == str.charAt(mid + j); j++) {
+                count++;
+            }
 
-        if (i == j) {
-            return 1;
-        } else if (str.charAt(i) == str.charAt(j)) {
-            return countPalindromic(str, i+1,j) + countPalindromic(str, i,j-1) - countPalindromic(str, i+1, j-1) + 1;
-        } else {
-            return countPalindromic(str, i+1,j) + countPalindromic(str, i,j-1) - countPalindromic(str, i+1, j-1);
         }
+        return count;
     }
 
     /***
