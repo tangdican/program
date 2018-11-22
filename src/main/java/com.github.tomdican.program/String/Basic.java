@@ -76,16 +76,19 @@ public class Basic {
 
         // Palindromic
         // A string is said to be palindrome if reverse of the string is same as string
-        String str = "cbccbc";
-        int count = countPalindromic(str);
-        System.out.println("sub Palindromic sum: "+ count);
+//        String str = "cbccbc";
+//        int count = countPalindromic(str);
+//        System.out.println("sub Palindromic sum: "+ count);
+
+
 
     }
 
     /**
      * Count the number of possible palindrome substrings in a string
-     *
      * input: cbccbc
+     *
+     * output:  c,b,cbc,c,cc,bccb,cbccbc,c,b,cbc,c,
      * output: 11
      *
      * source: https://leetcode.com/discuss/interview-question/125095/count-palindromes
@@ -100,13 +103,15 @@ public class Basic {
             // substring of the odd length
             for (int j = 0; mid >= j && mid < len - j && str.charAt(mid - j) == str.charAt(mid + j); j++) {
                 count++;
+                System.out.print(str.substring(mid-j, mid+j+1) + ",");
             }
             // substring of the even length
             for (int j = 1; mid >= j - 1 && mid < len - j && str.charAt(mid - j + 1) == str.charAt(mid + j); j++) {
                 count++;
+                System.out.print(str.substring(mid-j+1, mid+j+1) + ",");
             }
-
         }
+        System.out.println("");
         return count;
     }
 
