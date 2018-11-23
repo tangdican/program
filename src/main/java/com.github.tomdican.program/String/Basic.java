@@ -1,7 +1,8 @@
 package com.github.tomdican.program.String;
 
 
-import java.util.SortedMap;
+import com.github.tomdican.program.Util;
+import java.util.Stack;
 
 /**
  * Pangram: A pangram or holoalphabetic sentence is a sentence using every letter of a given alphabet at least once.
@@ -81,11 +82,74 @@ public class Basic {
 //        System.out.println("sub Palindromic sum: "+ count);
 
         // binary string
-        String binaryStr = "0000";
-        //String result = twoComplement(binaryStr);
-        String result = twoComplementEfficency(binaryStr);
-        System.out.println(result);
+//        String binaryStr = "0000";
+//        //String result = twoComplement(binaryStr);
+//        String result = twoComplementEfficency(binaryStr);
+//        System.out.println(result);
 
+        // Lexicographic pattern
+        String str = "abcd";
+        //int count = countPowerSet(str);
+        //int count = countPermutationsLoop(str);
+        int count = countPermutationsRec(str.toCharArray(), 0, str.length()-1);
+        System.out.println("");
+        System.out.println(count);
+
+    }
+
+    /**
+     * print all permutations of a given string
+     * recursively
+     *
+     * input: abcd
+     * output: abcd,abdc,acbd,acdb,adcb,adbc,bacd,badc,bcad,bcda,bdca,bdac,
+     * cbad,cbda,cabd,cadb,cdab,cdba,dbca,dbac,dcba,dcab,dacb,dabc,
+     *
+     * 24
+     *
+     *
+     * source: https://www.geeksforgeeks.org/write-a-c-program-to-print-all-permutations-of-a-given-string/
+     *
+     * @param strs
+     * @return
+     */
+    private static int countPermutationsRec(char[] strs, int l, int r) {
+        if ( l == r) {
+            System.out.print(String.valueOf(strs)+",");
+            return 1;
+        } else {
+            int count = 0;
+            for (int i = l; i <= r; i++) {
+                Util.exchange(strs, l, i);
+                count += countPermutationsRec(strs, l + 1, r);
+                Util.exchange(strs, l, i);
+            }
+            return count;
+        }
+    }
+
+
+    /**
+     *
+     *
+     * @param str
+     * @return
+     */
+    private static int countPermutationsLoop(String str) {
+        char[] strs = str.toCharArray();
+        Stack<char[]> stack = new Stack<>();
+        int len = str.length();
+        for (int i = 0; i < len; i++) {
+            for (int j = i; j < len; j++) {
+
+            }
+        }
+        return 0;
+    }
+
+    private static int countPowerSet(String str) {
+
+        return 0;
     }
 
     /**
@@ -94,6 +158,8 @@ public class Basic {
      *
      * input: "0000"
      * output: "10000"
+     *
+     * source: https://www.geeksforgeeks.org/efficient-method-2s-complement-binary-string/
      *
      * @param binaryStr
      * @return

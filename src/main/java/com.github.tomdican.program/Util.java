@@ -34,6 +34,12 @@ public class Util {
         a[j] = temp;
     }
 
+    public static void exchange(char[] a, int i ,int j) {
+        char temp = a[i];
+        a[i] = a[j];
+        a[j] = temp;
+    }
+
     public static void exchange(int i , int j) {
         int temp = i;
         i = j;
