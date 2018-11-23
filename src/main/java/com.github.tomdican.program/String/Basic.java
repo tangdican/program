@@ -80,8 +80,80 @@ public class Basic {
 //        int count = countPalindromic(str);
 //        System.out.println("sub Palindromic sum: "+ count);
 
+        // binary string
+        String binaryStr = "0000";
+        //String result = twoComplement(binaryStr);
+        String result = twoComplementEfficency(binaryStr);
+        System.out.println(result);
 
+    }
 
+    /**
+     * 2’s complement of a binary string
+     * efficency
+     *
+     * input: "0000"
+     * output: "10000"
+     *
+     * @param binaryStr
+     * @return
+     */
+    private static String twoComplementEfficency(String binaryStr) {
+        char[] strs = binaryStr.toCharArray();
+        int len = binaryStr.length();
+        boolean firstOne = false;
+        for (int i = len - 1; i >= 0 ; i--) {
+                if (firstOne) {
+                    if (strs[i] == '1') {
+                        strs[i] = '0';
+                    } else if (strs[i] == '0') {
+                        strs[i] = '1';
+                    }
+                } else {
+                    if (strs[i] == '1') {
+                        firstOne = true;
+                    }
+                }
+        }
+        return (firstOne ? "": "1") + String.valueOf(strs);
+    }
+
+    /***
+     * 2’s complement of a binary string
+     *
+     * input: 0000
+     * output: 10000
+     *
+     * source: https://www.geeksforgeeks.org/1s-2s-complement-binary-number/
+     *
+     * @param binaryStr
+     * @return
+     */
+    private static String twoComplement(String binaryStr) {
+        // 1's complement
+        char[] strs = binaryStr.toCharArray();
+        for (int i = 0; i < strs.length; i++) {
+            if (strs[i] == '1') {
+                strs[i] = '0';
+            } else if (strs[i] == '0') {
+                strs[i] = '1';
+            }
+        }
+
+        // 2's complement
+        boolean upOne = false;
+        for (int i = strs.length - 1; i >= 0; i--) {
+            if (strs[i] == '1') {
+                strs[i] = '0';
+                upOne = true;
+            } else if (strs[i] == '0'){
+                strs[i] = '1';
+                upOne = false;
+                break;
+            }
+        }
+
+        return (upOne ? "1" : "") + String.valueOf(strs);
     }
 
     /**
