@@ -5,6 +5,9 @@ import com.github.tomdican.program.Util;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Stack;
 
 public class Permutation {
     public static void main(String[] args) {
@@ -65,6 +68,8 @@ public class Permutation {
     /**
      * print all permutations
      *
+     * store in arrayList
+     *
      * loop
      */
     public static void permutation(int[] a ) {
@@ -96,6 +101,44 @@ public class Permutation {
         }
 
     }
+
+    /**
+     * print all permutations
+     *
+     * store in queue
+     *
+     * loop
+     *
+     * @param a
+     * @return
+     */
+    public static int countPermutationStack(char[] a) {
+        Queue<char[]> queue = new LinkedList<>();
+        int len = a.length;
+        queue.add(a);
+        int count = 0;
+        for (int k = 0; k < len - 1; k++) {
+            int mark = count == 0 ? 1 : count;
+            count=0;
+            while (!queue.isEmpty() && mark-- > 0) {
+                char[] temp = queue.poll();
+                for (int i = k; i < len; i++) {
+                    Util.exchange(temp, k, i);
+                    queue.add(Arrays.copyOf(temp,len));
+                    // print all
+                    if (k == len - 2) {
+                        Util.printArray(temp);
+                    }
+
+                    Util.exchange(temp, k, i);
+                    count++;
+                }
+            }
+        }
+
+        return count;
+    }
+
 
     /**
      * the sum of all permutations

@@ -46,4 +46,12 @@ public class Util {
         j = temp;
     }
 
+    public static void printArray(char[] a) {
+        int begin = 0;
+        int end = a.length - 1;
+        for (int i = begin; i <= end; i++) {
+            Util.print(a[i]+",");
+        }
+        Util.print(" | ");
+    }
 }

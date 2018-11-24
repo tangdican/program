@@ -2,6 +2,7 @@ package com.github.tomdican.program.String;
 
 
 import com.github.tomdican.program.Util;
+import com.github.tomdican.program.interview.Permutation;
 import java.util.Stack;
 
 /**
@@ -90,8 +91,8 @@ public class Basic {
         // Lexicographic pattern
         String str = "abcd";
         //int count = countPowerSet(str);
-        //int count = countPermutationsLoop(str);
-        int count = countPermutationsRec(str.toCharArray(), 0, str.length()-1);
+        int count = countPermutationsLoop(str);
+       // int count = countPermutationsRec(str.toCharArray(), 0, str.length()-1);
         System.out.println("");
         System.out.println(count);
 
@@ -136,15 +137,7 @@ public class Basic {
      * @return
      */
     private static int countPermutationsLoop(String str) {
-        char[] strs = str.toCharArray();
-        Stack<char[]> stack = new Stack<>();
-        int len = str.length();
-        for (int i = 0; i < len; i++) {
-            for (int j = i; j < len; j++) {
-
-            }
-        }
-        return 0;
+      return Permutation.countPermutationStack(str.toCharArray());
     }
 
     private static int countPowerSet(String str) {
