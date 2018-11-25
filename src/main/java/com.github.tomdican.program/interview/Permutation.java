@@ -11,17 +11,23 @@ import java.util.Stack;
 
 public class Permutation {
     public static void main(String[] args) {
-        int[] a = {5,4,3,1};
+//        int[] a = {5,4,3,1};
+//
+//        Util.println("permutation recursive:");
+//        permutation(a,0,a.length);
+//
+//        sumPermutation(a,a.length,1);
+//        int sum = sumPermutaion(a.length);
+//        Util.println("sum2 : "+sum);
+//
+//        Util.println("permutation loop:");
+//        permutation(a);
 
-        Util.println("permutation recursive:");
-        permutation(a,0,a.length);
+        String str = "abcc";
+        int count = permutationWithRepeat(str.toCharArray(),0,str.length());
+        System.out.println(count);
 
-        sumPermutation(a,a.length,1);
-        int sum = sumPermutaion(a.length);
-        Util.println("sum2 : "+sum);
 
-        Util.println("permutation loop:");
-        permutation(a);
     }
 
     /** *******************************
@@ -124,7 +130,7 @@ public class Permutation {
                 char[] temp = queue.poll();
                 for (int i = k; i < len; i++) {
                     Util.exchange(temp, k, i);
-                    queue.add(Arrays.copyOf(temp,len));
+                    queue.add(Arrays.copyOf(temp, len));
                     // print all
                     if (k == len - 2) {
                         Util.printArray(temp);
@@ -136,6 +142,32 @@ public class Permutation {
             }
         }
 
+        return count;
+    }
+
+    /**
+     * print all permutations with the repeat char
+     *
+     *
+     * @param a
+     * @return
+     */
+    public static int permutationWithRepeat(char[] a, int start, int len) {
+        int count = 0;
+        if(start == (len - 1)) {
+            Util.printArray(a);
+            return 1;
+        }
+
+        for (int i = start; i < a.length; i++) {
+            // void the repeat char
+            if (i != start && (a[i] == a[start] || a[i-1] == a[i])) {
+                continue;
+            }
+            Util.exchange(a,start,i);
+            count += permutationWithRepeat(a,start+1,len);
+            Util.exchange(a,start,i);
+        }
         return count;
     }
 

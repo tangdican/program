@@ -89,13 +89,49 @@ public class Basic {
 //        System.out.println(result);
 
         // Lexicographic pattern
-        String str = "abcd";
+        String str = "aabc";
         //int count = countPowerSet(str);
-        int count = countPermutationsLoop(str);
-       // int count = countPermutationsRec(str.toCharArray(), 0, str.length()-1);
+        //int count = countPermutationsLoop(str);
+        //int count = countPermutationsRec(str.toCharArray(), 0, str.length()-1);
+        int count = countPermutationsRecWithRepeat(str.toCharArray(), 0, str.length()-1);
         System.out.println("");
         System.out.println(count);
 
+    }
+
+    /**
+     * print all permutations of a given string
+     * avoid the repeat char
+     *
+     * input: abbc
+     *
+     * output: abbc,abcb,acbb,babc,bacb,bbac,bbca,bcba,bcab,cbba,cbab,cabb,
+     *
+     * 12
+     *
+     *
+     * @param strs
+     * @param l
+     * @param r
+     * @return
+     */
+    private static int countPermutationsRecWithRepeat(char[] strs, int l, int r) {
+        if ( l == r) {
+            System.out.print(String.valueOf(strs)+",");
+            return 1;
+        } else {
+            int count = 0;
+            for (int i = l; i <= r; i++) {
+                // void the repeat char
+                if (i != l && (strs[i] == strs[l] || strs[i-1] == strs[i])) {
+                    continue;
+                }
+                Util.exchange(strs, l, i);
+                count += countPermutationsRecWithRepeat(strs, l + 1, r);
+                Util.exchange(strs, l, i);
+            }
+            return count;
+        }
     }
 
     /**
@@ -131,7 +167,18 @@ public class Basic {
 
 
     /**
+     * print all permutations
      *
+     * store in queue
+     *
+     * loop
+     *
+     * inpput: abcd
+     *
+     * output: a,b,c,d, | a,b,d,c, | a,c,b,d, | a,c,d,b, | a,d,c,b, | a,d,b,c, | b,a,c,d, | b,a,d,c, | b,c,a,d, | b,c,d,a, | b,d,c,a, | b,d,a,c,
+     * | c,b,a,d, | c,b,d,a, | c,a,b,d, | c,a,d,b, | c,d,a,b, | c,d,b,a, | d,b,c,a, | d,b,a,c, | d,c,b,a, | d,c,a,b, | d,a,c,b, | d,a,b,c, |
+     *
+     * 24
      *
      * @param str
      * @return
