@@ -54,4 +54,10 @@ public class Util {
         }
         Util.print(" | ");
     }
+
+    public static void reverse(char[] chars, int start, int end) {
+        while ( start < end) {
+            exchange(chars, start++, end--);
+        }
+    }
 }

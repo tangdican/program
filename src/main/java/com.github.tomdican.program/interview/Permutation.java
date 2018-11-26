@@ -12,9 +12,10 @@ import java.util.Stack;
 /**
  *
  * the third method and the forth method
- *
  * source: https://www.geeksforgeeks.org/permutations-of-a-given-string-using-stl/
  *
+ * print the n-th permutation
+ * source: https://www.geeksforgeeks.org/lexicographically-n-th-permutation-string/
  *
  */
 public class Permutation {
@@ -31,11 +32,74 @@ public class Permutation {
 //        Util.println("permutation loop:");
 //        permutation(a);
 
-        String str = "abcc";
-        int count = permutationWithRepeat(str.toCharArray(),0,str.length());
+//        String str = "abcc";
+//        int count = permutationWithRepeat(str.toCharArray(),0,str.length());
+////        System.out.println(count);
+
+        String str = "abbcc";
+        int count = allNextPermutation(str.toCharArray(),0,str.length());
+        System.out.println("");
         System.out.println(count);
 
 
+
+
+    }
+
+    /**
+     * print all permutation with the repeat char
+     *
+     *
+     * @param chars
+     * @param i
+     * @param length
+     * @return
+     */
+    private static int allNextPermutation(char[] chars, int i, int length) {
+
+        Arrays.sort(chars);
+
+        int count = 0;
+        do {
+            System.out.print(String.valueOf(chars)+",");
+            count++;
+        } while (nextPermutation(chars, i, length));
+        return count;
+    }
+
+    /**
+     * find next permutation
+     * the last permutation is the largest permutation
+     *
+     * input: abcc
+     * output: acbc
+     *
+     * @param chars
+     * @param i
+     * @param length
+     * @return
+     */
+    private static boolean nextPermutation(char[] chars, int i, int length) {
+        int j  = length - 2;
+        for (; j >= 0; j--) {
+            if (chars[j] < chars[j+1]) {
+                break;
+            }
+        }
+
+        if ( j >= 0) {
+            int k = j + 1;
+            for (; k < length; k++) {
+                if (chars[j] >= chars[k]) {
+                    break;
+                }
+            }
+            Util.exchange(chars, j, k - 1);
+            Util.reverse(chars, j + 1, length - 1);
+            return true;
+        }
+
+        return false;
     }
 
     /** *******************************
