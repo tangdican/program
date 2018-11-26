@@ -9,6 +9,14 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
 
+/**
+ *
+ * the third method and the forth method
+ *
+ * source: https://www.geeksforgeeks.org/permutations-of-a-given-string-using-stl/
+ *
+ *
+ */
 public class Permutation {
     public static void main(String[] args) {
 //        int[] a = {5,4,3,1};
