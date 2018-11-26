@@ -3,6 +3,7 @@ package com.github.tomdican.program.String;
 
 import com.github.tomdican.program.Util;
 import com.github.tomdican.program.interview.Permutation;
+import com.sun.deploy.util.StringUtils;
 import java.util.Stack;
 
 /**
@@ -89,11 +90,11 @@ public class Basic {
 //        System.out.println(result);
 
         // Lexicographic pattern
-        String str = "aabc";
-        //int count = countPowerSet(str);
+        String str = "abcd";
+        int count = countPowerSet(str.toCharArray(), "", 0, str.length());
         //int count = countPermutationsLoop(str);
         //int count = countPermutationsRec(str.toCharArray(), 0, str.length()-1);
-        int count = countPermutationsRecWithRepeat(str.toCharArray(), 0, str.length()-1);
+       // int count = countPermutationsRecWithRepeat(str.toCharArray(), 0, str.length()-1);
         System.out.println("");
         System.out.println(count);
 
@@ -187,9 +188,36 @@ public class Basic {
       return Permutation.countPermutationStack(str.toCharArray());
     }
 
-    private static int countPowerSet(String str) {
-
-        return 0;
+    /**
+     * print all substring
+     *
+     * input: abcd
+     *
+     * output: a,ab,abc,abcd,abd,ac,acd,ad,b,bc,bcd,bd,c,cd,d,
+     * 15
+     *
+     * @param strs
+     * @param curr
+     * @param i
+     * @param len
+     * @return
+     */
+    private static int countPowerSet(char[] strs, String curr, int i, int len) {
+        int count = 0;
+        if (i > len) {
+            return 0;
+        } else {
+            if (!curr.equals("")) {
+                System.out.print(curr + ",");
+                count++;
+            }
+            for (int j = i; j < len; j++) {
+                curr += strs[j];
+                count += countPowerSet(strs, curr, j+1, len);
+                curr = curr.substring(0,curr.length()-1);
+            }
+        }
+        return count;
     }
 
     /**
