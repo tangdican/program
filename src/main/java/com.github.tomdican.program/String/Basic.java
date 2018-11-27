@@ -5,6 +5,7 @@ import com.github.tomdican.program.Util;
 import com.github.tomdican.program.interview.Permutation;
 import com.sun.deploy.util.StringUtils;
 import java.util.Stack;
+import javax.swing.plaf.metal.MetalIconFactory.FolderIcon16;
 
 /**
  * Pangram: A pangram or holoalphabetic sentence is a sentence using every letter of a given alphabet at least once.
@@ -90,14 +91,75 @@ public class Basic {
 //        System.out.println(result);
 
         // Lexicographic pattern
-        String str = "abcd";
-        int count = countPowerSet(str.toCharArray(), "", 0, str.length());
-        //int count = countPermutationsLoop(str);
-        //int count = countPermutationsRec(str.toCharArray(), 0, str.length()-1);
-       // int count = countPermutationsRecWithRepeat(str.toCharArray(), 0, str.length()-1);
-        System.out.println("");
-        System.out.println(count);
+//        String str = "abcd";
+//        int count = countPowerSet(str.toCharArray(), "", 0, str.length());
+//        //int count = countPermutationsLoop(str);
+//        //int count = countPermutationsRec(str.toCharArray(), 0, str.length()-1);
+//       // int count = countPermutationsRecWithRepeat(str.toCharArray(), 0, str.length()-1);
+//        System.out.println("");
+//        System.out.println(count);
 
+        // Pattern Searching
+        String p = "AABAACAADAABAABA";
+        String t = "ABA";
+        int[] index = patternSearchWithFP(p, t);
+       // int[] index = patternSearchWithSimple(p, t);
+        Util.printArray(index);
+
+    }
+
+    /**
+     * Pattern Searching
+     * input: AABAACAADAABAABA
+     * output: ABA
+     *
+     * source: https://www.geeksforgeeks.org/finite-automata-algorithm-for-pattern-searching/
+     *
+     * @param p
+     * @param t
+     * @return
+     */
+    private static int[] patternSearchWithSimple(String p, String t) {
+        int pLen  = p.length();
+        int tLen = t.length();
+        char[] ps = p.toCharArray();
+        char[] ts = t.toCharArray();
+        int[] index = new int[pLen];
+        int loc = 0;
+
+        for (int i = 0; i < pLen; i++) {
+            if (ps[i] == ts[0]) {
+                for (int j = 1; j < tLen; j++) {
+                    if (i+j >= pLen || ps[i+j] != ts[j]) {
+                        j = tLen;
+                    }
+                    if (j == tLen - 1) {
+                        index[loc++] = i;
+                    }
+                }
+            }
+        }
+
+        return index;
+    }
+
+    private static int[] patternSearchWithFP(String p, String t) {
+        int pLen  = p.length();
+        int tLen = t.length();
+        char[] ps = p.toCharArray();
+        char[] ts = t.toCharArray();
+        int[][] TF = new int[pLen][256];
+
+        // construct TF
+        for (int i = 0; i < pLen; i++) {
+            TF[i][ps[i]] = i + 1;
+        }
+
+        for (int i = 0; i < pLen; i++) {
+
+        }
+
+        return new int[0];
     }
 
     /**
