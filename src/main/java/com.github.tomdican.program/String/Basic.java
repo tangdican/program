@@ -3,9 +3,6 @@ package com.github.tomdican.program.String;
 
 import com.github.tomdican.program.Util;
 import com.github.tomdican.program.interview.Permutation;
-import com.sun.deploy.util.StringUtils;
-import java.util.Stack;
-import javax.swing.plaf.metal.MetalIconFactory.FolderIcon16;
 
 /**
  * Pangram: A pangram or holoalphabetic sentence is a sentence using every letter of a given alphabet at least once.
@@ -100,12 +97,44 @@ public class Basic {
 //        System.out.println(count);
 
         // Pattern Searching
-        String p = "AABAACAADAABAABA";
-        String t = "ABA";
-        int[] index = patternSearchWithFP(p, t);
-       // int[] index = patternSearchWithSimple(p, t);
-        Util.printArray(index);
+//        String p = "AABAACAADAABAABA";
+//        String t = "ABA";
+//        int[] index = patternSearchWithFP(p, t);
+//       // int[] index = patternSearchWithSimple(p, t);
+//        Util.printArray(index);
 
+        // split string
+        String[] words = {"mobile","samsung","sam","sung",
+            "man","mango","icecream","and",
+            "go","i","like","ice","cream"};
+        String str = "ilikesamsung";
+        String result = printWordBreak(words, str);
+        System.out.println(result);
+
+    }
+
+    private static String printWordBreak(String[] words, String str) {
+        int len = str.length();
+        String result = "";
+        int startIndex = 0;
+        for (int i = 0; i < len; i++) {
+            String temp = str.substring(startIndex, i+1);
+            if (containWord(words, temp)) {
+                startIndex = i + 1;
+                result += (temp + " ");
+            }
+        }
+        return result;
+    }
+
+    private static boolean containWord(String[] words, String substring) {
+        int len = words.length;
+        for (int i = 0; i < len; i++) {
+            if (words[i].equals(substring)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
