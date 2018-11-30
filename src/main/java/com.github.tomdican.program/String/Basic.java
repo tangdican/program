@@ -107,22 +107,88 @@ public class Basic {
 //       // int[] index = patternSearchWithSimple(p, t);
 //        Util.printArray(index);
 
-        // split string
-        String[] words = {"mobile","samsung","sam","sung",
-            "man","mango","icecream","and",
-            "go","i","like","ice","cream"};
-        String str = "ilikesamsungicecream";
-//        String result = printWordBreak(words, str);
-//        System.out.println(result);
+//        // split string
+//        String[] words = {"mobile","samsung","sam","sung",
+//            "man","mango","icecream","and",
+//            "go","i","like","ice","cream"};
+//        String str = "ilikesamsungicecream";
+////        String result = printWordBreak(words, str);
+////        System.out.println(result);
+//
+//        String[] results = new String[10];
+//        printAllWordBreak(words, str, 0, str.length(), "", results);
+//        for (int i = 0; i < results.length; i++) {
+//            if (results[i] != null) {
+//                System.out.println(results[i]);
+//            }
+//        }
 
-        String[] results = new String[10];
-        printAllWordBreak(words, str, 0, str.length(), "", results);
-        for (int i = 0; i < results.length; i++) {
-            if (results[i] != null) {
-                System.out.println(results[i]);
+        // Balance Parentheses & Bracket Evaluation
+        String str = "{()}[]";
+        String str2 = "{{(}()}";
+        int loc = checkedParenthesis(str);
+        System.out.println(loc+"");
+        int loc2 = checkedParenthesis(str2);
+        System.out.println(loc2+"");
+
+
+
+    }
+
+    /**
+     * Check for balanced parentheses in an expression
+     *
+     * input: {{(}()}
+     * output: 3
+     *
+     * source: https://www.geeksforgeeks.org/check-for-balanced-parentheses-in-an-expression/
+     *
+     * @param str
+     * @return
+     */
+    private static int checkedParenthesis(String str) {
+        int loc = 0;
+        Stack<Integer> stack = new Stack<>();
+        char[] strs = str.toCharArray();
+        int i = 0;
+        for (; i < str.length(); i++) {
+            char c;
+            if (stack.isEmpty()) {
+                stack.push(Integer.valueOf(strs[i]));
+                continue;
+            } else {
+                c = (char)stack.peek().intValue();
+            }
+            if (')' == strs[i]) {
+                if ('(' != c ) {
+                    loc = i;
+                    break;
+                } else {
+                    stack.pop();
+                }
+            } else if ('}' == strs[i]) {
+                if ('{' != c ) {
+                    loc = i;
+                    break;
+                } else {
+                    stack.pop();
+                }
+            } else if (']' == strs[i]) {
+                if ('[' != c ) {
+                    loc = i;
+                    break;
+                } else {
+                    stack.pop();
+                }
+            } else {
+                stack.push(Integer.valueOf(strs[i]));
             }
         }
+        if (!stack.isEmpty() && i == str.length()) {
+            loc = str.length();
+        }
 
+        return loc;
     }
 
     /**
