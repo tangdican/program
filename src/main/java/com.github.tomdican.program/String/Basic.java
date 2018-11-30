@@ -3,6 +3,10 @@ package com.github.tomdican.program.String;
 
 import com.github.tomdican.program.Util;
 import com.github.tomdican.program.interview.Permutation;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Stack;
 
 /**
  * Pangram: A pangram or holoalphabetic sentence is a sentence using every letter of a given alphabet at least once.
@@ -107,10 +111,56 @@ public class Basic {
         String[] words = {"mobile","samsung","sam","sung",
             "man","mango","icecream","and",
             "go","i","like","ice","cream"};
-        String str = "ilikesamsung";
-        String result = printWordBreak(words, str);
-        System.out.println(result);
+        String str = "ilikesamsungicecream";
+//        String result = printWordBreak(words, str);
+//        System.out.println(result);
 
+        String[] results = new String[10];
+        printAllWordBreak(words, str, 0, str.length(), "", results);
+        for (int i = 0; i < results.length; i++) {
+            if (results[i] != null) {
+                System.out.println(results[i]);
+            }
+        }
+
+    }
+
+    /**
+     * print all words with break
+     *
+     * input: ilikesamsungicecream
+     * output:
+     *  i like sam sung ice cream
+        i like sam sung icecream
+        i like samsung ice cream
+        i like samsung icecream
+
+        source: https://www.geeksforgeeks.org/word-break-problem-using-backtracking/
+     *
+     * @param words
+     * @param str
+     * @param startIndex
+     * @param len
+     * @param result
+     * @param results
+     */
+    private static void printAllWordBreak(String[] words, String str, int startIndex, int len, String result, String[] results) {
+        if (startIndex >= len) {
+            for (int i = 0;i< results.length;i++) {
+                if(results[i] == null || results[i].isEmpty() || results[i].equals("")) {
+                    results[i] = result;
+                    break;
+                }
+            }
+            return;
+        }
+
+        for (int i = startIndex; i < len; i++) {
+            String temp = str.substring(startIndex, i + 1);
+            if (containWord(words, temp)) {
+                printAllWordBreak(words,str,i+1, len, result + (temp + " "), results);
+            }
+        }
     }
 
     private static String printWordBreak(String[] words, String str) {
