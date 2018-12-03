@@ -5,7 +5,9 @@ import com.github.tomdican.program.Util;
 import com.github.tomdican.program.interview.Permutation;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.Stack;
 
 /**
@@ -123,16 +125,122 @@ public class Basic {
 //            }
 //        }
 
-        // Balance Parentheses & Bracket Evaluation
-        String str = "{()}[]";
-        String str2 = "{{(}()}";
-        int loc = checkedParenthesis(str);
-        System.out.println(loc+"");
-        int loc2 = checkedParenthesis(str2);
-        System.out.println(loc2+"");
+//        // Balance Parentheses & Bracket Evaluation
+//        String str = "{()}[]";
+//        String str2 = "{{(}()}";
+//        int loc = checkedParenthesis(str);
+//        System.out.println(loc+"");
+//        int loc2 = checkedParenthesis(str2);
+//        System.out.println(loc2+"");
+
+        // conversion
+        String str = "banana$";
+        String result = burrowWheelerTransform(str);
+        System.out.println("");
+        System.out.println(result);
 
 
+    }
 
+    /***
+     * Burrows – Wheeler Data Transform Algorithm
+     *
+     * input: banana$
+     * output: annb$aa
+     *
+     * source: https://www.geeksforgeeks.org/burrows-wheeler-data-transform-algorithm/
+     *
+     * @param str
+     * @return
+     */
+    private static String burrowWheelerTransform(String str) {
+        int len = str.length();
+        char[] strs = str.toCharArray();
+        char[] result = new char[len];
+        String[] sortStr = new String[len];
+
+        for (int i = 0; i < len; i++) {
+            sortStr[i] = leftRotation(str, i+1);
+        }
+        String[] resultSort = sortByTrieChar(sortStr);
+        for (int i = 0; i < len; i++) {
+            result[i] = resultSort[i].charAt(len-1);
+        }
+        return String.valueOf(result);
+    }
+
+    /**
+     *
+     * Sorting array of strings (or words) using Trie
+     *
+     * input: "a","bbc","aa","aac","cbc","bcb"
+     * output: a, aa, aac, bbc, bcb, cbc,
+     *
+     * source: https://www.geeksforgeeks.org/sorting-array-strings-words-using-trie/
+     *
+     * @param str
+     */
+    private static String[] sortByTrieChar(String[] str) {
+        TrieChar trie = new TrieChar();
+        int len = str.length;
+        for (int i = 0; i < len; i++) {
+            String strElement = str[i];
+            int strLen = strElement.length();
+            trie.sort(strElement, strLen, i);
+        }
+
+        String[] result = new String[str.length];
+        Queue<String> queue =  trie.printOrderString(str);
+        int i = 0;
+        while (queue != null && !queue.isEmpty()) {
+            result[i++] = queue.poll();
+        }
+        return result;
+    }
+
+    static class TrieChar {
+        int size = 256;
+        int index = -1;
+        int count = 0;
+        TrieChar[] child = null;
+
+        public void sort(String element, int len, int loc) {
+            TrieChar next = this;
+            for (int i = 0; i < len; i++) {
+                if (next.child == null) {
+                    next.child = new TrieChar[size];
+                }
+                int index = element.charAt(i);
+                //next.child[index].index++;
+                if (next.child[index] == null) {
+                    next.child[index] = new TrieChar();
+                }
+                next = next.child[index];
+            }
+            next.index = loc;
+            next.count++;
+        }
+
+        public Queue<String> printOrderString(String[] str) {
+            Queue<String> queue = new LinkedList<>();
+            if (index != -1) {
+                for (int i = 0; i < count; i++) {
+                    System.out.print(str[index]+", ");
+                    queue.add(str[index]);
+                }
+            }
+            if (child != null) {
+                for (int i = 0; i < size; i++) {
+                    if (child[i] != null) {
+                        Queue<String> temp = child[i].printOrderString(str);
+                        while (temp != null && !temp.isEmpty()) {
+                            queue.add(temp.poll());
+                        }
+                    }
+                }
+            }
+            return queue;
+        }
     }
 
     /**
