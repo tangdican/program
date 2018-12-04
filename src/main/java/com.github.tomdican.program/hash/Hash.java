@@ -13,10 +13,12 @@ public class Hash {
     /**
      * double hashing
      *
-     *
      * input: 19,27,36,10,64
      *
      * output:
+     *
+     *
+     * g
      *  value[1]: 27,
         value[5]: 10,
         value[6]: 19,
