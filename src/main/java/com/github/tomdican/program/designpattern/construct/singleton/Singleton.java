@@ -1,6 +1,13 @@
 package com.github.tomdican.program.designpattern.construct.singleton;
 
 import com.github.tomdican.program.Util;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.lang.reflect.Constructor;
 import javax.management.InstanceAlreadyExistsException;
 
@@ -13,12 +20,14 @@ public class Singleton {
     /**
      * for a single thread
      */
-    public static class Simple {
+    public static class Simple implements Serializable {
         private static Simple instance;
         protected String s;
 
         private Simple(){
             s = "Simple Singleton is Instantiated.";
+
+            // prevent the reflection
 //            if (instance != null) {
 //                throw new InstantiationError("exist!");
 //            }
@@ -29,6 +38,13 @@ public class Singleton {
             if (instance == null)
                 instance = new Simple();
 
+            return instance;
+        }
+
+        // implement readResolve method
+        // to singleton
+        protected Object readResolve()
+        {
             return instance;
         }
     }
@@ -101,11 +117,42 @@ public class Singleton {
         //testInstance();
 
         // test reflection
-        testReflection();
+       // testReflection();
+
+        // test Serializable
+        testSerializable();
 
 
 
 
+    }
+
+    private static void testSerializable() {
+        try
+        {
+            Simple instance1 = Simple.getInstance();
+            ObjectOutput out
+                = new ObjectOutputStream(new FileOutputStream("file.text"));
+            out.writeObject(instance1);
+            out.close();
+
+            // deserailize from file to object
+            ObjectInput in
+                = new ObjectInputStream(new FileInputStream("file.text"));
+
+            Simple instance2 = (Simple) in.readObject();
+            in.close();
+
+            System.out.println("instance1 hashCode:- "
+                + instance1.hashCode());
+            System.out.println("instance2 hashCode:- "
+                + instance2.hashCode());
+        }
+
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 
     private static void testReflection() {
