@@ -1,7 +1,12 @@
 package com.github.tomdican.program.designpattern.construct.singleton;
 
 import com.github.tomdican.program.Util;
+import java.lang.reflect.Constructor;
 
+/**
+ * source: https://www.geeksforgeeks.org/java-singleton-design-pattern-practices-examples/
+ *
+ */
 public class Singleton {
 
     /**
@@ -46,7 +51,7 @@ public class Singleton {
 
     /**
      * for multi thread
-     * simple
+     * simple but not lazy instance
      */
     public static class SimpleFinal {
         private static final SimpleFinal instance = new SimpleFinal();
@@ -84,16 +89,55 @@ public class Singleton {
         }
     }
 
+
+
+
     public static void main(String[] args) {
         // test instance loc
+        //testInstance();
+
+        // test reflection
+        testReflection();
+
+
+
+
+    }
+
+    private static void testReflection() {
+        Simple instance1 = Simple.getInstance();
+        Simple instance2 = null;
+        try
+        {
+            Constructor[] constructors =
+                Simple.class.getDeclaredConstructors();
+            for (Constructor constructor : constructors)
+            {
+                // Below code will destroy the singleton pattern
+                constructor.setAccessible(true);
+                instance2 = (Simple) constructor.newInstance();
+                break;
+            }
+        }
+
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        System.out.println("instance1.hashCode():- "
+            + instance1.hashCode());
+        System.out.println("instance2.hashCode():- "
+            + instance2.hashCode());
+
+    }
+
+    private static void testInstance() {
         Simple instance1 = Simple.getInstance();
         Simple instance2 = Simple.getInstance();
         instance1.s = instance1.s.toUpperCase();
         Util.println(instance1.s+","+instance2.s);
         instance2.s = instance2.s.toLowerCase();
         Util.println(instance1.s+","+instance2.s);
-
-
-
     }
 }
