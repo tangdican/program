@@ -2,6 +2,7 @@ package com.github.tomdican.program.designpattern.construct.singleton;
 
 import com.github.tomdican.program.Util;
 import java.lang.reflect.Constructor;
+import javax.management.InstanceAlreadyExistsException;
 
 /**
  * source: https://www.geeksforgeeks.org/java-singleton-design-pattern-practices-examples/
@@ -18,6 +19,9 @@ public class Singleton {
 
         private Simple(){
             s = "Simple Singleton is Instantiated.";
+//            if (instance != null) {
+//                throw new InstantiationError("exist!");
+//            }
         }
 
         public static Simple getInstance()
