@@ -21,7 +21,15 @@ public class Map<K,V> {
     final double DEFAULT_LOAD_FACTOR = 0.75;
 
     public Map() {
-        numBuckets = 5;
+        initialize(5);
+    }
+
+    public Map(int num) {
+       initialize(num);
+    }
+
+    private void initialize(int num) {
+        numBuckets = num;
         buckets = new ArrayList<>(numBuckets);
         for (int i = 0; i < numBuckets; i++) {
             buckets.add(null);
@@ -31,6 +39,7 @@ public class Map<K,V> {
         System.out.println("Size of Map: " + numBuckets);
         System.out.println("Default Load Factor : " + DEFAULT_LOAD_FACTOR + "\n");
     }
+
 
     private int getBucketInd(K key) {
         // Using the inbuilt function from the object class
@@ -104,6 +113,20 @@ public class Map<K,V> {
             }
         }
         System.out.println();
+    }
+
+    public boolean contain(K key) {
+        return this.get(key) != null;
+    }
+
+    public V get(K key) {
+        int bucketInd = getBucketInd(key);
+        MapNode<K, V> kvMapNode = buckets.get(bucketInd);
+        if (kvMapNode == null) {
+            return null;
+        }
+
+        return kvMapNode.value;
     }
 
 
