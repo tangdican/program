@@ -1,4 +1,6 @@
-package com.github.tomdican.program.designpattern.construct;
+package com.github.tomdican.program.designpattern.construct.singleton;
+
+import com.github.tomdican.program.Util;
 
 public class Singleton {
 
@@ -7,9 +9,10 @@ public class Singleton {
      */
     public static class Simple {
         private static Simple instance;
+        protected String s;
 
         private Simple(){
-            System.out.println("Simple Singleton is Instantiated.");
+            s = "Simple Singleton is Instantiated.";
         }
 
         public static Simple getInstance()
@@ -81,5 +84,16 @@ public class Singleton {
         }
     }
 
+    public static void main(String[] args) {
+        // test instance loc
+        Simple instance1 = Simple.getInstance();
+        Simple instance2 = Simple.getInstance();
+        instance1.s = instance1.s.toUpperCase();
+        Util.println(instance1.s+","+instance2.s);
+        instance2.s = instance2.s.toLowerCase();
+        Util.println(instance1.s+","+instance2.s);
 
+
+
+    }
 }
