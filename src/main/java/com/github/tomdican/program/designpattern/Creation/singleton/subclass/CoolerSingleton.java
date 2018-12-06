@@ -1,4 +1,4 @@
-package com.github.tomdican.program.designpattern.construct.singleton.subclass;
+package com.github.tomdican.program.designpattern.Creation.singleton.subclass;
 
 public class CoolerSingleton extends Singleton {
 	// useful instance variables here

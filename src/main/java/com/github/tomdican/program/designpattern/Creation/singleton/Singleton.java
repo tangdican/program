@@ -1,4 +1,4 @@
-package com.github.tomdican.program.designpattern.construct.singleton;
+package com.github.tomdican.program.designpattern.Creation.singleton;
 
 import com.github.tomdican.program.Util;
 import java.io.FileInputStream;

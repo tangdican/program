@@ -1,4 +1,4 @@
-package com.github.tomdican.program.designpattern.construct.singleton.subclass;
+package com.github.tomdican.program.designpattern.Creation.singleton.subclass;
 
 public class SingletonTestDrive {
 	public static void main(String[] args) {
