@@ -1,17 +1,20 @@
 package com.github.tomdican.program.hash;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class Hash {
 
     public static void main(String[] args) {
 
 //        int[] keys = {19,27,36,10,64};
 //        createHashTable(keys);
-
-        int arr1[] = {11, 1, 13, 21, 3, 7};
-        int arr2[] = {11, 3, 7, 1};
-        int arr3[] = {11, 3, 7, 2};
-        System.out.println(isSubSet(arr1, arr2));
-        System.out.println(isSubSet(arr1, arr3));
+//
+//        int arr1[] = {11, 1, 13, 21, 3, 7};
+//        int arr2[] = {11, 3, 7, 1};
+//        int arr3[] = {11, 3, 7, 2};
+//        System.out.println(isSubSet(arr1, arr2));
+//        System.out.println(isSubSet(arr1, arr3));
 
     }
 
