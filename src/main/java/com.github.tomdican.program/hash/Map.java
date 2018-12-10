@@ -121,12 +121,47 @@ public class Map<K,V> {
 
     public V get(K key) {
         int bucketInd = getBucketInd(key);
-        MapNode<K, V> kvMapNode = buckets.get(bucketInd);
-        if (kvMapNode == null) {
+        MapNode<K, V> head = buckets.get(bucketInd);
+
+        while (head !=null) {
+            if (head.key.equals(key)) {
+                return head.value;
+            }
+            head = head.next;
+        }
+
+        return null;
+    }
+
+    public V remove(K key) {
+        int bucketInd = getBucketInd(key);
+        MapNode<K, V> head = buckets.get(bucketInd);
+
+        MapNode<K, V> prev = null;
+        while (head != null) {
+            if (head.key.equals(key)) {
+                break;
+            }
+            prev = head;
+            head = head.next;
+        }
+
+        if (head == null) {
             return null;
         }
 
-        return kvMapNode.value;
+
+        if (prev != null) {
+            prev.next = head.next;
+            prev = head;
+        } else {
+            prev = head;
+            head = head.next;
+        }
+        buckets.set(bucketInd, head);
+        size--;
+
+        return prev.value ;
     }
 
 
