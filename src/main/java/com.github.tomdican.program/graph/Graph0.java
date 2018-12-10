@@ -95,6 +95,11 @@ public class Graph0 {
     // Driver Code
     public static void main(String args[])
     {
+        /**
+         * 0 --> 1 --> 3
+         * 0 <--> 2 --> 1
+         * 0 --> 3
+         */
         Graph0 g = new Graph0(4);
         g.addEdge(0, 1);
         g.addEdge(0, 2);
