@@ -1,5 +1,10 @@
 package com.github.tomdican.program.designpattern.Behave.mediator;
 
+/**
+ *
+ * java.util.concurrent.Executor#execute()
+ *
+ */
 public class Client {
 
     public static void main(String[] args) {
