@@ -1,24 +1,184 @@
 package com.github.tomdican.program.graph;
 
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
 import java.util.Stack;
 
 public class Graph {
 
     public static void main(String[] args) {
-        Vertex adj = createGraph();
-      //  breathFirstSearch(adj,0);
-      //  depthFirstSearch(adj,0);
-
-//        int motherVertice = findMotherVertices(adj);
+//        Vertex adj = createGraph();
+//      //  breathFirstSearch(adj,0);
+//      //  depthFirstSearch(adj,0);
+//
+////        int motherVertice = findMotherVertices(adj);
+////        System.out.println();
+////        System.out.println("mother vertice: "+motherVertice);
+//
+//
+//        int pathNum = countPath(adj, 2, 3);
 //        System.out.println();
-//        System.out.println("mother vertice: "+motherVertice);
+//        System.out.println("path number: "+pathNum);
 
 
-        int pathNum = countPath(adj, 2, 3);
-        System.out.println();
-        System.out.println("path number: "+pathNum);
+
+       Vertex adj = createGraph2();
+        if (biDirSearch(adj,0, adj.V-1, adj.V) == -1) {
+            System.out.println("Path don't exist between");
+        }
+    }
+
+    private static Vertex createGraph2() {
+        // bidirectional search
+        // no of vertices in graph
+        int n=15;
+
+        // source vertex
+        int s=0;
+
+        // target vertex
+        int t=14;
+        Vertex adj = new Vertex(n);
+        addEdge2(adj,0, 4);
+        addEdge2(adj,1, 4);
+        addEdge2(adj,2, 5);
+        addEdge2(adj,3, 5);
+        addEdge2(adj,4, 6);
+        addEdge2(adj,5, 6);
+        addEdge2(adj,6, 7);
+        addEdge2(adj,7, 8);
+        addEdge2(adj,8, 9);
+        addEdge2(adj,8, 10);
+        addEdge2(adj,9, 11);
+        addEdge2(adj,9, 12);
+        addEdge2(adj,10, 13);
+        addEdge2(adj,10, 14);
+
+        return adj;
+    }
+
+
+    static int biDirSearch(Vertex adj, int s, int t, int V) {
+        // boolean array for BFS started from
+        // source and target(front and backward BFS)
+        // for keeping track on visited nodes
+        boolean s_visited[] = new boolean[V];
+        boolean t_visited[] = new boolean[V];
+
+        // Keep track on parents of nodes
+        // for front and backward search
+        int s_parent[] = new int[V];
+        int t_parent[] = new int[V];
+
+        // queue for front and backward search
+        Queue<Integer> s_queue = new LinkedList<>();
+        Queue<Integer> t_queue = new LinkedList<>();
+
+        int intersectNode = -1;
+
+        // necessary initialization
+        for(int i=0; i<V; i++)
+        {
+            s_visited[i] = false;
+            t_visited[i] = false;
+        }
+
+        s_queue.add(s);
+        s_visited[s] = true;
+
+        // parent of source is set to -1
+        s_parent[s]=-1;
+
+        t_queue.add(t);
+        t_visited[t] = true;
+
+        // parent of target is set to -1
+        t_parent[t] = -1;
+
+        while (!s_queue.isEmpty() && !t_queue.isEmpty())
+        {
+            // Do BFS from source and target vertices
+            BFS(adj, s_queue, s_visited, s_parent);
+            BFS(adj, t_queue, t_visited, t_parent);
+
+            // check for intersecting vertex
+            intersectNode = isIntersecting(adj, s_visited, t_visited);
+
+            // If intersecting vertex is found
+            // that means there exist a path
+            if(intersectNode != -1)
+            {
+                System.out.println( "<< " + " Path exist between << "+ s + "<<  and << " + t + "<< ");
+                System.out.println("cout << Intersection at:  <<"+ intersectNode+" << ");
+
+                // print the path and exit the program
+                printPath(adj, s_parent, t_parent, s, t, intersectNode);
+                return 0;
+            }
+        }
+        return -1;
+    }
+
+    private static void printPath(Vertex adj, int[] s_parent, int[] t_parent, int s, int t,
+        int intersectNode) {
+        List<Integer> path = new LinkedList<>();
+        path.add(intersectNode);
+        int i = intersectNode;
+        while (i != s)
+        {
+            path.add(s_parent[i]);
+            i = s_parent[i];
+        }
+        Collections.reverse(path);
+        i = intersectNode;
+        while(i != t)
+        {
+            path.add(t_parent[i]);
+            i = t_parent[i];
+        }
+
+        System.out.println("cout<<*****Path*****");
+        for(int it = 0;it < path.size(); it++) {
+            System.out.print("cout <<*"+ it +" << ");
+        }
+        System.out.println("cout<<");
+    }
+
+    private static int isIntersecting(Vertex adj, boolean[] s_visited, boolean[] t_visited) {
+        int intersectNode = -1;
+        for(int i=0;i<adj.V;i++)
+        {
+            // if a vertex is visited by both front
+            // and back BFS search return that node
+            // else return -1
+            if(s_visited[i] && t_visited[i])
+                return i;
+        }
+        return -1;
+    }
+
+    private static void BFS(Vertex adj, Queue<Integer> s_queue, boolean[] visited, int[] parent) {
+        int current = s_queue.poll();
+        Iterator<Integer> iterator = adj.adjListArray[current].iterator();
+        while (iterator.hasNext()) {
+            Integer next = iterator.next();
+            // If adjacent vertex is not visited earlier
+            // mark it visited by assigning true value
+            if (!visited[next])
+            {
+                // set current as parent of this vertex
+                parent[next] = current;
+
+                // Mark this vertex visited
+                visited[next] = true;
+
+                // Push to the end of queue
+                s_queue.add(next);
+            }
+        }
     }
 
     /**
@@ -235,4 +395,9 @@ public class Graph {
       //  adj.put(desc, src);
     }
 
+    static void addEdge2(Vertex adj, int u, int v)
+    {
+        adj.put(u,v);
+        adj.put(v,u);
+    }
 }
