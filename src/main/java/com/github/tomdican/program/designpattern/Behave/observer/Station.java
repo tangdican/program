@@ -7,7 +7,7 @@ public class Station {
         WebDisplay webDisplay = new WebDisplay();
         Observed weatherServer = new WeatherServer();
         weatherServer.registerObserver(webDisplay);
-        webDisplay.update(1,2,3);
+        weatherServer.setMeasurements(1,2,3);
 
 
     }

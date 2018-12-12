@@ -24,11 +24,12 @@ public class Graph {
 //        System.out.println("path number: "+pathNum);
 
 
+// bidirectional search
+//       Vertex adj = createGraph2();
+//        if (biDirSearch(adj,0, adj.V-1, adj.V) == -1) {
+//            System.out.println("Path don't exist between");
+//        }
 
-       Vertex adj = createGraph2();
-        if (biDirSearch(adj,0, adj.V-1, adj.V) == -1) {
-            System.out.println("Path don't exist between");
-        }
     }
 
     private static Vertex createGraph2() {
