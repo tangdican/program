@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Stack;
 
@@ -24,12 +25,50 @@ public class Graph {
 //        System.out.println("path number: "+pathNum);
 
 
-// bidirectional search
-       Vertex adj = createGraph2();
-        if (biDirSearch(adj,0, adj.V-1, adj.V) == -1) {
-            System.out.println("Path don't exist between");
-        }
+//// bidirectional search
+//       Vertex adj = createGraph2();
+//        if (biDirSearch(adj,0, adj.V-1, adj.V) == -1) {
+//            System.out.println("Path don't exist between");
+//        }
 
+
+        // best first search
+        Vertex adj = createGraph2();
+        bestFirstSearch(adj, 0);
+    }
+
+
+    /**
+     * bestFirstSearch
+     *
+     * output:0,4,1,6,5,2,3,7,8,9,10,11,12,13,14
+     *
+     * source: https://www.geeksforgeeks.org/best-first-search-informed-search/
+     *
+     * @param adj
+     * @param start
+     */
+    private static void bestFirstSearch(Vertex adj, int start) {
+        //Stack<Integer> stack = new Stack<>();
+        PriorityQueue<Integer> pq = new PriorityQueue<>(20);
+        boolean visited[] = new boolean[adj.V];
+        pq.add(start);
+        visited[start] = true;
+        while (!pq.isEmpty()) {
+            int s = pq.poll();
+            System.out.print(","+s);
+            LinkedList<Integer> links = adj.adjListArray[s];
+            Iterator<Integer> iterator = links.iterator();
+
+            while (iterator.hasNext()) {
+                int r = iterator.next();
+                if (!visited[r]) {
+                    pq.add(r);
+                    visited[r] = true;
+                }
+            }
+
+        }
     }
 
     private static Vertex createGraph2() {
