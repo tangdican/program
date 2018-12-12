@@ -25,10 +25,10 @@ public class Graph {
 
 
 // bidirectional search
-//       Vertex adj = createGraph2();
-//        if (biDirSearch(adj,0, adj.V-1, adj.V) == -1) {
-//            System.out.println("Path don't exist between");
-//        }
+       Vertex adj = createGraph2();
+        if (biDirSearch(adj,0, adj.V-1, adj.V) == -1) {
+            System.out.println("Path don't exist between");
+        }
 
     }
 
@@ -143,7 +143,7 @@ public class Graph {
 
         System.out.println("cout<<*****Path*****");
         for(int it = 0;it < path.size(); it++) {
-            System.out.print("cout <<*"+ it +" << ");
+            System.out.print("cout <<*"+ path.get(it) +" << ");
         }
         System.out.println("cout<<");
     }
