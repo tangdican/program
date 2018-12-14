@@ -11,7 +11,7 @@ public class TryCatch {
         int x = 1;
         try {
             x = 2;
-            x = 1/0;
+          //  x = 1/0;
             return x;
         } catch (Exception e) {
             e.printStackTrace();
@@ -19,6 +19,7 @@ public class TryCatch {
             return x;
         } finally {
             x = 4;
+            System.out.println("finally: " +  x);
           //  return x;
         }
     }
