@@ -19,6 +19,7 @@ public class TryCatch {
             return x;
         } finally {
             x = 4;
+           // x = 1/0;
             System.out.println("finally: " +  x);
           //  return x;
         }
