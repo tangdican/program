@@ -4,4 +4,14 @@ public class Node {
     public int val;
     public Node left;
     public Node right;
+
+    public int height;
+
+    public Node(int d) {
+        val = d;
+        height = 1;
+    }
+
+    public Node() {
+    }
 }
