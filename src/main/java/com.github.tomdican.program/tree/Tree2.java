@@ -71,6 +71,7 @@ public class Tree2 {
         }
         Node line = new Node();
         line.val = -1;// mark to print next line;
+        queue.clear();
         queue.add(node);
         queue.add(line);
         Node temp = null;
