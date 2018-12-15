@@ -1,4 +1,4 @@
-package com.github.tomdican.program.tree.balance;
+package com.github.tomdican.program.advance;
 
 import com.github.tomdican.program.tree.Node;
 import com.github.tomdican.program.tree.Tree2;
