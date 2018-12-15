@@ -49,7 +49,7 @@ public class AVLTree {
         tree.root = tree.insert(tree.root, 25);
         tree.root = tree.insert(tree.root, 5);
         Tree2.printLevelOrderLineWithQueue(tree.root);
-        tree.deleteNode(tree.root, 50);
+        tree.root = tree.deleteNode(tree.root, 50);
         Tree2.printLevelOrderLineWithQueue(tree.root);
 
     }
