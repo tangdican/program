@@ -6,7 +6,7 @@ public class BTree {
 
         BTree t = new BTree(3); // A B-Tree with minium degree 3
 
-        for (int i = 10; i <= 10*53; i+=10) {
+        for (int i = 10; i <= 10*43; i+=10) {
             t.insert(i);
         }
        // t.insert(280);
@@ -14,12 +14,25 @@ public class BTree {
         System.out.println( "Traversal of the constucted tree is ");
         t.traverseLine();
 
-        int k = 60;
-        System.out.println((t.search(k) != null) ? "cout << Present" : "cout << Not Present");
+        System.out.println((t.search(60) != null) ? "cout << Present" : "cout << Not Present");
+        System.out.println((t.search(15) != null)? "cout << Present" : "cout << Not Present");
 
-        k = 15;
-        System.out.println((t.search(k) != null)? "cout << Present" : "cout << Not Present");
+        t.remove(100);
+        t.traverseLine();
+        System.out.println((t.search(100) != null) ? "cout << Present" : "cout << Not Present");
 
+//        t.remove(180);
+//        t.traverseLine();
+////
+//        t.remove(190);
+//        t.traverseLine();
+
+    }
+
+    private void remove(int val) {
+        if (root == null)
+            return;
+        root.remove(val);
     }
 
     private BTreeNode search(int k) {
@@ -47,6 +60,10 @@ public class BTree {
     BTreeNode root;
     int range;
 
+    /**
+     * source: https://www.geeksforgeeks.org/b-tree-set-1-insert-2/
+     * @param val
+     */
     // The main function that inserts a new key in this B-Tree
     void insert(int val)
     {
