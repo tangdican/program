@@ -1,5 +1,8 @@
 package com.github.tomdican.program.advance;
 
+/**
+ * source: https://www.geeksforgeeks.org/red-black-tree-set-3-delete-2/
+ */
 public class RedBlackTree {
 
     public static void main(String[] args) {
@@ -17,15 +20,16 @@ public class RedBlackTree {
         tree.insert(6);
         tree.insert(13);
 
+
         tree.printLevelOrder();
 
         System.out.println("cout<<endl<<Deleting 18, 11, 3, 10, 22<<endl");
 
         tree.deleteByVal(18);
-        tree.deleteByVal(11);
+//        tree.deleteByVal(11);
         tree.deleteByVal(3);
-        tree.deleteByVal(10);
-        tree.deleteByVal(22);
+//        tree.deleteByVal(10);
+//        tree.deleteByVal(22);
 
         tree.printLevelOrder();
     }
@@ -36,6 +40,11 @@ public class RedBlackTree {
     public boolean RED = true;
     private int size = 0;
 
+    /**
+     * The main property that violates after insertion is two consecutive reds
+     *
+     * @param val
+     */
     private void insert(int val) {
         RedBlackTreeNode newNode = new RedBlackTreeNode(val);
         if (root == null) {
@@ -177,13 +186,18 @@ public class RedBlackTree {
         grandparent.color = temp;
     }
 
+    /**
+     * In delete, the main violated property is, change of black height in subtrees
+     *
+     * @param val
+     */
     private void deleteByVal(int val) {
         if (root == null)
             return;
 
         RedBlackTreeNode v = search(val);
 
-        if (v.val != val) {
+        if (v == null  || v.val != val) {
             System.out.println("cout << No node found to delete with value:<<"  + val + "<< endl");
             return;
         }
