@@ -7,11 +7,18 @@ public class Node {
 
     public int height;
 
+    public boolean color = true;
+
     public Node(int d) {
         val = d;
         height = 1;
     }
 
+    public Node(boolean color) {
+        this.color = color;
+    }
+
     public Node() {
+
     }
 }
