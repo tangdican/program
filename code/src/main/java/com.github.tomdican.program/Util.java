@@ -1,5 +1,9 @@
 package com.github.tomdican.program;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+
 public class Util {
     public static void println(String str){
         System.out.println(str);
@@ -58,6 +62,14 @@ public class Util {
     public static void reverse(char[] chars, int start, int end) {
         while ( start < end) {
             exchange(chars, start++, end--);
+        }
+    }
+
+    private static void printArray(String[] names) {
+        int begin = 0;
+        int end = names.length - 1;
+        for (int i = begin; i <= end; i++) {
+            Util.print(names[i]+",");
         }
     }
 }
