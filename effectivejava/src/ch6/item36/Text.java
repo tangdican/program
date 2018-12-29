@@ -1,4 +1,4 @@
-package ch6.item34.item36;
+package ch6.item36;
 
 import java.util.EnumSet;
 import java.util.Objects;
