@@ -33,7 +33,7 @@ public enum Operation {
     // map string to enum
     private static final Map<String, Operation> stringToEnum =
             Stream.of(values()).collect(
-                    toMap(Object::toString, e -> e));
+                    toMap(Operation::toString, e -> e));
 
     // Returns Operation for string, if any
     // find enum from string
