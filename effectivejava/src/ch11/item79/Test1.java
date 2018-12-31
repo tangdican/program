@@ -8,6 +8,7 @@ public class Test1 {
         ObservableSet<Integer> set =
                 new ObservableSet<>(new HashSet<>());
 
+        // implement method
         set.addObserver((s, e) -> System.out.println(e));
 
         for (int i = 0; i < 100; i++)
