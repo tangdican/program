@@ -1,0 +1,4 @@
+package ch11.item83;
+
+public class FieldType {
+}
