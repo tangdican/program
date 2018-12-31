@@ -16,7 +16,9 @@ public class SetList {
             list.add(i);
         }
         for (int i = 0; i < 3; i++) {
+            // find key
             set.remove(i);
+            // find index
             list.remove(i);
         }
         System.out.println(set + " " + list);
