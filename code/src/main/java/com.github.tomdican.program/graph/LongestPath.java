@@ -6,19 +6,31 @@ import java.util.Stack;
 public class LongestPath {
 
     public static void main(String[] args) {
-        BaseGraph<AdjNode> g = new BaseGraph<>(6);
-        g.addEdge(0, new AdjNode(1, 5));
-        g.addEdge(0, new AdjNode(2, 3));
-        g.addEdge(1, new AdjNode(3, 6));
-        g.addEdge(1, new AdjNode(2, 2));
-        g.addEdge(2, new AdjNode(4, 4));
-        g.addEdge(2, new AdjNode(5, 2));
-        g.addEdge(2, new AdjNode(3, 7));
-        g.addEdge(3, new AdjNode(5, 1));
-        g.addEdge(3, new AdjNode(4, -1));
-        g.addEdge(4, new AdjNode(5, -2));
+        BaseGraph<AdjNode> g = new BaseGraph<>(7);
+//        g.addEdge(0, new AdjNode(1, 5));
+//        g.addEdge(0, new AdjNode(2, 3));
+//        g.addEdge(1, new AdjNode(3, 6));
+//        g.addEdge(1, new AdjNode(2, 2));
+//        g.addEdge(2, new AdjNode(4, 4));
+//        g.addEdge(2, new AdjNode(5, 2));
+//        g.addEdge(2, new AdjNode(3, 7));
+//        g.addEdge(3, new AdjNode(5, 1));
+//        g.addEdge(3, new AdjNode(4, -1));
+//        g.addEdge(4, new AdjNode(5, -2));
 
-        int s = 1;
+        g.addEdge(0, new AdjNode(1, 1));
+        g.addEdge(0, new AdjNode(2, 1));
+        g.addEdge(1, new AdjNode(3, 1));
+        g.addEdge(1, new AdjNode(2, 1));
+        g.addEdge(2, new AdjNode(4, 1));
+        g.addEdge(2, new AdjNode(5, 1));
+        g.addEdge(2, new AdjNode(3, 1));
+        g.addEdge(2, new AdjNode(6, 1));
+        g.addEdge(3, new AdjNode(5, 1));
+        g.addEdge(3, new AdjNode(4, 1));
+        g.addEdge(4, new AdjNode(5, 1));
+
+        int s = 2;
         graph = g;
         longestPath(s);
     }
@@ -51,9 +63,8 @@ public class LongestPath {
 
         // Recur for all the vertices adjacent to this vertex
         for (AdjNode adj: graph.getAdj(v)) {
-            AdjNode node = adj;
-            if (!visited[node.getV()])
-                topologicalSortUtil(node.getV(), visited, stack);
+            if (!visited[adj.getV()])
+                topologicalSortUtil(adj.getV(), visited, stack);
         }
 
         // Push current vertex to stack which stores topological
@@ -100,7 +111,7 @@ public class LongestPath {
 
         // print the longest distance
         for (int i = 0; i < V; i++) {
-            System.out.print("," + dist[i]);
+            System.out.print(",["+i+"]" + dist[i]);
         }
     }
 }
