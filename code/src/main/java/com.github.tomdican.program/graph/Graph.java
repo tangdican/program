@@ -1,5 +1,6 @@
 package com.github.tomdican.program.graph;
 
+import com.github.tomdican.program.tree.Tree;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -11,9 +12,13 @@ import java.util.Stack;
 public class Graph {
 
     public static void main(String[] args) {
-//        Vertex adj = createGraph();
-//      //  breathFirstSearch(adj,0);
-//      //  depthFirstSearch(adj,0);
+        Vertex adj = createGraph();
+      //  breathFirstSearch(adj,0);
+        depthFirstSearch(adj,0);
+        System.out.println("");
+        depthFirstSearchRecursively(adj,0,new boolean[adj.V]);
+        System.out.println("");
+        topologicalSort(adj);
 //
 ////        int motherVertice = findMotherVertices(adj);
 ////        System.out.println();
@@ -33,10 +38,9 @@ public class Graph {
 
 
         // best first search
-        Vertex adj = createGraph2();
-        bestFirstSearch(adj, 0);
+//        Vertex adj = createGraph2();
+//        bestFirstSearch(adj, 0);
     }
-
 
     /**
      * bestFirstSearch
@@ -332,7 +336,89 @@ public class Graph {
         }
     }
 
+    /**
+     * store in stack like post-order,so print pre-order from right to left
+     * print a path from start point to end point ,then another path of adjacent;
+     * like pre-order
+     *
+     * input:
+     *   vertex 0 :1,4,
+         vertex 1 :2,3,4,
+         vertex 2 :3,
+         vertex 3 :4,
+         vertex 4 :
+     *
+     * output: 0,1,2,3,4
+     *
+     * @param adj
+     */
+    static void topologicalSort(Vertex adj) {
+        Stack<Integer> stack = new Stack();
+        boolean visited[] = new boolean[adj.V];
+
+        for (int i = 0; i < adj.V; i++)
+            if (visited[i] == false) {
+                topologicalSortUtil(adj,i,visited,stack);
+            }
+
+        while (!stack.isEmpty()) {
+            System.out.print(stack.pop() + ",");
+        }
+    }
+
+    static void topologicalSortUtil(Vertex adj, int v, boolean visited[], Stack<Integer> stack) {
+        visited[v] = true;
+
+        Iterator<Integer> iterator = adj.adjListArray[v].iterator();
+
+        while (iterator.hasNext()) {
+            int a = iterator.next();
+            if (!visited[a])
+                topologicalSortUtil(adj, a, visited, stack);
+        }
+
+        stack.push(v);
+    }
+
     /***
+     * print a path from start point to end point ,then another path of adjacent;
+     * like pre-order
+     *
+     * input:
+     *   vertex 0 :1,4,
+         vertex 1 :2,3,4,
+         vertex 2 :3,
+         vertex 3 :4,
+         vertex 4 :
+
+     * output: ,0,1,2,3,4
+     *
+     * @param adj
+     * @param start
+     */
+    private static void depthFirstSearchRecursively(Vertex adj, int start, boolean visited[]) {
+        System.out.print(","+start);
+        visited[start] = true;
+        Iterator<Integer> iterator = adj.adjListArray[start].iterator();
+        while (iterator.hasNext()) {
+            int a = iterator.next();
+            if (!visited[a]) {
+                depthFirstSearchRecursively(adj, a, visited);
+            }
+        }
+    }
+
+    /***
+     * print a path from start point to end point ,then another path of adjacent;
+     * like pre-order
+     *
+     * input:
+     *   vertex 0 :1,4,
+         vertex 1 :2,3,4,
+         vertex 2 :3,
+         vertex 3 :4,
+         vertex 4 :
+
      * output: ,0,4,3,2,1
      *
      * @param adj
@@ -356,9 +442,10 @@ public class Graph {
                     visited[r] = true;
                 }
             }
-
         }
     }
+
+
 
     /**
      * output: ,0,1,4,2,3
@@ -401,21 +488,21 @@ public class Graph {
         int V = 5;
         Vertex adj = new Vertex(V);
         // annotation the line when testing the findMotherVertices method
-//        addEdge(adj, 0, 1);
-//        addEdge(adj, 0, 4);
-//        addEdge(adj, 1, 2);
-//        addEdge(adj, 1, 3);
-//        addEdge(adj, 1, 4);
-//        addEdge(adj, 2, 3);
-//        addEdge(adj, 3, 4);
+        addEdge(adj, 0, 1);
+        addEdge(adj, 0, 4);
+        addEdge(adj, 1, 2);
+        addEdge(adj, 1, 3);
+        addEdge(adj, 1, 4);
+        addEdge(adj, 2, 3);
+        addEdge(adj, 3, 4);
 
         // count path
-        addEdge(adj, 0, 1);
-        addEdge(adj, 0, 2);
-        addEdge(adj, 0, 3);
-        addEdge(adj, 2, 0);
-        addEdge(adj, 2, 1);
-        addEdge(adj, 1, 3);
+//        addEdge(adj, 0, 1);
+//        addEdge(adj, 0, 2);
+//        addEdge(adj, 0, 3);
+//        addEdge(adj, 2, 0);
+//        addEdge(adj, 2, 1);
+//        addEdge(adj, 1, 3);
 
         printGraph(adj,V);
         return adj;
