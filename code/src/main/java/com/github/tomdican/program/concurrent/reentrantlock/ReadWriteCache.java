@@ -104,7 +104,7 @@ public class ReadWriteCache {
             return this.getQueuedReaderThreads();
         }
         Collection<Thread> getQueuedThreads1() {
-            List<Thread> list = (List)this.getQueuedThreads();
+            List<Thread> list = (List)super.getQueuedThreads();
             Collections.reverse(list);
             return list;
         }
