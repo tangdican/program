@@ -18,20 +18,35 @@ public class LongestPath {
 //        g.addEdge(3, new AdjNode(4, -1));
 //        g.addEdge(4, new AdjNode(5, -2));
 
+        // 0 1 3 4
+        // 0 1 3 5
+        // 0 1 4 3 5
+        // 0 2 4 3 5
+        // 0 2 4 3
+        // 0 2 5
+        // 0 2 3 5
+        // 0 2 3 4
+        // 0 2 6
         g.addEdge(0, new AdjNode(1, 1));
         g.addEdge(0, new AdjNode(2, 1));
         g.addEdge(1, new AdjNode(3, 1));
-        g.addEdge(1, new AdjNode(2, 1));
+        g.addEdge(1, new AdjNode(4, 1));
         g.addEdge(2, new AdjNode(4, 1));
         g.addEdge(2, new AdjNode(5, 1));
         g.addEdge(2, new AdjNode(3, 1));
         g.addEdge(2, new AdjNode(6, 1));
         g.addEdge(3, new AdjNode(5, 1));
         g.addEdge(3, new AdjNode(4, 1));
-        g.addEdge(4, new AdjNode(5, 1));
+        g.addEdge(4, new AdjNode(3, 1));
 
         int s = 2;
         graph = g;
+        // 4 5 3 1 2 0
+
+        // 1 3(1 4(1
+        // 3 5(2 4(2
+        // 5
+        // 4 3(3
         longestPath(s);
     }
 
@@ -58,17 +73,13 @@ public class LongestPath {
     static BaseGraph<AdjNode> graph;
 
     static void topologicalSortUtil(int v, boolean visited[], Stack<Integer> stack) {
-        // Mark the current node as visited
         visited[v] = true;
 
-        // Recur for all the vertices adjacent to this vertex
         for (AdjNode adj: graph.getAdj(v)) {
             if (!visited[adj.getV()])
                 topologicalSortUtil(adj.getV(), visited, stack);
         }
 
-        // Push current vertex to stack which stores topological
-        // sort
         stack.push(v);
     }
 
@@ -78,29 +89,21 @@ public class LongestPath {
         Stack<Integer>  stack = new Stack<>();
         int dist[] = new int[V];
 
-        // Mark all the vertices as not visited
         boolean[] visited = new boolean[V];
         for (int i = 0; i < V; i++)
             visited[i] = false;
 
-        // Call the recursive helper function to store Topological
-        // Sort starting from all vertices one by one
         for (int i = 0; i < V; i++)
             if (visited[i] == false)
                 topologicalSortUtil(i, visited, stack);
 
-        // Initialize distances to all vertices as infinite and
-        // distance to source as 0
         for (int i = 0; i < V; i++)
             dist[i] = -1;
         dist[s] = 0;
 
-        // Process vertices in topological order
         while (!stack.empty()) {
-            // Get the next vertex from topological order
             int u = stack.pop();
 
-            // Update distances of all adjacent vertices
             if (dist[u] != -1) {
                 for (AdjNode adj: graph.getAdj(u)) {
                     if (dist[adj.getV()] < dist[u] + adj.getWeight())
@@ -109,7 +112,6 @@ public class LongestPath {
             }
         }
 
-        // print the longest distance
         for (int i = 0; i < V; i++) {
             System.out.print(",["+i+"]" + dist[i]);
         }
