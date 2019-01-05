@@ -1,8 +1,8 @@
 package com.github.tomdican.program.concurrent.reentrantlock;
 
+import com.github.tomdican.program.concurrent.locks.AbstractQueuedSynchronizer;
 import java.util.Collection;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.AbstractQueuedSynchronizer;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 
