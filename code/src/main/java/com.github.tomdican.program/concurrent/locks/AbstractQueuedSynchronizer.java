@@ -34,6 +34,7 @@
  */
 
 package com.github.tomdican.program.concurrent.locks;
+import java.lang.reflect.Field;
 import java.util.concurrent.TimeUnit;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -2257,7 +2258,8 @@ public abstract class AbstractQueuedSynchronizer
      * are at it, we do the same for other CASable fields (which could
      * otherwise be done with atomic field updaters).
      */
-    private static final Unsafe unsafe = Unsafe.getUnsafe();
+    private static Unsafe unsafe = null;
+//    private static final Unsafe unsafe = Unsafe.getUnsafe();
     private static final long stateOffset;
     private static final long headOffset;
     private static final long tailOffset;
@@ -2266,6 +2268,7 @@ public abstract class AbstractQueuedSynchronizer
 
     static {
         try {
+            unsafe = getUnsafeInstance();
             stateOffset = unsafe.objectFieldOffset
                 (AbstractQueuedSynchronizer.class.getDeclaredField("state"));
             headOffset = unsafe.objectFieldOffset
@@ -2278,6 +2281,15 @@ public abstract class AbstractQueuedSynchronizer
                 (Node.class.getDeclaredField("next"));
 
         } catch (Exception ex) { throw new Error(ex); }
+    }
+
+    // load the unsafe class
+    private static Unsafe getUnsafeInstance() throws SecurityException,
+        NoSuchFieldException, IllegalArgumentException,
+        IllegalAccessException {
+        Field theUnsafeInstance = Unsafe.class.getDeclaredField("theUnsafe");
+        theUnsafeInstance.setAccessible(true);
+        return (Unsafe) theUnsafeInstance.get(Unsafe.class);
     }
 
     /**
