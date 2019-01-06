@@ -2,6 +2,7 @@ package com.github.tomdican.program.concurrent.reentrantlock;
 
 import com.github.tomdican.program.concurrent.locks.AbstractQueuedSynchronizer;
 import java.lang.reflect.Field;
+import java.util.Collection;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
@@ -186,6 +187,102 @@ public class ReentrantReadWriteLock  implements ReadWriteLock {
                 }
             }
         }
+
+        protected final boolean tryReleaseShared(int unused) {
+            Thread current = Thread.currentThread();
+            if (firstReader == current) {
+                // assert firstReaderHoldCount > 0;
+                if (firstReaderHoldCount == 1)
+                    firstReader = null;
+                else
+                    firstReaderHoldCount--;
+            } else {
+                HoldCounter rh = cachedHoldCounter;
+                if (rh == null || rh.tid != getThreadId(current))
+                    rh = readHolds.get();
+                int count = rh.count;
+                if (count <= 1) {
+                    readHolds.remove();
+                    if (count <= 0)
+                        throw unmatchedUnlockException();
+                }
+                --rh.count;
+            }
+            for (;;) {
+                int c = getState();
+                int nextc = c - SHARED_UNIT;
+                if (compareAndSetState(c, nextc))
+                    // Releasing the read lock has no effect on readers,
+                    // but it may allow waiting writers to proceed if
+                    // both read and write locks are now free.
+                    return nextc == 0;
+            }
+        }
+        private IllegalMonitorStateException unmatchedUnlockException() {
+            return new IllegalMonitorStateException(
+                "attempt to unlock read lock, not locked by current thread");
+        }
+
+
+        protected final boolean tryAcquire(int acquires) {
+            Thread current = Thread.currentThread();
+            int c = getState();
+            int w = exclusiveCount(c);
+            if (c != 0) {
+                // (Note: if c != 0 and w == 0 then shared count != 0)
+                if (w == 0 || current != getExclusiveOwnerThread())
+                    return false;
+                if (w + exclusiveCount(acquires) > MAX_COUNT)
+                    throw new Error("Maximum lock count exceeded");
+                // Reentrant acquire
+                setState(c + acquires);
+                return true;
+            }
+            if (writerShouldBlock() ||
+                !compareAndSetState(c, c + acquires))
+                return false;
+            setExclusiveOwnerThread(current);
+            return true;
+        }
+
+        protected final boolean tryRelease(int releases) {
+            if (!isHeldExclusively())
+                throw new IllegalMonitorStateException();
+            int nextc = getState() - releases;
+            boolean free = exclusiveCount(nextc) == 0;
+            if (free)
+                setExclusiveOwnerThread(null);
+            setState(nextc);
+            return free;
+        }
+
+        final int getReadHoldCount() {
+            if (getReadLockCount() == 0)
+                return 0;
+
+            Thread current = Thread.currentThread();
+            if (firstReader == current)
+                return firstReaderHoldCount;
+
+            HoldCounter rh = cachedHoldCounter;
+            if (rh != null && rh.tid == getThreadId(current))
+                return rh.count;
+
+            int count = readHolds.get().count;
+            if (count == 0) readHolds.remove();
+            return count;
+        }
+        final int getReadLockCount() {
+            return sharedCount(getState());
+        }
+
+        protected final boolean isHeldExclusively() {
+            return getExclusiveOwnerThread() == Thread.currentThread();
+        }
+
+        final int getWriteHoldCount() {
+            return isHeldExclusively() ? exclusiveCount(getState()) : 0;
+        }
     }
 
     static final class NonfairSync extends Sync {
@@ -286,5 +383,27 @@ public class ReentrantReadWriteLock  implements ReadWriteLock {
             return null;
         }
     }
+
+    public int getReadHoldCount() {
+        return sync.getReadHoldCount();
+    }
+
+    protected Collection<Thread> getQueuedWriterThreads() {
+        return sync.getExclusiveQueuedThreads();
+    }
+
+
+    protected Collection<Thread> getQueuedReaderThreads() {
+        return sync.getSharedQueuedThreads();
+    }
+    protected Collection<Thread> getQueuedThreads() {
+        return sync.getQueuedThreads();
+    }
+
+
+    public int getWriteHoldCount() {
+        return sync.getWriteHoldCount();
+    }
+
 
 }
