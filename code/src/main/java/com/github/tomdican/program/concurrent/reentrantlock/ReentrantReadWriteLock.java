@@ -107,7 +107,6 @@ public class ReentrantReadWriteLock  implements ReadWriteLock {
             int c = getState();
             // if writelock,return
             // 写锁占用就返回
-            // 写锁有状态，写锁线程不为当前线程时，其他线程也能获取读锁；
             if (exclusiveCount(c) != 0 && // 是否写锁有状态，可能没占用
                 getExclusiveOwnerThread() != current) // 是否占用线程为当前线程
                 return -1;
@@ -138,7 +137,8 @@ public class ReentrantReadWriteLock  implements ReadWriteLock {
             return fullTryAcquireShared(current);
         }
 
-        // for set state
+        // set state for loop
+        // many read lock threads set the same state field
         final int fullTryAcquireShared(Thread current) {
             HoldCounter rh = null;
             for (;;) {
@@ -212,9 +212,6 @@ public class ReentrantReadWriteLock  implements ReadWriteLock {
                 int c = getState();
                 int nextc = c - SHARED_UNIT;
                 if (compareAndSetState(c, nextc))
-                    // Releasing the read lock has no effect on readers,
-                    // but it may allow waiting writers to proceed if
-                    // both read and write locks are now free.
                     return nextc == 0;
             }
         }

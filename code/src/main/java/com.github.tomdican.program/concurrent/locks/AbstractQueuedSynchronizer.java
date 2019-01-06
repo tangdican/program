@@ -687,10 +687,10 @@ public abstract class AbstractQueuedSynchronizer
                 if (ws == Node.SIGNAL) {
                     if (!compareAndSetWaitStatus(h, Node.SIGNAL, 0))
                         continue;            // loop to recheck cases
-                    unparkSuccessor(h);
+                    unparkSuccessor(h);// 前节点释放读锁之前，当前节点线程就能被激活，获取读锁，更快速；
                 }
                 else if (ws == 0 &&
-                         !compareAndSetWaitStatus(h, 0, Node.PROPAGATE))
+                         !compareAndSetWaitStatus(h, 0, Node.PROPAGATE))// 为了把当前节点状态<0,激活下一个读锁
                     continue;                // loop on failed CAS
             }
             if (h == head)                   // loop if head changed
@@ -954,9 +954,9 @@ public abstract class AbstractQueuedSynchronizer
             for (;;) {
                 final Node p = node.predecessor();
                 if (p == head) {
-                    int r = tryAcquireShared(arg);
+                    int r = tryAcquireShared(arg);// 排队后获取到的读锁
                     if (r >= 0) {
-                        setHeadAndPropagate(node, r);
+                        setHeadAndPropagate(node, r); // 前节点还没有释放读锁，直接设置当前节点为头节点
                         p.next = null; // help GC
                         if (interrupted)
                             selfInterrupt();
@@ -964,8 +964,8 @@ public abstract class AbstractQueuedSynchronizer
                         return;
                     }
                 }
-                if (shouldParkAfterFailedAcquire(p, node) &&
-                    parkAndCheckInterrupt())
+                if (shouldParkAfterFailedAcquire(p, node) && // 排队时一直需要把前节点设为signal状态
+                    parkAndCheckInterrupt())// 线程等待，避免太多空循环
                     interrupted = true;
             }
         } finally {
@@ -1280,7 +1280,7 @@ public abstract class AbstractQueuedSynchronizer
      *        and can represent anything you like.
      */
     public final void acquireShared(int arg) {
-        if (tryAcquireShared(arg) < 0)
+        if (tryAcquireShared(arg) < 0) // if条件成立是，写锁占用时，所有读锁需要排队，if条件不成立是，没有写锁占用，所有读锁不用排队获取读锁；
             doAcquireShared(arg);
     }
 
