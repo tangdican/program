@@ -3,6 +3,11 @@ package com.github.tomdican.program.concurrent.pool.recursive;
 import java.util.Arrays;
 import java.util.concurrent.RecursiveAction;
 
+/**
+ *
+ * source: https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/RecursiveAction.html
+ *
+ */
 public class SortTask extends RecursiveAction {
 
     public static void main(String[] args) {
@@ -20,9 +25,7 @@ public class SortTask extends RecursiveAction {
         sortTask.compute();
         for (int i = 1000; i < 1010; i++) {
             System.out.println(","+a[i]);
-
         }
-
     }
 
     final long[] array; final int lo, hi;
