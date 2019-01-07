@@ -1,4 +1,4 @@
-package com.github.tomdican.program.concurrent.pool.recursive;
+package com.github.tomdican.program.concurrent.pool.forkjoin.recursive;
 
 import java.util.concurrent.RecursiveAction;
 
