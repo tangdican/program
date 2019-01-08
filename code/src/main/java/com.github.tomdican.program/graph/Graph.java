@@ -12,7 +12,7 @@ import java.util.Stack;
 public class Graph {
 
     public static void main(String[] args) {
-        Vertex adj = createGraph();
+     //   Vertex adj = createGraph();
       //  breathFirstSearch(adj,0);
 //        depthFirstSearch(adj,0);
 //        System.out.println("");
@@ -31,19 +31,82 @@ public class Graph {
 
 
 //// bidirectional search
-//       Vertex adj = createGraph2();
-//        if (biDirSearch(adj,0, adj.V-1, adj.V) == -1) {
+//       Vertex adj2 = createGraph2();
+//        if (biDirSearch(adj2,0, adj2.V-1, adj.V) == -1) {
 //            System.out.println("Path don't exist between");
 //        }
 
 
         // best first search
-//        Vertex adj = createGraph2();
-//        bestFirstSearch(adj, 0);
+//        Vertex adj2 = createGraph2();
+//        bestFirstSearch(adj2, 0);
 
         // detect cycle
-        boolean b = detectCycleWithdirected(adj, 0, new boolean[adj.V]);
-        System.out.println(b);
+//        boolean b = detectCycleWithdirected(adj, 0, new boolean[adj.V]);
+//        System.out.println(b);
+
+        Vertex adj2 = createGraph2();
+        printKCore(adj2, 3);
+
+
+    }
+
+    private static void printKCore(Vertex adj,int k) {
+        boolean[] visited = new boolean[adj.V];
+        int[] degree = new int[adj.V];
+
+        int startIndex = 0;
+        int minDeg = adj.V;
+        for (int i = 0; i < adj.V; i++) {
+            degree[i] = adj.adjListArray[i].size();
+            if (degree[i] < minDeg) {
+                minDeg = degree[i];
+                startIndex = i;
+            }
+        }
+
+        setDegreeDFS(adj, startIndex, visited, degree, k);
+        for (int i = 0; i < adj.V; i++) {
+            if (!visited[i]) {
+                setDegreeDFS(adj,i,visited,degree,k);
+            }
+        }
+
+        // print k core
+        for (int i = 0; i < adj.V; i++) {
+            visited[i] = false;
+        }
+        for (int i = 0; i < adj.V; i++) {
+            if (degree[i] >= k) {
+                System.out.print("," + i+"-->");
+                LinkedList<Integer> list = adj.adjListArray[i];
+                for (int o:list) {
+                    if (degree[o] >= k && !visited[o]) {
+                        System.out.print("," + o);
+                    }
+                //    visited[o] = true;
+                }
+                System.out.println("");
+            }
+        }
+    }
+
+    private static boolean setDegreeDFS(Vertex adj, int startIndex, boolean[] visited, int[] degree, int k) {
+        visited[startIndex] = true;
+        LinkedList<Integer> list = adj.adjListArray[startIndex];
+        for (Integer o:list) {
+            // delete parent node,decrement the child
+            if (degree[startIndex] < k) {
+                degree[o]--;
+            }
+            if (!visited[o]) {
+                // delete child node,decrement the parent
+                if (setDegreeDFS(adj, o, visited, degree, k)) {
+                    degree[startIndex]--;
+                }
+            }
+        }
+        return degree[startIndex] < k;
     }
 
     private static boolean detectCycleWithdirected(Vertex adj,int i, boolean[] visited) {
@@ -94,29 +157,56 @@ public class Graph {
 
     private static Vertex createGraph2() {
         // bidirectional search
-        // no of vertices in graph
-        int n=15;
+//        // no of vertices in graph
+//        int n=15;
+//
+//        // source vertex
+//        int s=0;
+//
+//        // target vertex
+//        int t=14;
+//        Vertex adj = new Vertex(n);
+//        addEdge2(adj,0, 4);
+//        addEdge2(adj,1, 4);
+//        addEdge2(adj,2, 5);
+//        addEdge2(adj,3, 5);
+//        addEdge2(adj,4, 6);
+//        addEdge2(adj,5, 6);
+//        addEdge2(adj,6, 7);
+//        addEdge2(adj,7, 8);
+//        addEdge2(adj,8, 9);
+//        addEdge2(adj,8, 10);
+//        addEdge2(adj,9, 11);
+//        addEdge2(adj,9, 12);
+//        addEdge2(adj,10, 13);
+//        addEdge2(adj,10, 14);
 
-        // source vertex
-        int s=0;
 
-        // target vertex
-        int t=14;
-        Vertex adj = new Vertex(n);
-        addEdge2(adj,0, 4);
-        addEdge2(adj,1, 4);
+
+        // find k core
+        Vertex adj = new Vertex(9);
+        addEdge2(adj,0, 1);
+        addEdge2(adj,0, 2);
+        addEdge2(adj,1, 2);
+        addEdge2(adj,1, 5);
+        addEdge2(adj,2, 3);
+        addEdge2(adj,2, 4);
         addEdge2(adj,2, 5);
-        addEdge2(adj,3, 5);
+        addEdge2(adj,2, 6);
+        addEdge2(adj,3, 4);
+        addEdge2(adj,3, 6);
+        addEdge2(adj,3, 7);
         addEdge2(adj,4, 6);
+        addEdge2(adj,4, 7);
         addEdge2(adj,5, 6);
+        addEdge2(adj,5, 8);
         addEdge2(adj,6, 7);
-        addEdge2(adj,7, 8);
-        addEdge2(adj,8, 9);
-        addEdge2(adj,8, 10);
-        addEdge2(adj,9, 11);
-        addEdge2(adj,9, 12);
-        addEdge2(adj,10, 13);
-        addEdge2(adj,10, 14);
+        addEdge2(adj,6, 8);
+
+
+
+
+        printGraph(adj,adj.V);
 
         return adj;
     }
