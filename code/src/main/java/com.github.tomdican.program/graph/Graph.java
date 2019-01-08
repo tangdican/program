@@ -14,11 +14,11 @@ public class Graph {
     public static void main(String[] args) {
         Vertex adj = createGraph();
       //  breathFirstSearch(adj,0);
-        depthFirstSearch(adj,0);
-        System.out.println("");
-        depthFirstSearchRecursively(adj,0,new boolean[adj.V]);
-        System.out.println("");
-        topologicalSort(adj);
+//        depthFirstSearch(adj,0);
+//        System.out.println("");
+//        depthFirstSearchRecursively(adj,0,new boolean[adj.V]);
+//        System.out.println("");
+//        topologicalSort(adj);
 //
 ////        int motherVertice = findMotherVertices(adj);
 ////        System.out.println();
@@ -40,6 +40,23 @@ public class Graph {
         // best first search
 //        Vertex adj = createGraph2();
 //        bestFirstSearch(adj, 0);
+
+        // detect cycle
+        boolean b = detectCycleWithdirected(adj, 0, new boolean[adj.V]);
+        System.out.println(b);
+    }
+
+    private static boolean detectCycleWithdirected(Vertex adj,int i, boolean[] visited) {
+        visited[i] = true;
+        LinkedList<Integer> list = adj.adjListArray[i];
+        for (Integer one:list) {
+            if (visited[one]) {
+                return true;
+            } else {
+                return detectCycleWithdirected(adj,one,visited);
+            }
+        }
+        return false;
     }
 
     /**
