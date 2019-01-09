@@ -41,14 +41,53 @@ public class Graph {
 //        Vertex adj2 = createGraph2();
 //        bestFirstSearch(adj2, 0);
 
-        // detect cycle
-//        boolean b = detectCycleWithdirected(adj, 0, new boolean[adj.V]);
+        // detect cycle with the undirected graph
+        //Vertex adj2 = createGraph2();
+//        boolean b = detectCycleWithUndirected(adj2, 0, new boolean[adj2.V]);
 //        System.out.println(b);
 
-        Vertex adj2 = createGraph2();
-        printKCore(adj2, 3);
+        // find k core
+//        Vertex adj2 = createGraph2();
+//        printKCore(adj2, 3);
+
+        // detect cycle with the directed graph
+        Vertex adj = createGraph();
+        boolean b = detectCycleWithDirected(adj, 0, new boolean[adj.V],new boolean[adj.V]);
+        System.out.println(b);
 
 
+    }
+
+    private static boolean detectCycleWithDirected(Vertex adj, int start, boolean[] visited, boolean[] recStack) {
+
+        // Call the recursive helper function to
+        // detect cycle in different DFS trees
+        for (int i = 0; i < adj.V; i++)
+            if (detectCyclicDirected(adj, i, visited, recStack))
+                return true;
+
+        return false;
+    }
+
+    private static boolean detectCyclicDirected(Vertex adj,int i, boolean[] visited, boolean[] recStack) {
+        if (recStack[i])
+            return true;
+
+        if (visited[i]) // detect not back edge
+            return false;
+
+        visited[i] = true;
+        recStack[i] = true;
+
+        List<Integer> children = adj.adjListArray[i];
+
+        for (Integer c: children)
+            if (detectCyclicDirected(adj, c, visited, recStack))
+                return true;
+
+        recStack[i] = false; // exit of the function stack
+
+        return false;
     }
 
     private static void printKCore(Vertex adj,int k) {
@@ -109,14 +148,14 @@ public class Graph {
         return degree[startIndex] < k;
     }
 
-    private static boolean detectCycleWithdirected(Vertex adj,int i, boolean[] visited) {
+    private static boolean detectCycleWithUndirected(Vertex adj,int i, boolean[] visited) {
         visited[i] = true;
         LinkedList<Integer> list = adj.adjListArray[i];
         for (Integer one:list) {
             if (visited[one]) {
                 return true;
             } else {
-                return detectCycleWithdirected(adj,one,visited);
+                return detectCycleWithUndirected(adj,one,visited);
             }
         }
         return false;
@@ -595,13 +634,13 @@ public class Graph {
         int V = 5;
         Vertex adj = new Vertex(V);
         // annotation the line when testing the findMotherVertices method
-        addEdge(adj, 0, 1);
-        addEdge(adj, 0, 4);
-        addEdge(adj, 1, 2);
-        addEdge(adj, 1, 3);
-        addEdge(adj, 1, 4);
-        addEdge(adj, 2, 3);
-        addEdge(adj, 3, 4);
+//        addEdge(adj, 0, 1);
+//        addEdge(adj, 0, 4);
+//        addEdge(adj, 1, 2);
+//        addEdge(adj, 1, 3);
+//        addEdge(adj, 1, 4);
+//        addEdge(adj, 2, 3);
+//        addEdge(adj, 3, 4);
 
         // count path
 //        addEdge(adj, 0, 1);
@@ -610,6 +649,17 @@ public class Graph {
 //        addEdge(adj, 2, 0);
 //        addEdge(adj, 2, 1);
 //        addEdge(adj, 1, 3);
+
+
+        // detect the cycle in directed graph
+        addEdge(adj, 0, 1);
+        addEdge(adj, 0, 4);
+        addEdge(adj, 1, 2);
+        addEdge(adj, 1, 3);
+        addEdge(adj, 1, 4);
+        addEdge(adj, 2, 3);
+        addEdge(adj, 3, 4);
+        addEdge(adj, 3, 0);
 
         printGraph(adj,V);
         return adj;
