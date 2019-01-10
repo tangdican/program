@@ -3,40 +3,42 @@ package com.github.tomdican.program.bit;
 public class BitOperator {
     public static void main(String [] args){
 
-        println("-1",Integer.toBinaryString(-1)+" ,len: "+ Integer.toBinaryString(-1).length());
-        println("-2",Integer.toBinaryString(-2)+" ,len: "+ Integer.toBinaryString(-2).length());
-        println("0<<1",Integer.toBinaryString(0<<1)+" ,len: "+ Integer.toBinaryString(0<<1).length());
-        println("-1<<1",Integer.toBinaryString(-1<<1)+" ,len: "+ Integer.toBinaryString(-1<<1).length());
-        println("0>>1",Integer.toBinaryString(0>>1)+" ,len: "+ Integer.toBinaryString(0>>1).length());
-        println("1>>1",Integer.toBinaryString(1>>1)+" ,len: "+ Integer.toBinaryString(1>>1).length());
-        println("-1>>1",Integer.toBinaryString(-1>>1)+" ,len: "+ Integer.toBinaryString(-1>>1).length());
-        println("-2>>1",Integer.toBinaryString(-2>>1)+" ,len: "+ Integer.toBinaryString(-2>>1).length());
-        println("-3>>1",Integer.toBinaryString(-3>>1)+" ,len: "+ Integer.toBinaryString(-3>>1).length());
-        println("2>>>1",Integer.toBinaryString((2>>>1))+" ,len: "+ Integer.toBinaryString((2>>>1)).length());
-        println("1>>>1",Integer.toBinaryString((1>>>1))+" ,len: "+ Integer.toBinaryString((1>>>1)).length());
-        println("0>>>1",Integer.toBinaryString((0>>>1))+" ,len: "+ Integer.toBinaryString((0>>>1)).length());
-        println("-1>>>1",Integer.toBinaryString(((-1)>>>1))+" ,len: "+ Integer.toBinaryString(((-1)>>>1)).length());
-        println("-2>>>1",Integer.toBinaryString(((-2)>>>1))+" ,len: "+ Integer.toBinaryString(((-2)>>>1)).length());
-        println("-3>>>1",Integer.toBinaryString(((-3)>>>1))+" ,len: "+ Integer.toBinaryString(((-3)>>>1)).length());
-        println(Integer.toBinaryString((-1)>>>0)+"",Integer.toString((-1)>>>0));
-        println(Integer.toBinaryString((-1)>>>1)+"",Integer.toString((-1)>>>1));
-        println(Integer.toBinaryString(((-1)>>>1) + 1)+"",Integer.toString(((-1)>>>1) + 1));
-        println(Integer.toBinaryString((-1)>>>2)+"",Integer.toString((-1)>>>2));
+//        println("-1",Integer.toBinaryString(-1)+" ,len: "+ Integer.toBinaryString(-1).length());
+//        println("-2",Integer.toBinaryString(-2)+" ,len: "+ Integer.toBinaryString(-2).length());
+//        println("0<<1",Integer.toBinaryString(0<<1)+" ,len: "+ Integer.toBinaryString(0<<1).length());
+//        println("-1<<1",Integer.toBinaryString(-1<<1)+" ,len: "+ Integer.toBinaryString(-1<<1).length());
+//        println("0>>1",Integer.toBinaryString(0>>1)+" ,len: "+ Integer.toBinaryString(0>>1).length());
+//        println("1>>1",Integer.toBinaryString(1>>1)+" ,len: "+ Integer.toBinaryString(1>>1).length());
+//        println("-1>>1",Integer.toBinaryString(-1>>1)+" ,len: "+ Integer.toBinaryString(-1>>1).length());
+//        println("-2>>1",Integer.toBinaryString(-2>>1)+" ,len: "+ Integer.toBinaryString(-2>>1).length());
+//        println("-3>>1",Integer.toBinaryString(-3>>1)+" ,len: "+ Integer.toBinaryString(-3>>1).length());
+//        println("2>>>1",Integer.toBinaryString((2>>>1))+" ,len: "+ Integer.toBinaryString((2>>>1)).length());
+//        println("1>>>1",Integer.toBinaryString((1>>>1))+" ,len: "+ Integer.toBinaryString((1>>>1)).length());
+//        println("0>>>1",Integer.toBinaryString((0>>>1))+" ,len: "+ Integer.toBinaryString((0>>>1)).length());
+//        println("-1>>>1",Integer.toBinaryString(((-1)>>>1))+" ,len: "+ Integer.toBinaryString(((-1)>>>1)).length());
+//        println("-2>>>1",Integer.toBinaryString(((-2)>>>1))+" ,len: "+ Integer.toBinaryString(((-2)>>>1)).length());
+//        println("-3>>>1",Integer.toBinaryString(((-3)>>>1))+" ,len: "+ Integer.toBinaryString(((-3)>>>1)).length());
+//        println(Integer.toBinaryString((-1)>>>0)+"",Integer.toString((-1)>>>0));
+//        println(Integer.toBinaryString((-1)>>>1)+"",Integer.toString((-1)>>>1));
+//        println(Integer.toBinaryString(((-1)>>>1) + 1)+"",Integer.toString(((-1)>>>1) + 1));
+//        println(Integer.toBinaryString((-1)>>>2)+"",Integer.toString((-1)>>>2));
+//
+//        int x32  = 0x80000000;
+//        int x311 = 0x7fffffff;
+//        String s31 = Integer.toBinaryString(x32);
+//        String s32 = Integer.toBinaryString(x32>>1);
+//        String s321 = Integer.toBinaryString(x32>>>1);
+//        println( "len: " + s31.length() +" bit: "+ s31 + " bit x31",Integer.toString(x32));
+//        println( "len: " + s32.length() +" bit: "+ s32 + " bit x32>>1","");
+//        println( "len: " + s321.length() +" bit: "+ s321 + " bit x32>>>1","");
+//
+//        println("bit x311",Integer.toString(x311));
+//        println("bit x311",Integer.toBinaryString(x311));
+//        println("max integer",String.valueOf(Math.pow(2,31)));
+//       println("max test",String.valueOf(2147483647));
+//       println("a^b^b is a:",String.valueOf((char)('a'^'b'^'b')));
 
-        int x32  = 0x80000000;
-        int x311 = 0x7fffffff;
-        String s31 = Integer.toBinaryString(x32);
-        String s32 = Integer.toBinaryString(x32>>1);
-        String s321 = Integer.toBinaryString(x32>>>1);
-        println( "len: " + s31.length() +" bit: "+ s31 + " bit x31",Integer.toString(x32));
-        println( "len: " + s32.length() +" bit: "+ s32 + " bit x32>>1","");
-        println( "len: " + s321.length() +" bit: "+ s321 + " bit x32>>>1","");
-
-        println("bit x311",Integer.toString(x311));
-        println("bit x311",Integer.toBinaryString(x311));
-        println("max integer",String.valueOf(Math.pow(2,31)));
-       println("max test",String.valueOf(2147483647));
-       println("a^b^b is a:",String.valueOf((char)('a'^'b'^'b')));
+       println(Long.toBinaryString((-4L)),""+Long.toBinaryString((-4L)).length());
 
 //       testMaxIntToNegative();
     }

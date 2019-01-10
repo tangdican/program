@@ -54,5 +54,10 @@ public class CountTask extends RecursiveTask<Integer> {
         } catch (InterruptedException e) {
         } catch (ExecutionException e) {
         }
+//
+//        final int MODE_MASK    = 0xffff << 16;
+//        final int MODE_MASK1    = 0xffff ;
+//        System.out.println(Integer.toBinaryString(MODE_MASK)+","+Integer.toBinaryString(MODE_MASK).length());
+//        System.out.println(Integer.toBinaryString(MODE_MASK1)+","+Integer.toBinaryString(MODE_MASK1).length());
     }
 }
