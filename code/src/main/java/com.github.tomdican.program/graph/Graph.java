@@ -51,11 +51,62 @@ public class Graph {
 //        printKCore(adj2, 3);
 
         // detect cycle with the directed graph
+//        Vertex adj = createGraph();
+//        boolean b = detectCycleWithDirected(adj, 0, new boolean[adj.V],new boolean[adj.V]);
+//        System.out.println(b);
+
+        // detect the cycle in Disjoint Set (Or Union-Find)
         Vertex adj = createGraph();
-        boolean b = detectCycleWithDirected(adj, 0, new boolean[adj.V],new boolean[adj.V]);
-        System.out.println(b);
+        System.out.println(iscyclic(adj));
 
 
+
+    }
+
+    /**
+     * detect the cycle in Disjoint Set (Or Union-Find)
+     *
+     * input:
+     *  vertex 0 :1,
+        vertex 1 :2,
+        vertex 2 :0,
+
+        output: true
+     *
+     * @param adj
+     * @return
+     */
+    static boolean iscyclic(Vertex adj)
+    {
+        int[] parent = new int[adj.V];
+        for (int i = 0; i < adj.V; i++) {
+            parent[i] = -1;
+        }
+
+        for(int i=0;i<adj.V;i++)
+        {
+            int x = find(parent,i);
+            int y = find(parent,adj.adjListArray[i].getFirst());
+
+            if(x==y)
+                return true;
+            union(parent,x,y);
+        }
+        return false;
+    }
+
+    static int find(int parent[],int x)
+    {
+        if(parent[x]==-1)
+            return x;
+        return find(parent,parent[x]);
+    }
+
+    static void union(int parent[],int x,int y)
+    {
+        int xs = find(parent,x);
+        int ys = find(parent,y);
+        parent[xs] = ys;
     }
 
     private static boolean detectCycleWithDirected(Vertex adj, int start, boolean[] visited, boolean[] recStack) {
@@ -631,8 +682,8 @@ public class Graph {
      * @return
      */
     private static Vertex createGraph() {
-        int V = 5;
-        Vertex adj = new Vertex(V);
+//        int V = 5;
+//        Vertex adj = new Vertex(V);
         // annotation the line when testing the findMotherVertices method
 //        addEdge(adj, 0, 1);
 //        addEdge(adj, 0, 4);
@@ -652,14 +703,22 @@ public class Graph {
 
 
         // detect the cycle in directed graph
+//        addEdge(adj, 0, 1);
+//        addEdge(adj, 0, 4);
+//        addEdge(adj, 1, 2);
+//        addEdge(adj, 1, 3);
+//        addEdge(adj, 1, 4);
+//        addEdge(adj, 2, 3);
+//        addEdge(adj, 3, 4);
+//        addEdge(adj, 3, 0);
+
+
+        // detect the cycle in Disjoint Set (Or Union-Find)
+        int V = 3;
+        Vertex adj = new Vertex(V);
         addEdge(adj, 0, 1);
-        addEdge(adj, 0, 4);
         addEdge(adj, 1, 2);
-        addEdge(adj, 1, 3);
-        addEdge(adj, 1, 4);
-        addEdge(adj, 2, 3);
-        addEdge(adj, 3, 4);
-        addEdge(adj, 3, 0);
+        addEdge(adj, 2, 0);
 
         printGraph(adj,V);
         return adj;
