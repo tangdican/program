@@ -56,58 +56,12 @@ public class Graph {
 //        System.out.println(b);
 
         // detect the cycle in Disjoint Set (Or Union-Find)
-        Vertex adj = createGraph();
-        System.out.println(iscyclic(adj));
+
 
 
 
     }
 
-    /**
-     * detect the cycle in Disjoint Set (Or Union-Find)
-     *
-     * input:
-     *  vertex 0 :1,
-        vertex 1 :2,
-        vertex 2 :0,
-
-        output: true
-     *
-     * @param adj
-     * @return
-     */
-    static boolean iscyclic(Vertex adj)
-    {
-        int[] parent = new int[adj.V];
-        for (int i = 0; i < adj.V; i++) {
-            parent[i] = -1;
-        }
-
-        for(int i=0;i<adj.V;i++)
-        {
-            int x = find(parent,i);
-            int y = find(parent,adj.adjListArray[i].getFirst());
-
-            if(x==y)
-                return true;
-            union(parent,x,y);
-        }
-        return false;
-    }
-
-    static int find(int parent[],int x)
-    {
-        if(parent[x]==-1)
-            return x;
-        return find(parent,parent[x]);
-    }
-
-    static void union(int parent[],int x,int y)
-    {
-        int xs = find(parent,x);
-        int ys = find(parent,y);
-        parent[xs] = ys;
-    }
 
     private static boolean detectCycleWithDirected(Vertex adj, int start, boolean[] visited, boolean[] recStack) {
 
