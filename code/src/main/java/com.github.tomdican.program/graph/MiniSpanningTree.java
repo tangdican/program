@@ -1,5 +1,7 @@
 package com.github.tomdican.program.graph;
 
+import java.util.Arrays;
+
 public class MiniSpanningTree {
     static class Graph {
         int V ,E;
@@ -7,7 +9,7 @@ public class MiniSpanningTree {
         Graph(int v,int e) {
             V = v;
             E = e;
-            edges = new Edge[V];
+            edges = new Edge[e];
         }
 
         public void add(int e, int src, int dest) {
@@ -15,22 +17,90 @@ public class MiniSpanningTree {
             edges[e].dest = dest;
             edges[e].src = src;
         }
+
+        public void add(int e, int src, int dest, int weight) {
+            edges[e] = new Edge();
+            edges[e].dest = dest;
+            edges[e].src = src;
+            edges[e].weight = weight;
+        }
+
+        public void sort() {
+            Arrays.sort(edges);
+        }
+
     }
-    static class Edge {
-        int src,dest;
+    static class Edge implements Comparable<Edge> {
+        int src,dest,weight;
+
+        @Override
+        public int compareTo(Edge e) {
+            return this.weight - e.weight;
+        }
     }
 
     public static void main(String[] args) {
         Graph adj = createGraph();
+        // is cyclic with find-union
+       // System.out.println(iscyclic(adj));
 
-        System.out.println(iscyclic(adj));
+        // Kruskal's algorithm to find Minimum Spanning Tree
+        kruskalMST(adj);
+    }
+
+    /**
+     * Kruskal's algorithm to find Minimum Spanning Tree
+     *
+     * output:
+     *   edges 0 :2,3,4
+         edges 1 :0,3,5
+         edges 2 :
+         edges 3 :0,1,10
+         edges 4 :
+     *
+     *
+     * @param adj
+     */
+    private static void kruskalMST(Graph adj) {
+        adj.sort();
+
+        Graph newAdj = new Graph(adj.V, adj.E);
+        for (int i = 0; i < adj.E; i++) {
+            newAdj.edges[i] = adj.edges[i];
+            if (iscyclic(newAdj)) {
+                newAdj.edges[i] = null;
+            }
+        }
+
+        printGraph(newAdj);
+    }
+
+    private static void printGraph(Graph newAdj) {
+        for (int i = 0; i < newAdj.E ; i++) {
+            System.out.print("edges "+i+" :");
+            if (newAdj.edges[i] != null) {
+                System.out.print(newAdj.edges[i].src + "," + newAdj.edges[i].dest + ","+newAdj.edges[i].weight);
+            }
+            System.out.println();
+        }
     }
 
     private static Graph createGraph() {
-        Graph adj = new Graph(3,3);
-        adj.add(0, 0 ,1);
-        adj.add(1, 1 ,2);
-        adj.add(2, 2 ,0);
+
+    // is cyclic with find-union
+//        Graph adj = new Graph(3,3);
+//        adj.add(0, 0 ,1);
+//        adj.add(1, 1 ,2);
+//        adj.add(2, 2 ,0);
+
+
+        // Kruskal's algorithm to find Minimum Spanning Tree
+        Graph adj = new Graph(4,5);
+        adj.add(0, 0 ,1, 10);
+        adj.add(1, 0 ,2, 6);
+        adj.add(2, 0 ,3, 5);
+        adj.add(3, 1 ,3, 15);
+        adj.add(4, 2 ,3, 4);
 
         return adj;
     }
@@ -58,6 +128,9 @@ public class MiniSpanningTree {
 
         for(int i=0;i<adj.E;i++)
         {
+            if (adj.edges[i] == null) {
+                continue;
+            }
 
             int x = find(parent,adj.edges[i].src);
             int y = find(parent,adj.edges[i].dest);
