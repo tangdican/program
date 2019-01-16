@@ -16,6 +16,16 @@ import java.nio.file.Paths;
 import java.util.Iterator;
 import java.util.Set;
 
+/**
+ * NIO server
+ *
+ * source: https://blog.csdn.net/xidianliuy/article/details/51612676
+ *
+ * telnet localhost 8081
+ *
+ * input:
+ * get file:file.text
+ */
 public class NIOServer {
     private static final Charset DEFAULT_CHARSET = StandardCharsets.ISO_8859_1;
 
