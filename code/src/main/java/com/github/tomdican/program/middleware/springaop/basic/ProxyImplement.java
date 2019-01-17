@@ -1,4 +1,4 @@
-package com.github.tomdican.program.middleware.springaop;
+package com.github.tomdican.program.middleware.springaop.basic;
 
 public class ProxyImplement implements InterfaceA {
     private InterfaceA interfaceA;
