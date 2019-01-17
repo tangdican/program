@@ -1,14 +1,16 @@
 package com.github.tomdican.program.middleware.springaop.jdkproxy;
 
 import com.github.tomdican.program.middleware.springaop.basic.InterfaceA;
-import com.github.tomdican.program.middleware.springaop.basic.RealImplement;
 import sun.misc.ProxyGenerator;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.lang.reflect.Proxy;
 
+/**
+ * source : https://github.com/crossoverJie/JCSprout/blob/master/MD/SpringAOP.md
+ *
+ */
 public class Main {
     public static void main(String[] args) {
 //        CustomizeHandle handle = new CustomizeHandle(RealImplement.class) ;
