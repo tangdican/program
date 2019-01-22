@@ -37,10 +37,12 @@ public class PrimMST {
         key[0] = 0;
         parent[0] = -1;
         for (int count = 0; count < V-1; count++) {
+            // find the smallest weight without visited
             int u = minKey(key, mstSet);
             mstSet[u] = true;
 
             for (int v = 0; v < V; v++)
+                // ignore the visited and the bigger weight
                 if (graph[u][v]!=0 && mstSet[v] == false &&
                         graph[u][v] < key[v]) {
                     parent[v] = u;
