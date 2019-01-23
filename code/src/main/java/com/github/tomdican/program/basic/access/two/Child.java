@@ -1,6 +1,6 @@
-package com.github.tomdican.program.access.two;
+package com.github.tomdican.program.basic.access.two;
 
-import com.github.tomdican.program.access.one.Parent;
+import com.github.tomdican.program.basic.access.one.Parent;
 
 public class Child{
 

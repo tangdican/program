@@ -1,4 +1,4 @@
-package com.github.tomdican.program.access.one;
+package com.github.tomdican.program.basic.access.one;
 
 public abstract class Parent {
 
