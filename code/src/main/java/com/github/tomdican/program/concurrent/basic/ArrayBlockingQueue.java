@@ -8,6 +8,12 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * FIFO
+ * put and take from 0 to length -1
+ *
+ * @param <E>
+ */
 public class ArrayBlockingQueue<E> extends AbstractQueue<E> implements BlockingQueue<E> {
 
     final Object[] items;
