@@ -2,6 +2,7 @@ package com.github.tomdican.program.concurrent.basic;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.PriorityBlockingQueue;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException {
@@ -11,7 +12,37 @@ public class Main {
 //            list.add(new Main());
 //        }
 
-         testArrayBlockingQueue();
+       //  testArrayBlockingQueue();
+         testPriorityBlockingQueue();
+
+    }
+
+    private static void testPriorityBlockingQueue() {
+        PriorityBlockingQueue<Integer> blockingQueue = new PriorityBlockingQueue<>(5);
+
+        new Thread() {
+            @Override
+            public void run() {
+                try {
+                    for (int i=0;i< 5; i++) {
+                        System.out.println(Thread.currentThread().getName() + " PriorityBlockingQueue take:" + blockingQueue.take());
+                        Thread.sleep(1000);
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+
+        blockingQueue.put(4);
+        blockingQueue.put(7);
+        blockingQueue.put(8);
+        blockingQueue.put(3);
+        blockingQueue.put(2);
+        blockingQueue.put(6);
+        blockingQueue.put(1);
+
+        System.out.println(Thread.currentThread().getName()+ " PriorityBlockingQueue:" + blockingQueue);
 
     }
 
