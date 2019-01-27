@@ -30,14 +30,15 @@ public class Node {
             return;
         }
 
-        Node pre = head.next;
+        Node curr = head.next;
+        Node pre = head;
+        pre.next = null;
         Node node = null;
-        Node curr = head;
         while (curr != null) {
-            node = curr.next;
+            node = curr;
+            curr = curr.next;
             node.next = pre;
             pre = node;
-            curr = curr.next;
         }
 
 
