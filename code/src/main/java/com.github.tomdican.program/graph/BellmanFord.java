@@ -1,5 +1,9 @@
 package com.github.tomdican.program.graph;
 
+/**
+ * find shortest paths from src to all vertices in the given graph
+ * source: https://www.geeksforgeeks.org/bellman-ford-algorithm-dp-23/
+ */
 public class BellmanFord {
     public static void main(String[] args) {
         EdgeGraph.Graph graph = new EdgeGraph.Graph(5, 8);
