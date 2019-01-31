@@ -12,7 +12,38 @@ public class Main {
 //        }
 
        //  testArrayBlockingQueue();
-         testPriorityBlockingQueue();
+//         testPriorityBlockingQueue();
+        testSemaphore();
+
+    }
+
+    private static void testSemaphore() {
+        int max = 10;
+        SemaphoresPool semaphoresPool = new SemaphoresPool(max);
+       new Thread()  {
+           @Override
+           public void run() {
+               System.out.print("lock:");
+               for (int i = 0; i < 2*max; i++) {
+                   try {
+                       System.out.print(", "+semaphoresPool.getItem());
+                   } catch (InterruptedException e) {
+                       e.printStackTrace();
+                   }
+               }
+           }
+       }.start();
+
+        new Thread()  {
+            @Override
+            public void run() {
+                System.out.print("unlock:");
+                for (int i = 0; i < max; i++) {
+                        System.out.print(" ;"+i);
+                        semaphoresPool.putItem(i);
+                }
+            }
+        }.start();
 
     }
 
