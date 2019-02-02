@@ -13,8 +13,40 @@ public class Main {
 
        //  testArrayBlockingQueue();
 //         testPriorityBlockingQueue();
-        testSemaphore();
+//        testSemaphore();
+        testSemaphore2();
 
+    }
+
+    private static void testSemaphore2() {
+        Semaphore semaphore = new Semaphore(4, true);
+        new Thread() {
+            public void run() {
+                try {
+                    for (int i = 0; i < 9; i++) {
+                        semaphore.acquire();
+                        System.out.print(i+"->, ");
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+
+        for (int i = 0; i < 9; i++) {
+            if (i%4==0) {
+                try {
+                    System.out.print("sleep start..");
+                    Thread.sleep(1000);
+                    System.out.println("sleep end..");
+
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            semaphore.release();
+            System.out.print(i+"<-; ");
+        }
     }
 
     private static void testSemaphore() {
