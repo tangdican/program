@@ -14,8 +14,20 @@ public class Main {
        //  testArrayBlockingQueue();
 //         testPriorityBlockingQueue();
 //        testSemaphore();
-        testSemaphore2();
+//        testSemaphore2();
 
+        testCyclicBarrier();
+    }
+
+    private static void testCyclicBarrier() {
+
+        float[][] martrix = {
+                {1,1,1,1},
+                {2,2,2,2},
+                {3,3,3,3},
+                {4,4,4,4}
+        };
+        Solver solver = new Solver(martrix);
     }
 
     private static void testSemaphore2() {
