@@ -3,7 +3,6 @@ package com.github.tomdican.program.concurrent.basic;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.BrokenBarrierException;
-import java.util.concurrent.CyclicBarrier;
 
 public class Solver {
     final int N;
