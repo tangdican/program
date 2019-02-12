@@ -22,6 +22,7 @@ public class JumpSearch  {
             }
         }
 
+        i = Math.min(i, arr.length);
         int loc = i;
         while ((i - --loc) < step) {
             if (arr[loc] == x) {
