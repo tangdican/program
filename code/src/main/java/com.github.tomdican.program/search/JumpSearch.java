@@ -6,7 +6,12 @@ public class JumpSearch  {
                 34, 55, 89, 144, 233, 377, 610};
         int x = 55;
         int index = jumpSearch(arr, x);
+       // int index = jumpSearch1(arr, x);
         System.out.println(arr[index]);
+    }
+
+    private static int jumpSearch1(int[] arr, int x) {
+        return 0;
     }
 
     private static int jumpSearch(int[] arr, int x) {
