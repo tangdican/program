@@ -2,7 +2,7 @@ package com.github.tomdican.program.search;
 
 public class InterpolationSearch {
     public static void main(String[] args) {
-        int x = 35; // Element to be searched
+        int x = 12; // Element to be searched
         int arr[] = new int[]{10, 12, 13, 16,
                 18, 19, 20, 21, 22, 23,
                 24, 33, 35, 42, 47};
@@ -17,12 +17,12 @@ public class InterpolationSearch {
     private static int interpolationSearch(int[] arr, int x) {
 
         int lo = 0, hi = (arr.length - 1);
+        int times = 0;
 
         while (lo <= hi && x >= arr[lo] && x <= arr[hi]) {
-            int xi = (hi-lo) / (arr[hi]-arr[lo]);
-            int pos = lo + (
-                    (xi) * (x - arr[lo])
-            );
+            times++;
+            int xi = ((hi-lo)* (x - arr[lo])) / (arr[hi]-arr[lo]);
+            int pos = lo + xi;
 
             if (arr[pos] == x)
                 return pos;
