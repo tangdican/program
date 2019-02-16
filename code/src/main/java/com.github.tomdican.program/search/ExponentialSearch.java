@@ -2,6 +2,10 @@ package com.github.tomdican.program.search;
 
 import java.util.Arrays;
 
+/**
+ *
+ * source: https://www.geeksforgeeks.org/exponential-search/
+ */
 public class ExponentialSearch {
 
     public static void main(String args[]) {
