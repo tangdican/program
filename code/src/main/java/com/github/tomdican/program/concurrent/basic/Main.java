@@ -2,6 +2,7 @@ package com.github.tomdican.program.concurrent.basic;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Exchanger;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException {
@@ -19,11 +20,61 @@ public class Main {
 //        testCyclicBarrier();
 
         // CountDownLatch
-        Driver d = new Driver();
-        d.main();
+//        Driver d = new Driver();
+//        d.main();
+
+        // exchanger
+        testExchanger();
 
     }
 
+    private static void testExchanger() {
+        Exchanger<String> ex = new Exchanger<String>();
+        new Thread(new ConsumerThread(ex)).start();
+
+        new Thread(new ProducerThread(ex)).start();
+    }
+
+
+    static class ProducerThread implements Runnable {
+        String str;
+        Exchanger<String> ex;
+        ProducerThread(Exchanger<String> ex){
+            this.ex = ex;
+            str = new String();
+        }
+        @Override
+        public void run() {
+            for(int i = 0; i < 3; i ++){
+                str = "Producer" + i;
+                try {
+                    str = ex.exchange(str);
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    System.out.println(e);
+                }
+            }
+        }
+    }
+
+    static class ConsumerThread implements Runnable {
+        String str;
+        Exchanger<String> ex;
+        ConsumerThread(Exchanger<String> ex){
+            this.ex = ex;
+        }
+        @Override
+        public void run() {
+            for(int i = 0; i < 3; i ++){
+                try {
+                    str = ex.exchange(new String());
+                    System.out.println("Got from Producer " + str);
+                } catch (InterruptedException e) {
+                    System.out.println(e);
+                }
+            }
+        }
+    }
 
   static class Driver { // ...
    void main() throws InterruptedException {
