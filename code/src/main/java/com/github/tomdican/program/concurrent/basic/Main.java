@@ -72,7 +72,6 @@ public class Main {
         };
 
         consumer.start();
-
     }
 
     private static void testLinkedBlockingQueue() {
