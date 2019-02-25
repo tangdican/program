@@ -1,8 +1,11 @@
 package com.github.tomdican.program.String;
 
+/**
+ * source: https://www.geeksforgeeks.org/rabin-karp-algorithm-for-pattern-searching/
+ */
 public class RabinKarpSearch {
     public static void main(String[] args) {
-        String txt = "GEEKS FOR GEEKS";
+        String txt = "SGEEKS FOR GEEKS";
         String pat = "GEEK";
         int q = 101; // A prime number
         rabinKarpSearch(pat, txt, q);
@@ -28,21 +31,21 @@ public class RabinKarpSearch {
 
         for (i = 0; i <= N - M; i++) {
             if ( p == t ) {
-
                 for (j = 0; j < M; j++) {
                     if (txt.charAt(i+j) != pat.charAt(j))
                         break;
                 }
-
                 if (j == M)
                     System.out.println("Pattern found at index " + i);
             }
+
+            if ( i < N-M ) {
+                t = (d*(t - txt.charAt(i)*h) + txt.charAt(i+M))%q;
+                if (t < 0)
+                    t = (t + q);
+            }
         }
-        if ( i < N-M ) {
-            t = (d*(t - txt.charAt(i)*h) + txt.charAt(i+M))%q;
-            if (t < 0)
-                t = (t + q);
-        }
+
     }
 
 }
