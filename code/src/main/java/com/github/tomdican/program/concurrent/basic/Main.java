@@ -35,35 +35,37 @@ public class Main {
     }
 
     private static void testSynchronousQueue() {
-        final SynchronousQueue<String> queue = new SynchronousQueue<String>();
+        final SynchronousQueue<String> queue = new SynchronousQueue<String>(false);
 
-        Thread producer = new Thread("PRODUCER") {
-            public void run() {
-                for (int i = 0; i < 3; i++) {
-                    String event = ""+i;
-                    try {
-                        queue.put(event); // thread will block here
-                        System.out.printf("[%s] published event : %s %n", Thread
-                                .currentThread().getName(), event);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+        for (int i = 0; i < 3; i++) {
+            Thread producer = new Thread("PRODUCER" + i) {
+                public void run() {
+
+                        String event = ""+Thread.currentThread().getName();
+                        try {
+                            queue.put(event); // thread will block here
+                            System.out.printf("[%s] published event : %s %n", Thread
+                                    .currentThread().getName(), event);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                 }
+            };
 
-            }
-        };
+            producer.start(); // starting publisher thread
+        }
 
-        producer.start(); // starting publisher thread
 
         Thread consumer = new Thread("CONSUMER") {
             public void run() {
                 for (int i = 0; i < 3; i++) {
 
                     try {
+                        Thread.sleep(1000);
+
                         String event = queue.take(); // thread will block here
                         System.out.printf("[%s] consumed event : %s %n", Thread
                                 .currentThread().getName(), event);
-                        Thread.sleep(1000);
 
                     } catch (InterruptedException e) {
                         e.printStackTrace();
