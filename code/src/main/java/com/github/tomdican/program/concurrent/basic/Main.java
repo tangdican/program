@@ -2,10 +2,7 @@ package com.github.tomdican.program.concurrent.basic;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.Exchanger;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException {
@@ -30,8 +27,55 @@ public class Main {
        // testExchanger();
 
 //        testLinkedBlockingQueue();
-        testSynchronousQueue();
+    //    testSynchronousQueue();
 
+        testDelayQueue();
+
+    }
+
+    private static void testDelayQueue() {
+        Thread t = new Thread(() -> {
+            CacheBean<String> cb = new CacheBean<>(k -> {
+                try {
+                    System.out.println("模拟计算数据，计算时长2秒。key=" + k);
+                    TimeUnit.SECONDS.sleep(2);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                return "你好：" + k;
+            }, 5000);
+
+            try {
+                while (true) {
+                    System.out.println("thead2:" + cb.compute("b"));
+                    TimeUnit.SECONDS.sleep(1);
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+        t.start();
+
+        // 主线程
+        while (true) {
+            CacheBean<String> cb = new CacheBean<>(k -> {
+                try {
+                    System.out.println("模拟计算数据，计算时长2秒。key=" + k);
+                    TimeUnit.SECONDS.sleep(2);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                return "你好：" + k;
+            }, 5000);
+
+            try {
+                System.out.println("thead1:" + cb.compute("b"));
+                TimeUnit.SECONDS.sleep(1);
+
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private static void testSynchronousQueue() {
