@@ -18,6 +18,13 @@ public class FindTopK {
         Util.println(""+kth);
     }
 
+    /**
+     * T(n) = T(n-x) + n
+     *
+     * @param arr
+     * @param k
+     * @return
+     */
     public static int findTopK(int[] arr, int k) {
         int l = 0, r = arr.length - 1;
         while (l <= r) {
