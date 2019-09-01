@@ -1,9 +1,16 @@
 package com.github.tomdican.program.String;
 
+import java.util.Arrays;
+import java.util.List;
+
+/**
+ * source:https://www.geeksforgeeks.org/finite-automata-algorithm-for-pattern-searching/
+ */
 public class FiniteAutomataSearch {
     public static void main(String[] args) {
-        char[] pat = "AABAACAADAABAAABAA".toCharArray();
-        char[] txt = "AABA".toCharArray();
+        char[] pat = "ACACAGA".toCharArray();
+        //char[] pat = "AABAACAADAABAAABAA".toCharArray();
+        char[] txt = "AABACABACACAGA".toCharArray();
         faSearch(txt,pat);
     }
 
@@ -13,9 +20,13 @@ public class FiniteAutomataSearch {
         int M = pat.length;
         int N = txt.length;
 
-        int[][] TF = new int[M+1][NO_OF_CHARS];
+        Integer[][] TF = new Integer[M+1][NO_OF_CHARS];
 
         computeTF(pat, M, TF);
+        for (Integer[] one : TF){
+
+            System.out.println(Arrays.toString(Arrays.asList(one).subList(65,91).toArray()));
+        }
 
         // Process txt over FA.
         int i, state = 0;
@@ -28,7 +39,7 @@ public class FiniteAutomataSearch {
         }
     }
 
-    private static void computeTF(char[] pat, int M, int[][] TF) {
+    private static void computeTF(char[] pat, int M, Integer[][] TF) {
         int state, x;
         for (state = 0; state <= M; ++state)
             for (x = 0; x < NO_OF_CHARS; ++x)
