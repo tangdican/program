@@ -73,9 +73,6 @@ public class FiniteAutomataSearch {
         }
     }
 
-
-
-
     private static void computeTF(char[] pat, int M, Integer[][] TF) {
         int state, x;
         for (state = 0; state <= M; ++state)
