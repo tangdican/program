@@ -1,5 +1,9 @@
 package com.github.tomdican.program.graph;
 
+/**
+ * https://www.geeksforgeeks.org/prims-minimum-spanning-tree-mst-greedy-algo-5/
+ *
+ */
 public class PrimMiniSpanningTree {
     // Number of vertices in the graph
     private static final int V = 5;
