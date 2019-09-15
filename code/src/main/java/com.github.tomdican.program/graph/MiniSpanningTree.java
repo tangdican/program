@@ -132,7 +132,7 @@ public class MiniSpanningTree {
                 continue;
             }
 
-            int x = find(parent,adj.edges[i].src);
+            int x = find(parent,adj.edges[i].src); // 都到达最终第一个开始节点 ，如果相等表示为圈
             int y = find(parent,adj.edges[i].dest);
 
             if(x==y)
