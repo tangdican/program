@@ -9,7 +9,6 @@ public class FindTopKWithWorstLineTime {
 // only for an array of size 5 in this program.
     static int findMedian(int arr[], int i,int n)
     {
-
         Arrays.sort(arr, i, i + n);
         return arr[i + n / 2]; // Return middle element
 
@@ -19,7 +18,6 @@ public class FindTopKWithWorstLineTime {
 //            Arrays.sort(arr, n, i);
 //        return arr[n/2]; // Return middle element
     }
-
     // Returns k'th smallest element
 // in arr[l..r] in worst case
 // linear time. ASSUMPTION: ALL
