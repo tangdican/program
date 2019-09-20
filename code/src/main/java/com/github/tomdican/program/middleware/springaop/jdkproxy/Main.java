@@ -1,11 +1,14 @@
 package com.github.tomdican.program.middleware.springaop.jdkproxy;
 
 import com.github.tomdican.program.middleware.springaop.basic.InterfaceA;
+import com.github.tomdican.program.middleware.springaop.basic.RealImplement;
 import sun.misc.ProxyGenerator;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Proxy;
 
 /**
  * source : https://github.com/crossoverJie/JCSprout/blob/master/MD/SpringAOP.md
@@ -13,12 +16,12 @@ import java.io.IOException;
  */
 public class Main {
     public static void main(String[] args) {
-//        CustomizeHandle handle = new CustomizeHandle(RealImplement.class) ;
-//        InterfaceA interfaceA = (InterfaceA) Proxy.newProxyInstance(Main.class.getClassLoader(), new Class[]{InterfaceA.class}, handle);
-//        interfaceA.exec();
+        CustomizeHandle handle = new CustomizeHandle(RealImplement.class) ;
+        InterfaceA interfaceA = (InterfaceA) Proxy.newProxyInstance(Main.class.getClassLoader(), new Class[]{InterfaceA.class}, handle);
+        interfaceA.exec();
 
         // show the proxy class
-        clazzTest();
+//        clazzTest();
 
     }
 
