@@ -1,6 +1,7 @@
 package com.github.tomdican.program.TAOjuly;
 
 import com.github.tomdican.program.Util;
+import com.sun.tools.javac.util.StringUtils;
 
 /**
  * https://github.com/julycoding/The-Art-Of-Programming-By-July/blob/master/ebook/zh/01.00.md
@@ -11,11 +12,12 @@ public class StringBasic {
 
         // 旋转字符
         // LeftRotateString(abcdef,abcdef.length,2);
-//        System.out.println(abcdef);
+        System.out.println(abcdef);
+        
 
         // a是否包含b所有字符
-        char[] b = "ce".toCharArray();
-        System.out.println(stringContain(abcdef, b ));
+//        char[] b = "ce".toCharArray();
+//        System.out.println(stringContain(abcdef, b ));
 
     }
 
