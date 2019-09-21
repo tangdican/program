@@ -40,7 +40,7 @@ public class HuffmanCode {
         int[] charfreq = { 5, 9, 12, 13, 16, 45 };
 
         PriorityQueue<HuffmanNode> q
-                = new PriorityQueue<HuffmanNode>(n, new MyComparator());
+                = new PriorityQueue<>(n, new MyComparator());
 
         for (int i = 0; i < n; i++) {
 
