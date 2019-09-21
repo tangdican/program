@@ -19,6 +19,7 @@ public class StringBasic {
 
     }
 
+    // 旋转字符
     static void LeftRotateString(char[] s,int n,int m) {
         m %= n;               //若要左移动大于n位，那么和%n 是等价的
         Util.reverse(s, 0, m - 1); //反转[0..m - 1]，套用到上面举的例子中，就是X->X^T，即 abc->cba
@@ -26,6 +27,7 @@ public class StringBasic {
         Util.reverse(s, 0, n - 1); //反转[0..n - 1]，即如整个反转，(X^TY^T)^T=YX，即 cbafed->defab// c。
     }
 
+    // a是否包含b所有字符
     // “最好的方法”，时间复杂度O(n + m)，空间复杂度O(1)
     static boolean stringContain(char[] a,char[] b)
     {
