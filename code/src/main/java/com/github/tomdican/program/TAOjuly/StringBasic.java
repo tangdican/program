@@ -1,7 +1,9 @@
 package com.github.tomdican.program.TAOjuly;
 
 import com.github.tomdican.program.Util;
-import com.sun.tools.javac.util.StringUtils;
+import org.apache.commons.lang3.StringUtils;
+
+import static java.lang.Math.min;
 
 /**
  * https://github.com/julycoding/The-Art-Of-Programming-By-July/blob/master/ebook/zh/01.00.md
@@ -12,13 +14,94 @@ public class StringBasic {
 
         // 旋转字符
         // LeftRotateString(abcdef,abcdef.length,2);
-        System.out.println(abcdef);
-        
+      //  StringUtils.reverse(abcdef.toString());
+     //   System.out.println(abcdef);
 
         // a是否包含b所有字符
 //        char[] b = "ce".toCharArray();
+//        StringUtils.contains(abcdef.toString(),b.toString());
 //        System.out.println(stringContain(abcdef, b ));
 
+        // 最长回文查找 Manacher算法
+        char[] s = "122123321".toCharArray();
+         String longestPalindrome = getLongestPalindrome(s);
+         System.out.println(longestPalindrome);
+
+
+    }
+
+    private static String getLongestPalindrome(char[] ss) {
+        char[] s=longestPalindromeLoc(ss);
+
+        int mx = 0, id = 0;
+        int[] p = new int[s.length];
+        for (int i = 1; i < s.length; i++) {
+            p[i] = mx > i ? min( 2*id-i<s.length && 2*id-i>=0? p[2 * id - i]:1, mx - i) : 1;
+
+            while (i+p[i]<s.length && i-p[i]>=0 && s[i + p[i]] == s[i - p[i]])
+                p[i]++;
+            if (i + p[i] > mx) {
+                mx = i + p[i];
+                id = i;
+            }
+        }
+        int maxLoc = 0;
+        int maxI = 0;
+        for (int i = 0; i < p.length; i++) {
+            if (maxLoc < p[i]) {
+                maxLoc = p[i];
+                maxI = i;
+            }
+        }
+
+        String result = "";
+        for (int i = maxI-maxLoc+1; i < maxI+maxLoc; i++) {
+            if (s[i]!='#') {
+                result += String.valueOf(s[i]);
+            }
+        }
+
+        return result;
+
+    }
+
+    private static char[] longestPalindromeLoc(char[] s) {
+        char[] ss  = new char[2*s.length + 1];
+        for (int i = 0; i < ss.length; i++) {
+            if (i%2==0) {
+                ss[i]='#';
+            } else {
+                ss[i] = s[i/2];
+            }
+        }
+
+        return ss;
+    }
+
+    private static int longestPalindromeLocationCenter(char[] s) {
+
+        int mx = 0, id = 0;
+        int[] p = new int[s.length];
+        for (int i = 1; i < s.length; i++) {
+            p[i] = mx > i ? min( 2*id-i<s.length && 2*id-i>=0? p[2 * id - i]:1, mx - i) : 1;
+
+            while (i+p[i]<s.length && i-p[i]>=0 && s[i + p[i]] == s[i - p[i]])
+                p[i]++;
+            if (i + p[i] > mx) {
+                mx = i + p[i];
+                id = i;
+            }
+        }
+
+        int maxLoc = 0;
+        int maxI = 0;
+        for (int i = 0; i < p.length; i++) {
+            if (maxLoc < p[i]) {
+                maxLoc = p[i];
+                maxI = i;
+            }
+        }
+        return maxI;
     }
 
     // 旋转字符
