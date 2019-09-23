@@ -23,11 +23,31 @@ public class StringBasic {
 //        System.out.println(stringContain(abcdef, b ));
 
         // 最长回文查找 Manacher算法
-        char[] s = "122123321".toCharArray();
-         String longestPalindrome = getLongestPalindrome(s);
-         System.out.println(longestPalindrome);
+//        char[] s = "122123321".toCharArray();
+//         String longestPalindrome = getLongestPalindrome(s);
+//         System.out.println(longestPalindrome);
 
+        // 字符全排
+       // calcAllPermutation(abcdef,0,abcdef.length-1);
 
+    }
+
+    static void calcAllPermutation(char[] perm, int from, int to) {
+        if (to <= 1) {
+            return;
+        }
+
+        if (from == to) {
+            for (int i = 0; i <= to; i++)
+                System.out.print( ","+perm[i]);
+            System.out.println(";");
+        } else {
+            for (int j = from; j <= to; j++) {
+                Util.exchange(perm,j, from);
+                calcAllPermutation(perm, from + 1, to);
+                Util.exchange(perm,j, from);
+            }
+        }
     }
 
     private static String getLongestPalindrome(char[] ss) {
