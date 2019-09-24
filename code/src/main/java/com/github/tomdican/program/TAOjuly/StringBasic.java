@@ -3,6 +3,8 @@ package com.github.tomdican.program.TAOjuly;
 import com.github.tomdican.program.Util;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.Collections;
+
 import static java.lang.Math.min;
 
 /**
@@ -29,7 +31,38 @@ public class StringBasic {
 
         // 字符全排
        // calcAllPermutation(abcdef,0,abcdef.length-1);
+        while (calcAllPermutationNext(abcdef,abcdef.length));
 
+
+
+    }
+
+    static boolean calcAllPermutationNext(char[] perm, int num){
+        int i;
+
+        //①找到排列中最后（最右）一个升序的首位位置i，x = ai
+        for (i = num - 2; (i >= 0) && (perm[i] >= perm[i + 1]); --i){
+            ;
+        }
+        // 已经找到所有排列
+        if (i < 0){
+            return false;
+        }
+        for (int j = 0; j <= num-1; j++)
+            System.out.print( ","+perm[j]);
+        System.out.println(";");
+
+        int k;
+        //②找到排列中第i位右边最后一个比perm[i] 大的位置j，y = perm[j]
+        for (k = num - 1; (k > i) && (perm[k] <= perm[i]); --k){
+            ;
+        }
+
+        //③交换x，y
+        Util.exchange(perm,i, k);
+        //④把第(i+ 1)位到最后的部分翻转
+        Util.reverse(perm,i + 1, num-1);
+        return true;
     }
 
     static void calcAllPermutation(char[] perm, int from, int to) {
