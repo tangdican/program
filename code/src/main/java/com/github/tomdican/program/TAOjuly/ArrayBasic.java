@@ -1,5 +1,6 @@
 package com.github.tomdican.program.TAOjuly;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -15,8 +16,7 @@ public class ArrayBasic {
 //        twoSum(arr,arr.length,8);
 
         // 求和为定值的任意组合数
-        Integer[] arr1 = {1,2,3,4,5,6,7,8,9,10};
-        sumOfkNumber(Arrays.asList(arr),9,arr1.length);
+        sumOfkNumber(new ArrayList<>(),12,10);
 
     }
 
@@ -27,12 +27,10 @@ public class ArrayBasic {
 
         // 输出找到的结果
         if (sum == n) {
-            // 反转list
-            Collections.reverse(list1);
             for (int i = 0; i < list1.size(); i++) {
-                System.out.println(list1.get(i) + "+" + n);
+                System.out.print(list1.get(i) + " + " );
             }
-            Collections.reverse(list1);//此处还需反转回来
+            System.out.println("  +" + n+",");
         }
 
         list1.add(n);      //典型的01背包问题
