@@ -18,6 +18,49 @@ public class ArrayBasic {
         // 求和为定值的任意组合数
         sumOfkNumber(new ArrayList<>(),12,10);
 
+        // 回溯法 剪枝
+        sumOfkNumber2(10,10,1,12,false,new boolean[10]);
+
+    }
+
+    //输入t， r， 尝试Wk
+    static void sumOfkNumber2(int t, int k, double r, int M, boolean flag, boolean[] X) {
+        X[k] = true;   // 选第k个数
+        if (t + k == M) // 若找到一个和为M，则设置解向量的标志位，输出解
+        {
+            flag = true;
+            for (int i = 1; i <= k; ++i) {
+                if (X[i]) {
+                    System.out.printf("%d ", i);
+                }
+            }
+            System.out.printf("\n");
+        } else {   // 若第k+1个数满足条件，则递归左子树
+            if (t + k + (k + 1) <= M) {
+                sumOfkNumber2(t + k, k + 1, r - k, M, flag, X);
+            }
+            // 若不选第k个数，选第k+1个数满足条件，则递归右子树
+            if ((t + r - k >= M) && (t + (k + 1) <= M)) {
+                X[k] = false;
+                sumOfkNumber2(t, k + 1, r - k, M, flag, X);
+            }
+        }
+    }
+
+    static void search(int N, int M) {
+        // 初始化解空间
+        boolean[] X = new boolean[N + 1];
+        double sum = (N + 1) * N * 0.5;
+        if (1 > M || sum < M) // 预先排除无解情况
+        {
+            System.out.printf("not found\n");
+            return;
+        }
+        boolean f = false;
+        sumOfkNumber2(0, 1, sum, M, f, X);
+        if (!f) {
+            System.out.printf("not found\n");
+        }
     }
 
     static void sumOfkNumber(List<Integer> list1, int sum, int n) {
