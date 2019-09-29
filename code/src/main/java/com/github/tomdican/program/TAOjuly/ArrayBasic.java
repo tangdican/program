@@ -11,16 +11,36 @@ import java.util.List;
 public class ArrayBasic {
     public static void main(String[] args) {
 
-        Integer[] arr = {3, 2, 7, 10, 1, 4, 5, 9, 11};
+        int[] arr = {3, 2, 7, 10, 1, 4, 5, 9, 11};
         // 求两个数和为定值
 //        twoSum(arr,arr.length,8);
 
         // 求和为定值的任意组合数
 //        sumOfkNumber(new ArrayList<>(),12,10);
 
-        // 累积 回溯法 剪枝
-        search(10,12);
+//        // 累积 回溯法 剪枝
+//        search(10,12);
 
+        //求一个数组的最大子数组和
+        int[] arr1 = {3, 2, -4, 8, 1, -4, 5, 9, -11};
+        maxSubArray(arr1, arr1.length);
+
+
+
+    }
+
+
+    static int maxSubArray(int[] a, int n) {
+        int currSum = 0;
+        int maxSum = a[0];       //全负情况，返回最大数
+
+        for (int j = 0; j < n; j++) {
+            currSum = (a[j] > currSum + a[j]) ? a[j] : currSum + a[j];
+            maxSum = (maxSum > currSum) ? maxSum : currSum;
+
+        }
+        System.out.println(maxSum);
+        return maxSum;
     }
 
     //输入acc， sum， 尝试Wk
