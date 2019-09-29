@@ -16,35 +16,37 @@ public class ArrayBasic {
 //        twoSum(arr,arr.length,8);
 
         // 求和为定值的任意组合数
-        sumOfkNumber(new ArrayList<>(),12,10);
+//        sumOfkNumber(new ArrayList<>(),12,10);
 
-        // 回溯法 剪枝
-        sumOfkNumber2(10,10,1,12,false,new boolean[10]);
+        // 累积 回溯法 剪枝
+        search(10,12);
 
     }
 
-    //输入t， r， 尝试Wk
-    static void sumOfkNumber2(int t, int k, double r, int M, boolean flag, boolean[] X) {
+    //输入acc， sum， 尝试Wk
+    static boolean sumOfkNumber2(int acc, int k, double sum, int M,boolean flag, boolean[] X) {
+
         X[k] = true;   // 选第k个数
-        if (t + k == M) // 若找到一个和为M，则设置解向量的标志位，输出解
+        if (acc + k == M) // 若找到一个和为M，则设置解向量的标志位，输出解
         {
             flag = true;
             for (int i = 1; i <= k; ++i) {
                 if (X[i]) {
-                    System.out.printf("%d ", i);
+                    System.out.print(" +"+ i);
                 }
             }
-            System.out.printf("\n");
+            System.out.println(",");
         } else {   // 若第k+1个数满足条件，则递归左子树
-            if (t + k + (k + 1) <= M) {
-                sumOfkNumber2(t + k, k + 1, r - k, M, flag, X);
+            if (acc + k + (k + 1) <= M) {
+                flag = sumOfkNumber2(acc + k, k + 1, sum - k, M, flag, X);
             }
             // 若不选第k个数，选第k+1个数满足条件，则递归右子树
-            if ((t + r - k >= M) && (t + (k + 1) <= M)) {
+            if ((acc + sum - k >= M) && (acc + (k + 1) <= M)) {
                 X[k] = false;
-                sumOfkNumber2(t, k + 1, r - k, M, flag, X);
+                flag = sumOfkNumber2(acc, k + 1, sum - k, M, flag, X);
             }
         }
+        return flag;
     }
 
     static void search(int N, int M) {
@@ -57,7 +59,7 @@ public class ArrayBasic {
             return;
         }
         boolean f = false;
-        sumOfkNumber2(0, 1, sum, M, f, X);
+        f = sumOfkNumber2(0, 1, sum, M,f, X);
         if (!f) {
             System.out.printf("not found\n");
         }
