@@ -27,9 +27,23 @@ public class ArrayBasic {
 
         // 一个台阶总共有n 级，如果一次可以跳1 级，也可以跳2 级。
         //求总共有多少总跳法
-//        System.out.println(fibonacci(6));
+//          System.out.println(fibonacci(6));
+          System.out.println(climbStairs(6));
 
+    }
 
+    //1, 1, 2, 3, 5, 8, 13, 21..
+    static int climbStairs(int n) {
+        int dp[] = {1, 1, 2};
+        if (n < 2) {
+            return 1;
+        }
+        for (int i = 2; i <= n; i++) {
+            dp[2] = dp[0] + dp[1];
+            dp[0] = dp[1];
+            dp[1] = dp[2];
+        }
+        return dp[2];
     }
 
     static int fibonacci(int n)
