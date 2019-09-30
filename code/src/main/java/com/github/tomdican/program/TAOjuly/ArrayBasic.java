@@ -22,13 +22,24 @@ public class ArrayBasic {
 //        search(10,12);
 
         //求一个数组的最大子数组和
-        int[] arr1 = {3, 2, -4, 8, 1, -4, 5, 9, -11};
-        maxSubArray(arr1, arr1.length);
+//        int[] arr1 = {3, 2, -4, 8, 1, -4, 5, 9, -11};
+//        maxSubArray(arr1, arr1.length);
 
+        // 一个台阶总共有n 级，如果一次可以跳1 级，也可以跳2 级。
+        //求总共有多少总跳法
+//        System.out.println(fibonacci(6));
 
 
     }
 
+    static int fibonacci(int n)
+    {
+        int result[] = {0, 1, 2};
+        if (n <= 2)
+            return result[n];
+
+        return fibonacci(n - 1) + fibonacci(n - 2);
+    }
 
     static int maxSubArray(int[] a, int n) {
         int currSum = 0;
