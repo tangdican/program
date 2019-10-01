@@ -1,8 +1,8 @@
 package com.github.tomdican.program.TAOjuly;
 
-import java.util.ArrayList;
+import com.github.tomdican.program.Util;
+
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -28,9 +28,34 @@ public class ArrayBasic {
         // 一个台阶总共有n 级，如果一次可以跳1 级，也可以跳2 级。
         //求总共有多少总跳法
 //          System.out.println(fibonacci(6));
-          System.out.println(climbStairs(6));
+//          System.out.println(climbStairs(6));
+
+        // 荷兰国旗
+        int[] arr2 = {1,0,0,2,1,0,1,2,1,0};
+        helanguoqi(arr2);
+        Util.printArray(arr2);
 
     }
+
+    //引用自gnuhpc
+    static void helanguoqi(int[] array) {
+
+        int begin = 0, current = 0, end = array.length-1;
+        while (current <= end) {
+            if (array[current] == 0) {
+                Util.exchange(array,current, begin);
+                current++;
+                begin++;
+            } else if (array[current] == 1) {
+                current++;
+            } else //When array[current] =2
+            {
+                Util.exchange(array,current, end);
+                end--;
+            }
+        }
+    }
+
 
     //1, 1, 2, 3, 5, 8, 13, 21..
     static int climbStairs(int n) {
