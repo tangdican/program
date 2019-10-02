@@ -31,11 +31,33 @@ public class ArrayBasic {
 //          System.out.println(climbStairs(6));
 
         // 荷兰国旗
-        int[] arr2 = {1,0,0,2,1,0,1,2,1,0};
-        helanguoqi(arr2);
-        Util.printArray(arr2);
+//        int[] arr2 = {1,0,0,2,1,0,1,2,1,0};
+//        helanguoqi(arr2);
+//        Util.printArray(arr2);
+        int[][] a = {{1,2},{3,4}};
+        int[][] b = {{6,7},{8,9}};
+        int[][] c = {{0,0},{0,0}};
+        mulMatrix(a,b,c);
+        System.out.println(Arrays.deepToString(c));
 
     }
+
+    //矩阵乘法，3个for循环搞定
+    static void mulMatrix(int matrixA[][], int matrixB[][], int[][] matrixC)
+    {
+        for(int i = 0; i < 2; ++i)
+        {
+            for(int j = 0; j < 2; ++j)
+            {
+                matrixC[i][j] = 0;
+                for(int k = 0; k < 2; ++k)
+                {
+                    matrixC[i][j] += matrixA[i][k] * matrixB[k][j];
+                }
+            }
+        }
+    }
+
 
     //引用自gnuhpc
     static void helanguoqi(int[] array) {
