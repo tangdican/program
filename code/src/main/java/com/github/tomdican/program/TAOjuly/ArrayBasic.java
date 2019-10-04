@@ -34,30 +34,43 @@ public class ArrayBasic {
 //        int[] arr2 = {1,0,0,2,1,0,1,2,1,0};
 //        helanguoqi(arr2);
 //        Util.printArray(arr2);
-        int[][] a = {{1,2},{3,4}};
-        int[][] b = {{6,7},{8,9}};
-        int[][] c = {{0,0},{0,0}};
-        mulMatrix(a,b,c);
-        System.out.println(Arrays.deepToString(c));
 
+        //矩正乘法
+//        int[][] a = {{1,2},{3,4}};
+//        int[][] b = {{6,7},{8,9}};
+//        int[][] c = {{0,0},{0,0}};
+//        mulMatrix(a,b,c);
+//        System.out.println(Arrays.deepToString(c));
+
+        // 完美洗牌
+        int[] a = {1,1,1,1,2,2,2,2};
+        pefectShuffle1(a,a.length/2);
+        Util.printArray(a);
+    }
+
+    // 时间O(n)，空间O(n) 数组下标从1开始
+    static void pefectShuffle1(int[] a, int n) {
+        int n2 = n * 2, i, b[] = new int[n2];
+        for (i = 1; i <= n2; ++i) {
+//            System.out.print((i * 2) % (n2 + 1) -1  + ",");
+            b[(i * 2) % (n2 + 1) - 1] = a[i-1];
+        }
+        for (i = 0; i < n2; ++i) {
+            a[i] = b[i];
+        }
     }
 
     //矩阵乘法，3个for循环搞定
-    static void mulMatrix(int matrixA[][], int matrixB[][], int[][] matrixC)
-    {
-        for(int i = 0; i < 2; ++i)
-        {
-            for(int j = 0; j < 2; ++j)
-            {
+    static void mulMatrix(int matrixA[][], int matrixB[][], int[][] matrixC) {
+        for (int i = 0; i < 2; ++i) {
+            for (int j = 0; j < 2; ++j) {
                 matrixC[i][j] = 0;
-                for(int k = 0; k < 2; ++k)
-                {
+                for (int k = 0; k < 2; ++k) {
                     matrixC[i][j] += matrixA[i][k] * matrixB[k][j];
                 }
             }
         }
     }
-
 
     //引用自gnuhpc
     static void helanguoqi(int[] array) {
