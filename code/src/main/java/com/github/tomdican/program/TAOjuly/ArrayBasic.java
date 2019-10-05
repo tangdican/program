@@ -43,10 +43,82 @@ public class ArrayBasic {
 //        System.out.println(Arrays.deepToString(c));
 
         // 完美洗牌
-        int[] a = {1,1,1,1,2,2,2,2};
-        pefectShuffle1(a,a.length/2);
-        Util.printArray(a);
+//        int[] a = {1,1,1,1,2,2,2,2};
+//        pefectShuffle1(a,a.length/2);
+//        Util.printArray(a);
+
+//        int[] a = {1,1,1,1,2,2,2,2};
+//        cycleLeader(a,1,a.length/2);
+//        cycleLeader(a,3,a.length/2);
+//        Util.printArray(a);
+
+
     }
+
+    //copyright@caopengcs 8/24/2013
+    //时间O(n)，空间O(1)
+    static void perfectShuffle3(int[] a, int n) {
+        int n2, m, i, k, t;
+        int from = 0;
+        for (; n > 1; ) {
+            // step 1
+            n2 = n * 2;
+            for (k = 0, m = 1; n2 / m >= 3; ++k, m *= 3)
+                ;
+            m /= 2;
+            // 2m = 3^k - 1 , 3^k <= 2n < 3^(k + 1)
+
+            // step 2
+            rightRotate(a, m, n, from);
+
+            // step 3
+            for (i = 0, t = 1; i < k; ++i, t *= 3) {
+                cycleLeader(a, t, m, from);
+            }
+
+            //step 4
+            //    a += m * 2;
+            n -= m;
+        }
+        // n = 1
+        t = a[1];
+        a[1] = a[2];
+        a[2] = t;
+    }
+
+    // 旋转字符
+    static void rightRotate(int[] s,int n,int m,int from) {
+        m %= n;               //若要左移动大于n位，那么和%n 是等价的
+        Util.reverse(s, from , from +m - 1); //反转[0..m - 1]，套用到上面举的例子中，就是X->X^T，即 abc->cba
+        Util.reverse(s, from +m, from +n - 1); //反转[m..n - 1]，例如Y->Y^T，即 def->fed
+        Util.reverse(s, from , from +n - 1); //反转[0..n - 1]，即如整个反转，(X^TY^T)^T=YX，即 cbafed->defab// c。
+    }
+
+    //数组下标从1开始，from是圈的头部，mod是要取模的数 mod 应该为 2 * n + 1，时间复杂度O(圈长）
+    static void cycleLeader(int[] a, int from,int n,int start) {
+        int mod =  2 * n + 1;
+        int t, i;
+        for (i = from * 2 % mod; i != from; i = i * 2 % mod) {
+//            System.out.print(i+",");
+            t = a[start+i-1];
+            a[start+i-1] = a[start+from-1];
+            a[start+ from-1] = t;
+        }
+    }
+
+    //数组下标从1开始，from是圈的头部，mod是要取模的数 mod 应该为 2 * n + 1，时间复杂度O(圈长）
+    static void cycleLeader(int[] a, int from,int n) {
+        int mod =  2 * n + 1;
+        int t, i;
+        for (i = from * 2 % mod; i != from; i = i * 2 % mod) {
+//            System.out.print(i+",");
+            t = a[i-1];
+            a[i-1] = a[from-1];
+            a[from-1] = t;
+        }
+    }
+
+
 
     // 时间O(n)，空间O(n) 数组下标从1开始
     static void pefectShuffle1(int[] a, int n) {
