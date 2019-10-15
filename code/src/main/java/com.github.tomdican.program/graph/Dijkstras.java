@@ -34,10 +34,12 @@ public class Dijkstras {
         dist[src] = 0;
         for (int count = 0; count < V-1; count++) {
             // find the smallest v without visited
+            // 局部最优
             int u = minDistance(dist, visited, V);
             visited[u] = true;
             for (int v = 0; v < V; v++)
                 // unvisited , set dist[v] to the smallest path
+                // u点全局最优
                 if (!visited[v] && graph[u][v]!=0 &&
                         dist[u] != Integer.MAX_VALUE &&
                         dist[u]+graph[u][v] < dist[v])
