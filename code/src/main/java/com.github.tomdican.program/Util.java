@@ -65,6 +65,12 @@ public class Util {
         }
     }
 
+    public static void reverse(int[] chars, int start, int end) {
+        while ( start < end) {
+            exchange(chars, start++, end--);
+        }
+    }
+
     private static void printArray(String[] names) {
         int begin = 0;
         int end = names.length - 1;
