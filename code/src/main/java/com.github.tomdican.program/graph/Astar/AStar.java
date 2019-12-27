@@ -232,6 +232,7 @@ public class AStar {
     private void checkNode(Node currentNode, int col, int row, int cost) {
         Node adjacentNode = getSearchArea()[row][col];
         if (!adjacentNode.isBlock() && !getClosedSet().contains(adjacentNode)) {
+
             if (!getOpenList().contains(adjacentNode)) {
                 adjacentNode.setNodeData(currentNode, cost);
                 getOpenList().add(adjacentNode);
