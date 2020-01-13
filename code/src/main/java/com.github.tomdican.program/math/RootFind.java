@@ -5,13 +5,15 @@ public class RootFind {
        sqrt(4);
     }
 
+    /**
+     * https://blog.csdn.net/junbujianwpl/article/details/78024852
+     * @param c
+     * @return
+     */
     public static double sqrt(double c) {
-
         if (c < 0) {
-
             return Double.NaN;
         }
-
         double e = 1e-15;
         double x = c;
         double y = (x + c / x) / 2;
